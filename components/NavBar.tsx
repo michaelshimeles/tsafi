@@ -20,7 +20,7 @@ import { SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger }
 
 
 export function NavBar() {
-    const { isLoaded, userId, sessionId, getToken } = useAuth();
+    const { userId } = useAuth();
 
     return (
         <div className="flex min-w-full justify-between p-2 border-b z-10">

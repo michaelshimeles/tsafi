@@ -38,15 +38,7 @@ const Footer = () => {
                 <div className="mx-auto max-w-7xl px-2">
                     <div className="flex flex-col justify-between lg:flex-row">
                         <div className="space-y-8">
-                            <Image
-                                priority={true}
-                                unoptimized={true}
-                                width={100}
-                                height={40}
-                                src="/images/syntaxUI.svg"
-                                alt="logo"
-                                className="h-7 w-auto"
-                            />
+                            <p className='font-semibold'>SupaNext CMS</p>
                             <p className="text-md max-w-xs leading-6 text-gray-700">
                                 Not your average component library - build faster, launch sooner.
                             </p>

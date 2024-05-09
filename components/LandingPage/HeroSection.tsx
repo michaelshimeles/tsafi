@@ -23,7 +23,7 @@ export default function HeroSection() {
             <div>
                 <div className="relative flex max-w-6xl justify-center overflow-hidden">
                     <div className='w-full mt-[1rem] p-3'>
-                        <Image src={"/dash-light.png"} alt='' width={900} height={400} className='border border-gray-100 rounded-lg drop-shadow-xl' />
+                        <Image src={"/home.png"} alt='' width={900} height={400} className='border border-gray-100 rounded-lg drop-shadow-xl' />
                     </div>
                     <div className="from-1% absolute inset-0 bg-gradient-to-t from-white to-35%" />
                 </div>

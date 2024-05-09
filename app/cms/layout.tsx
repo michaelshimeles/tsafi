@@ -1,6 +1,6 @@
 import { ReactNode } from "react"
-import DashboardNav from "./(components)/DashboardNav"
-import DashboardNavMobile from "./(components)/DashboardNavMobile"
+import DashboardNav from "./(components)/DashboardSidebar"
+import DashboardNavMobile from "./(components)/DashboardNav"
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
 
