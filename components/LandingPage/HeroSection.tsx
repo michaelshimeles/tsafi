@@ -1,13 +1,9 @@
 "use client"
-import Link from "next/link"
-import { GiSaucepan } from "react-icons/gi";
-import { Button } from "../ui/button";
+import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
-import { useTheme } from 'next-themes';
-import { ArrowBigRight, ArrowRight } from 'lucide-react';
+import Link from "next/link";
+import { Button } from "../ui/button";
 export default function HeroSection() {
-    const { theme } = useTheme()
-
     return (
         <div className='flex flex-col items-center justify-center mt-[4rem] p-3'>
             <h1 className="scroll-m-20 text-4xl sm:text-4xl md:text-6xl font-semibold tracking-tight lg:text-6xl text-center max-w-[1000px]">
@@ -17,8 +13,8 @@ export default function HeroSection() {
                 An opensource blog CMS built using Nextjs, Supabase & TipTap
             </p>
             <div className="flex gap-3">
-                <Link href="/dashboard" className="mt-5">
-                    <Button className="animate-buttonheartbeat rounded-md bg-blue-600 text-sm font-semibold text-white">Get Started</Button>
+                <Link href="/cms" className="mt-5">
+                    <Button className="animate-buttonheartbeat rounded-md bg-blue-600 text-sm font-semibold text-white">Dashboard</Button>
                 </Link>
                 <Link href="/methodology" className="mt-5">
                     <Button variant="ghost" className="flex gap-1 text-blue-600 hover:text-blue-600 hover:bg-blue-100">YouTube Video<ArrowRight className='w-4 h-4' /></Button>

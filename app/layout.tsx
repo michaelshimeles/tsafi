@@ -9,8 +9,8 @@ import Provider from './provider'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Nextjs 14 Starter Template',
-  description: 'Build your next SAAS product',
+  title: 'SupaNext CMS',
+  description: 'An opensource blog CMS built using Nextjs, Supabase & TipTap',
 }
 
 export default function RootLayout({
@@ -23,15 +23,8 @@ export default function RootLayout({
       <html lang="en" suppressHydrationWarning>
         <body className={inter.className}>
           <Provider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              {children}
-              <Toaster />
-            </ThemeProvider>
+            {children}
+            <Toaster />
           </Provider>
         </body>
       </html>

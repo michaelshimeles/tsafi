@@ -1,99 +1,110 @@
-"use client"
-import { Button } from "../ui/button"
-import { Input } from "../ui/input"
-import { useForm } from 'react-hook-form';
+import Image from 'next/image'
+import Link from 'next/link'
 
-export default function Footer() {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-        reset,
-    } = useForm();
+const navigation = {
+    connect: [
+        { name: 'Book Meeting', href: '' },
+        {
+            name: 'Twitter',
+            href: 'https://twitter.com/justansub',
+        },
+        {
+            name: 'Github',
+            href: 'https://www.youtube.com/@SpeedyBrand-SEO',
+        },
+        {
+            name: 'LinkedIn',
+            href: 'https://www.linkedin.com/company/speedy-brand-inc/',
+        },
+    ],
+    company: [
+        { name: 'Blogs', href: '/' },
+        { name: 'Pricing', href: '/' },
+        { name: 'Affiliate Partner', href: '/' },
+        { name: 'AI For Enterprise', href: '/' },
+    ],
+}
 
-
-    const onSubmit = async (data: any) => {
-        console.log(data);
-
-
-    };
+const Footer = () => {
     return (
-        <footer className="border-t">
-            <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-                <div className="lg:grid lg:grid-cols-2">
-                    <div
-                        className="border-b   py-8 lg:order-last lg:border-b-0 lg:border-s lg:py-16 lg:ps-16"
-                    >
-                        <div className="mt-8 space-y-4 lg:mt-0">
-
-                            <div>
-                                <h2 className="text-2xl font-medium">Sign Up To Our Newsletter</h2>
-                                <p className="mt-4 max-w-lg  ">
-                                    Want the best SEO educational content from nerds who have fun building and learning in the SEO space? If the answer is yes, sign up.
-                                </p>
+        <main className="flex min-w-screen flex-col items-center justify-between px-7 pb-7">
+            <footer
+                aria-labelledby="footer-heading"
+                className="font-inter w-full max-w-7xl"
+            >
+                <h2 id="footer-heading" className="sr-only">
+                    Footer
+                </h2>
+                <div className="mx-auto max-w-7xl px-2">
+                    <div className="flex flex-col justify-between lg:flex-row">
+                        <div className="space-y-8">
+                            <Image
+                                priority={true}
+                                unoptimized={true}
+                                width={100}
+                                height={40}
+                                src="/images/syntaxUI.svg"
+                                alt="logo"
+                                className="h-7 w-auto"
+                            />
+                            <p className="text-md max-w-xs leading-6 text-gray-700">
+                                Not your average component library - build faster, launch sooner.
+                            </p>
+                            <div className="flex space-x-6 text-sm text-gray-700">
+                                <div>Made with ❤️ by Micky.</div>
                             </div>
-                            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col border rounded-xl p-4 gap-3 mt-6 w-full">
-                                <Input
-                                    {...register('email', { required: true })}
-                                    placeholder="Enter your email"
-                                    type="email"
-                                />
-                                <Button type="submit">
-                                    Sign Up
-                                </Button>
-                            </form>
+                        </div>
+                        {/* Navigations */}
+                        <div className="mt-16 grid grid-cols-2 gap-14 md:grid-cols-2 lg:mt-0 xl:col-span-2">
+                            <div className="md:mt-0">
+                                <h3 className="text-sm font-semibold leading-6 text-gray-900">
+                                    Connect
+                                </h3>
+                                <div className="mt-6 space-y-4">
+                                    {navigation.connect.map((item) => (
+                                        <div key={item.name}>
+                                            <a
+                                                href={item.href}
+                                                target="_blank"
+                                                rel="noreferrer"
+                                                className="text-sm leading-6 text-gray-700 hover:text-gray-900"
+                                            >
+                                                {item.name}
+                                            </a>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            <div>
+                                <div>
+                                    <h3 className="text-sm font-semibold leading-6 text-gray-900">
+                                        Company
+                                    </h3>
+                                    <div className="mt-6 space-y-4">
+                                        {navigation.company.map((item) => (
+                                            <div key={item.name}>
+                                                <Link
+                                                    href={item.href}
+                                                    className="text-sm leading-6 text-gray-700 hover:text-gray-900"
+                                                >
+                                                    {item.name}
+                                                </Link>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
-                    <div className="py-8 lg:py-16 lg:pe-16">
-
-
-                        <div className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2">
-
-                            <div>
-                                <p className="font-medium ">Socials</p>
-
-                                <ul className="mt-6 space-y-4 text-sm">
-                                    <li>
-                                        <a href="https://twitter.com/rasmickyy" target="_blank" className="transition hover:opacity-75"> Twitter </a>
-                                    </li>
-                                    <li>
-                                        <a href="https://www.youtube.com/@rasmic" target="_blank" className="  transition hover:opacity-75"> YouTube </a>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <div>
-                                <p className="font-medium ">Helpful Links</p>
-
-                                <ul className="mt-6 space-y-4 text-sm">
-                                    <li>
-                                        <a target="_blank" href="/" rel="noopener noreferrer" className="  transition hover:opacity-75"> Docs </a>
-                                    </li>
-                                    <li>
-                                        <a href="/" className="  transition hover:opacity-75"> Methodology </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div className="mt-8 border-t   pt-8">
-                            <ul className="flex flex-wrap gap-4 text-xs">
-                                <li>
-                                    <a href="/" target="_blank" className="transition hover:opacity-75">Terms & Conditions </a>
-                                </li>
-
-                                <li>
-                                    <a href="/" target="_blank" className="transition hover:opacity-75">Privacy Policy </a>
-                                </li>
-                            </ul>
-
-                            <p className="mt-8 text-xs  ">&copy; 2024. SomeCompany LLC. All rights reserved.</p>
-                        </div>
+                    <div className="mt-16 border-t border-gray-900/10 pt-8 sm:mt-20 lg:mt-24">
+                        <p className="text-xs leading-5 text-gray-700">
+                            &copy; 2024 SyntaxUI. All rights reserved.
+                        </p>
                     </div>
                 </div>
-            </div>
-        </footer>
-
+            </footer>
+        </main>
     )
 }
+
+export default Footer
