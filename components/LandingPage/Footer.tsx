@@ -1,4 +1,3 @@
-import Container from '@/app/(wrapper)/Container'
 import Image from 'next/image'
 import Link from 'next/link'
 
