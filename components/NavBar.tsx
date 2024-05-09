@@ -14,19 +14,10 @@ import { Rocket } from "lucide-react"
 import Link from "next/link"
 import * as React from "react"
 import { GiHamburgerMenu } from "react-icons/gi"
-import { ModeToggle } from "./ModeToggle"
 import { Profile } from "./Profile"
 import { Button } from "./ui/button"
 import { SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet"
 
-const components: { title: string; href: string; description: string }[] = [
-    {
-        title: "Blog",
-        href: "/resources/blog",
-        description:
-            "Deepen your knowledge.",
-    },
-]
 
 export function NavBar() {
     const { isLoaded, userId, sessionId, getToken } = useAuth();
@@ -39,9 +30,9 @@ export function NavBar() {
                 </SheetTrigger>
                 <SheetContent side="left">
                     <SheetHeader>
-                        <SheetTitle>Nextjs Start Template</SheetTitle>
+                        <SheetTitle>SupaNext CMS</SheetTitle>
                         <SheetDescription>
-                            Plan, Build & Scale.
+                            An opensource blog CMS built using Nextjs, Supabase & TipTap
                         </SheetDescription>
                     </SheetHeader>
                     <div className="flex flex-col space-y-3 mt-[1rem]">
@@ -51,7 +42,7 @@ export function NavBar() {
                             </Link>
                         </DialogClose>
                         <DialogClose asChild>
-                            <Link href="/dashboard">
+                            <Link href="/cms">
                                 <Button variant="outline" className="w-full">Dashboard</Button>
                             </Link>
                         </DialogClose>
@@ -65,7 +56,7 @@ export function NavBar() {
                         <Rocket />
                     </Link>
                     <NavigationMenuItem>
-                        <Link href="/dashboard" legacyBehavior passHref className="cursor-pointer">
+                        <Link href="/cms" legacyBehavior passHref className="cursor-pointer">
                             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                                 Dashboard
                             </NavigationMenuLink>
@@ -75,7 +66,6 @@ export function NavBar() {
             </NavigationMenu>
             <div className="flex items-center gap-3">
                 {userId && <Profile />}
-                <ModeToggle />
             </div>
         </div>
 

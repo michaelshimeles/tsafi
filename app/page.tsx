@@ -12,9 +12,6 @@ export default function Home() {
         <MarketingCards />
       </div>
       <BlogSample />
-      <div className=" w-full">
-        <Footer />
-      </div>
     </PageWrapper>
   );
 }

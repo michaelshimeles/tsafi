@@ -1,5 +1,6 @@
 "use client"
 
+import { Separator } from '@radix-ui/react-dropdown-menu'
 import clsx from 'clsx'
 import {
   Book,
@@ -8,6 +9,7 @@ import {
   Home,
   Paperclip,
   Pen,
+  Settings,
   Table
 } from "lucide-react"
 import Link from 'next/link'
@@ -71,6 +73,16 @@ export default function DashboardNav() {
             >
               <Table className="h-4 w-4" />
               Create Category{" "}
+            </Link>
+            <Separator className="my-3" />
+            <Link
+              className={clsx("flex items-center gap-2 rounded-lg px-3 py-2 text-white transition-all hover:text-gray-100 hover:bg-gray-800", {
+                "flex items-center gap-2 rounded-lg bg-gray-900 px-3 py-2 text-white transition-all dark:bg-gray-100 dark:text-gray-50": pathname === "/cms/settings"
+              })}
+              href="/cms/settings"
+            >
+              <Settings className="h-4 w-4" />
+              Settings{" "}
             </Link>
           </nav>
         </div>

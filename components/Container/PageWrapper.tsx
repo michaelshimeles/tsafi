@@ -1,5 +1,6 @@
 import React from 'react'
 import { NavBar } from '../NavBar'
+import Footer from '../LandingPage/Footer'
 
 export default function PageWrapper({ children }: { children: React.ReactNode }) {
   return (
@@ -8,6 +9,7 @@ export default function PageWrapper({ children }: { children: React.ReactNode })
     <main className="flex min-w-screen flex-col items-center justify-between ">
       {children}
     </main>
+    <Footer />
     </>
   )
 }
