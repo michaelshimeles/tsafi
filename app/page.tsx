@@ -14,7 +14,7 @@ export default function Home() {
       </div>
       <BlogSample />
       <div className="flex justify-center items-center w-full">
-        <AccordionComponent />
+        {/* <AccordionComponent /> */}
       </div>
       <div className=" w-full">
         <Footer />

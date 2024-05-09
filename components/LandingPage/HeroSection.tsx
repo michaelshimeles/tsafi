@@ -11,17 +11,17 @@ export default function HeroSection() {
     return (
         <div className='flex flex-col items-center justify-center mt-[4rem] p-3'>
             <h1 className="scroll-m-20 text-4xl sm:text-4xl md:text-6xl font-semibold tracking-tight lg:text-6xl text-center max-w-[1000px]">
-                Nextjs Starter Template
+                SupaNext CMS
             </h1>
             <p className="mx-auto max-w-[700px] text-gray-500 md:text-lg text-center mt-2 dark:text-gray-400">
-                Build a SAAS with a solid foundation.
+                An opensource blog CMS built using Nextjs, Supabase & TipTap
             </p>
             <div className="flex gap-3">
                 <Link href="/dashboard" className="mt-5">
                     <Button className="animate-buttonheartbeat rounded-md bg-blue-600 text-sm font-semibold text-white">Get Started</Button>
                 </Link>
                 <Link href="/methodology" className="mt-5">
-                    <Button variant="ghost" className="flex gap-1 text-blue-600 hover:text-blue-600 hover:bg-blue-100">Our Secret Sauce<ArrowRight className='w-4 h-4' /></Button>
+                    <Button variant="ghost" className="flex gap-1 text-blue-600 hover:text-blue-600 hover:bg-blue-100">YouTube Video<ArrowRight className='w-4 h-4' /></Button>
                 </Link>
             </div>
             <div>
