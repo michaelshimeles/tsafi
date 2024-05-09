@@ -1,5 +1,4 @@
 import PageWrapper from "@/components/Container/PageWrapper";
-import { AccordionComponent } from "@/components/LandingPage/AccordionComponent";
 import BlogSample from "@/components/LandingPage/BlogSamples";
 import Footer from "@/components/LandingPage/Footer";
 import HeroSection from "@/components/LandingPage/HeroSection";
@@ -13,9 +12,6 @@ export default function Home() {
         <MarketingCards />
       </div>
       <BlogSample />
-      <div className="flex justify-center items-center w-full">
-        <AccordionComponent />
-      </div>
       <div className=" w-full">
         <Footer />
       </div>
