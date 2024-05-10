@@ -1,20 +1,19 @@
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { getArticleBySlugApi } from '@/utils/actions/api/get-article-slug-api'
-import { auth } from '@clerk/nextjs/server'
+import { getAllArticleBySlug } from '@/utils/actions/articles/get-article-slug'
 import { ChevronLeft } from 'lucide-react'
 import Image from "next/image"
 import Link from 'next/link'
 import ReactHtmlParser from 'react-html-parser'
-
+import ManageArticle from '../(components)/ManageArticle'
 
 export default async function BlogPostPage({ params }: { params: { slug: string } }) {
-  const { userId } = auth();
 
-  const response = await getArticleBySlugApi(params?.slug, userId!)
+  const response = await getAllArticleBySlug(params?.slug)
 
   return (
     <main className="flex min-w-screen flex-col items-center justify-between ">
+      <ManageArticle response={response} params={params} />
       <article className="container relative max-w-3xl pt-3 pb-6 lg:pb-10">
         <div>
           <p

@@ -4,12 +4,13 @@ import { createServerClient } from "@supabase/ssr";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
-export const deleteDocument = async (id: string) => {
+export const statusBlogs = async (slug: string, published: boolean) => {
   const { userId } = auth();
 
   if (!userId) {
     return null;
   }
+
   const cookieStore = cookies();
 
   const supabase = createServerClient(
@@ -26,14 +27,22 @@ export const deleteDocument = async (id: string) => {
 
   try {
     const { data, error } = await supabase
-      .from("documents")
-      .delete()
-      .eq("document_id", id)
+      .from("blog")
+      .update([
+        {
+          published,
+        },
+      ])
+      .eq("user_id", userId)
+      .eq("slug", slug)
       .select();
+
+    console.log("err", error);
+    console.log("data", data);
 
     if (error?.code) return error;
 
-    revalidatePath("/cms/documents");
+    revalidatePath("/cms");
 
     return data;
   } catch (error: any) {

@@ -4,7 +4,7 @@ import { createServerClient } from "@supabase/ssr";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
-export const deleteDocument = async (id: string) => {
+export const deleteBlog = async (slug: string) => {
   const { userId } = auth();
 
   if (!userId) {
@@ -26,9 +26,10 @@ export const deleteDocument = async (id: string) => {
 
   try {
     const { data, error } = await supabase
-      .from("documents")
+      .from("blog")
       .delete()
-      .eq("document_id", id)
+      .eq("slug", slug)
+      .eq("user_id", userId)
       .select();
 
     if (error?.code) return error;
