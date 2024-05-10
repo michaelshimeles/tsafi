@@ -7,7 +7,7 @@ export default async function CMS() {
   const response = await getAllArticles()
   return (
     <main className="flex items-center w-full flex-wrap justify-start gap-3 ">
-      {response?.map((info: any) => (
+      {/* {response?.map((info: any) => (
         <Link key={info?.id} href={`/blog/${info?.slug}`}>
           <article
             className="flex flex-col space-y-2 p-4 rounded-md border max-w-[350px]"
@@ -31,7 +31,7 @@ export default async function CMS() {
             </p>
           </article>
         </Link>
-      ))}
+      ))} */}
     </main>
   )
 }

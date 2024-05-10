@@ -57,14 +57,15 @@ export async function POST(req: Request) {
   const eventType = evt.type;
 
   if (eventType === "user.created") {
+    console.log("payload?.data", payload?.data);
     try {
-      await userCreate(
-        payload?.data?.email_addresses?.[0]?.email_address,
-        payload?.data?.first_name,
-        payload?.data?.last_name,
-        payload?.data?.profile_image_url,
-        payload?.data?.id
-      );
+      await userCreate({
+        email: payload?.data?.email_addresses?.[0]?.email_address,
+        first_name: payload?.data?.first_name,
+        last_name: payload?.data?.last_name,
+        profile_image_url: payload?.data?.profile_image_url,
+        user_id: payload?.data?.id,
+      });
     } catch (error: any) {
       throw new Error(error.message);
     }
@@ -72,13 +73,13 @@ export async function POST(req: Request) {
 
   if (eventType === "user.updated") {
     try {
-      await userUpdate(
-        payload?.data?.email_addresses?.[0]?.email_address,
-        payload?.data?.first_name,
-        payload?.data?.last_name,
-        payload?.data?.profile_image_url,
-        payload?.data?.id
-      );
+      await userUpdate({
+        email: payload?.data?.email_addresses?.[0]?.email_address,
+        first_name: payload?.data?.first_name,
+        last_name: payload?.data?.last_name,
+        profile_image_url: payload?.data?.profile_image_url,
+        user_id: payload?.data?.id,
+      });
     } catch (error: any) {
       throw new Error(error.message);
     }
