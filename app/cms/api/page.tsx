@@ -13,7 +13,7 @@ export default function ApiPage() {
             <pre className="bg-gray-950 p-4 rounded-md max-w-[600px]">
               <code className="text-gray-50 font-mono">
                 {`const response = await fetch(
-  \`\https://cms-supanext.vercel.app/api/blog/all\`,
+  \`\https://supanext-cms.vercel.app/api/blog/all\`,
   {
     headers: {
       "X-Auth-Key": API_KEY,
@@ -30,7 +30,7 @@ export default function ApiPage() {
             <pre className="bg-gray-950 p-4 rounded-md max-w-[600px]">
               <code className="text-gray-50 font-mono">
                 {`const response = await fetch(
-  \`\https://cms-supanext.vercel.app/api/blog/slugs\`,
+  \`\https://supanext-cms.vercel.app/api/blog/slugs\`,
   {
     headers: {
       "X-Auth-Key": API_KEY,
@@ -47,7 +47,7 @@ export default function ApiPage() {
             <pre className="bg-gray-950 p-4 rounded-md max-w-[600px]">
               <code className="text-gray-50 font-mono">
                 {`const response = await fetch(
-  \`\https://cms-supanext.vercel.app/api/blog/[slug]\`,
+  \`\https://supanext-cms.vercel.app/api/blog/[slug]\`,
   {
     method: "POST",
     headers: {
