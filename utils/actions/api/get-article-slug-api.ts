@@ -29,6 +29,7 @@ export const getArticleBySlugApi = async (slug: string, userId: string) => {
       `
       )
       .eq("slug", slug)
+      .eq("published", true)
       .eq("user_id", result?.id);
 
     if (error?.code) return error;

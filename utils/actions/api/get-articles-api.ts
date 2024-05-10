@@ -24,7 +24,8 @@ export const getAllArticlesApi = async (userId: string) => {
     const { data, error } = await supabase
       .from("blog")
       .select("*, category(*), author(*)")
-      .eq("user_id", result?.id);
+      .eq("user_id", result?.id)
+      .eq("published", true);
 
     if (error?.code)
       return {
