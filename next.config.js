@@ -10,7 +10,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'seo-heist.s3.amazonaws.com',
+        hostname: 'utfs.io',
         port: '',
         pathname: '/**',
       },
@@ -27,14 +27,6 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
-  },
-  async rewrites() {
-    return [
-      {
-        source: '/',
-        destination: 'https://michaelshimeles.com/test',
-      },
-    ]
   },
 };
 

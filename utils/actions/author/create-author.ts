@@ -1,14 +1,21 @@
 "use server";
+import { auth } from "@clerk/nextjs/server";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
 export const createAuthor = async (
   name: string,
   instagram: string,
+  twitter: string,
   image_url: string
 ) => {
-  const cookieStore = cookies();
+  const { userId } = auth();
 
+  if (!userId) {
+    return null;
+  }
+
+  const cookieStore = cookies();
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -30,6 +37,8 @@ export const createAuthor = async (
           author_name: name,
           author_profile_img: image_url,
           author_instagram: instagram,
+          author_twitter: twitter,
+          user_id: userId,
         },
       ])
       .select();
@@ -37,7 +46,10 @@ export const createAuthor = async (
     console.log("err", error);
     console.log("data", data);
 
-    if (error?.code) return error;
+    if (error?.code)
+      return {
+        error,
+      };
 
     return data;
   } catch (error: any) {

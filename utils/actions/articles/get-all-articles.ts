@@ -1,8 +1,15 @@
 "use server";
+import { auth } from "@clerk/nextjs/server";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
 export const getAllArticles = async () => {
+  const { userId } = auth();
+
+  if (!userId) {
+    return null;
+  }
+
   const cookieStore = cookies();
 
   const supabase = createServerClient(
@@ -20,7 +27,8 @@ export const getAllArticles = async () => {
   try {
     const { data, error } = await supabase
       .from("blog")
-      .select("*, category(*)");
+      .select("*, category(*), author(*)")
+      .eq("user_id", userId);
 
     if (error?.code) return error;
 
