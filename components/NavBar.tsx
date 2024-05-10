@@ -10,7 +10,7 @@ import {
 import { cn } from "@/lib/utils"
 import { useAuth } from "@clerk/nextjs"
 import { Dialog, DialogClose } from "@radix-ui/react-dialog"
-import { Rocket } from "lucide-react"
+import { BookOpen } from 'lucide-react';
 import Link from "next/link"
 import * as React from "react"
 import { GiHamburgerMenu } from "react-icons/gi"
@@ -53,15 +53,8 @@ export function NavBar() {
             <NavigationMenu>
                 <NavigationMenuList className="max-[825px]:hidden ">
                     <Link href="/" className="pl-2">
-                        <Rocket />
+                        <BookOpen />
                     </Link>
-                    <NavigationMenuItem>
-                        <Link href="/cms" legacyBehavior passHref className="cursor-pointer">
-                            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                                Dashboard
-                            </NavigationMenuLink>
-                        </Link>
-                    </NavigationMenuItem>
                 </NavigationMenuList>
             </NavigationMenu>
             <div className="flex items-center gap-3">
