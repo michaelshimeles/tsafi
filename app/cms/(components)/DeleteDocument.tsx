@@ -11,15 +11,15 @@ import {
 import { deleteDocument } from '@/utils/actions/articles/delete-document'
 import { Trash } from 'lucide-react'
 import { useState } from 'react'
-
+import { useRouter } from 'next/navigation'
 export default function DeleteDocument({ id }: { id: string }) {
   const [open, setOpen] = useState<boolean>(false);
-
+  const router = useRouter()
 
   return (
     <Dialog open={open} onOpenChange={setOpen} >
       <DialogTrigger asChild>
-        <Trash className='w-4 h-4' />
+        <Button>Delete</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -33,6 +33,7 @@ export default function DeleteDocument({ id }: { id: string }) {
             const response = await deleteDocument(id)
             console.log('response', response)
             setOpen(false)
+            router.push("/cms/documents")
             return response
           } catch (error) {
             console.log('error', error)

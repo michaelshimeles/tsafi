@@ -9,6 +9,7 @@ import { ImageIcon } from 'lucide-react';
 import { useCallback, useEffect } from 'react';
 import { SubmitDocument } from './(components)/SubmitDocument';
 import "./styles.scss";
+import DeleteDocument from '../../(components)/DeleteDocument';
 
 const MenuBar = ({ editor }: any) => {
 
@@ -235,9 +236,12 @@ export default function DocumentEditor({ params }: { params: { id: string } }) {
 
   return (
     <div className='flex flex-col items-end w-full'>
-      <a href="/cms/documents">
-        <Button>Back</Button>
-      </a>
+      <div className='flex justify-center items-center gap-3'>
+        <DeleteDocument id={params?.id} />
+        <a href="/cms/documents">
+          <Button>Back</Button>
+        </a>
+      </div>
       <div className="p-4 border rounded mt-5">
         <div className='flex pb-3 my-7'>
           <h1 className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-5xl">
