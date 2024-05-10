@@ -28,6 +28,14 @@ const nextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: '/',
+        destination: 'https://michaelshimeles.com/test',
+      },
+    ]
+  },
 };
 
 module.exports = nextConfig

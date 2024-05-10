@@ -1,9 +1,16 @@
 "use server";
+import { auth } from "@clerk/nextjs/server";
 import { createServerClient } from "@supabase/ssr";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
 export const createDocument = async (title: string) => {
+  const { userId } = auth();
+
+  if (!userId) {
+    return null;
+  }
+
   const cookieStore = cookies();
 
   const supabase = createServerClient(
@@ -21,12 +28,15 @@ export const createDocument = async (title: string) => {
   try {
     const { data, error } = await supabase
       .from("documents")
-      .insert([{ title }])
+      .insert([{ title, user_id: userId }])
       .select();
+
+    console.log("d", data);
+    console.log("error", error);
 
     if (error?.code) return error;
 
-    revalidatePath('/cms/documents')
+    revalidatePath("/cms/documents");
 
     return data;
   } catch (error: any) {
