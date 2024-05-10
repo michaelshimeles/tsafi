@@ -234,48 +234,55 @@ export default function DocumentEditor({ params }: { params: { id: string } }) {
   }, [editor])
 
   return (
-    <div className="p-4 border rounded mt-5">
-      <div className='flex pb-3 my-7'>
-        <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-          {data?.[0]?.title}
-        </h1>
+    <div className='flex flex-col items-end w-full'>
+      <a href="/cms/documents">
+        <Button>Back</Button>
+      </a>
+      <div className="p-4 border rounded mt-5">
+        <div className='flex pb-3 my-7'>
+          <h1 className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-5xl">
+            {data?.[0]?.title}
+          </h1>
+        </div>
+        <MenuBar editor={editor} />
+        <BubbleMenu editor={editor!} tippyOptions={{ duration: 100 }}>
+          <button
+            onClick={() => editor?.chain()?.focus()?.toggleBold()?.run()}
+            className={editor?.isActive('bold') ? 'is-active border rounded bg-black text-white border-black px-1 mx-1' : 'border-black px-1 border rounded bg-white'}
+          >
+            bold
+          </button>
+          <button
+            onClick={() => editor?.chain().focus().toggleItalic().run()}
+            className={editor?.isActive('italic') ? 'is-active border rounded bg-black text-white border-black px-1 mx-1' : 'border-black px-1 border rounded bg-white mx-1'}
+          >
+            italic
+          </button>
+          <button
+            onClick={() => editor?.chain().focus().toggleStrike().run()}
+            className={editor?.isActive('strike') ? 'is-active border rounded bg-black text-white border-black px-1 mx-1' : 'border-black px-1 border rounded bg-white'}
+          >
+            strike
+          </button>
+          <button onClick={setLink} className={editor?.isActive('link') ? 'is-active border rounded bg-black text-white border-black px-1 mx-1' : 'border-black px-1 mx-1 border rounded bg-white'}>
+            link
+          </button>
+          <button
+            className={editor?.isActive('link') ? 'is-active border rounded bg-blue-700 text-white border-black px-1 mx-1' : 'border-black px-1 mx-1 border rounded bg-white'}
+            onClick={() => editor?.chain().focus().unsetLink().run()}
+            disabled={!editor?.isActive('link')}
+          >
+            unlink
+          </button>
+        </BubbleMenu>
+        <div className="tiptap-editor">
+          <EditorContent editor={editor} />
+        </div>
+        <div className="mt-4 w-full">
+          <SubmitDocument html={html} id={params?.id} title={data?.[0]?.title} />
+        </div>
       </div>
-      <MenuBar editor={editor} />
-      <BubbleMenu editor={editor!} tippyOptions={{ duration: 100 }}>
-        <button
-          onClick={() => editor?.chain()?.focus()?.toggleBold()?.run()}
-          className={editor?.isActive('bold') ? 'is-active border rounded bg-black text-white border-black px-1 mx-1' : 'border-black px-1 border rounded bg-white'}
-        >
-          bold
-        </button>
-        <button
-          onClick={() => editor?.chain().focus().toggleItalic().run()}
-          className={editor?.isActive('italic') ? 'is-active border rounded bg-black text-white border-black px-1 mx-1' : 'border-black px-1 border rounded bg-white mx-1'}
-        >
-          italic
-        </button>
-        <button
-          onClick={() => editor?.chain().focus().toggleStrike().run()}
-          className={editor?.isActive('strike') ? 'is-active border rounded bg-black text-white border-black px-1 mx-1' : 'border-black px-1 border rounded bg-white'}
-        >
-          strike
-        </button>
-        <button onClick={setLink} className={editor?.isActive('link') ? 'is-active border rounded bg-black text-white border-black px-1 mx-1' : 'border-black px-1 mx-1 border rounded bg-white'}>
-          link
-        </button>
-        <button
-          className={editor?.isActive('link') ? 'is-active border rounded bg-blue-700 text-white border-black px-1 mx-1' : 'border-black px-1 mx-1 border rounded bg-white'}
-          onClick={() => editor?.chain().focus().unsetLink().run()}
-          disabled={!editor?.isActive('link')}
-        >
-          unlink
-        </button>
-      </BubbleMenu>
-      <div className="tiptap-editor">
-        <EditorContent editor={editor}/>
-      </div>
-      <div className="mt-4 w-full">
-        <SubmitDocument html={html} id={params?.id} title={data?.[0]?.title} />
-      </div>
-    </div>)
+    </div>
+
+  )
 }

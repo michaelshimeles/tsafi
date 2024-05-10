@@ -3,13 +3,10 @@
 import { Separator } from '@radix-ui/react-dropdown-menu'
 import clsx from 'clsx'
 import {
-  Book,
   BookA,
   BookCheck,
   Home,
-  Network,
   NetworkIcon,
-  Paperclip,
   Pen,
   Settings,
   Table
@@ -22,8 +19,8 @@ export default function DashboardNav() {
 
   return (
     <div className="hidden border-r bg-muted/40 md:block ">
-      <div className="flex h-full max-h-screen flex-col gap-2 bg-black text-white">
-        <div className="flex  items-center  border-b border-gray-700 h-[60px] px-6">
+      <div className="flex h-full max-h-screen flex-col gap-2 ">
+        <div className="flex  items-center  border-b h-[60px] px-6">
           <Link href="/" className="flex items-center gap-2 font-semibold">
             <span className="text-lg">CMS Inc</span>
           </Link>
@@ -31,8 +28,8 @@ export default function DashboardNav() {
         <div className="flex-1">
           <nav className="grid items-start text-sm font-medium px-4 gap-[0.2rem]">
             <Link
-              className={clsx("flex items-center gap-2 rounded-lg px-3 py-2 text-white transition-all hover:text-gray-100 hover:bg-gray-800", {
-                "flex items-center gap-2 rounded-lg bg-gray-900 px-3 py-2 text-white transition-all dark:bg-gray-100 dark:text-gray-50": pathname === "/cms"
+              className={clsx("flex items-center gap-2 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50", {
+                "flex items-center gap-2 rounded-lg bg-gray-100 px-3 py-2 text-gray-900  transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50": pathname === "/cms"
               })}
               href="/cms"
             >
@@ -41,8 +38,8 @@ export default function DashboardNav() {
               Dashboard
             </Link>
             <Link
-              className={clsx("flex items-center gap-2 rounded-lg px-3 py-2 text-white transition-all hover:text-gray-100 hover:bg-gray-800", {
-                "flex items-center gap-2 rounded-lg bg-gray-900 px-3 py-2 text-white transition-all dark:bg-gray-100 dark:text-gray-50": pathname === "/cms/documents" || pathname.includes("/cms/documents/")
+              className={clsx("flex items-center gap-2 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50", {
+                "flex items-center gap-2 rounded-lg bg-gray-100 px-3 py-2 text-gray-900  transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50": pathname === "/cms/documents"
               })}
               href="/cms/documents"
             >
@@ -50,8 +47,8 @@ export default function DashboardNav() {
               My Documents
             </Link>
             <Link
-              className={clsx("flex items-center gap-2 rounded-lg px-3 py-2 text-white transition-all hover:text-gray-100 hover:bg-gray-800", {
-                "flex items-center gap-2 rounded-lg bg-gray-900 px-3 py-2 text-white transition-all dark:bg-gray-100 dark:text-gray-50": pathname === "/cms/publish"
+              className={clsx("flex items-center gap-2 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50", {
+                "flex items-center gap-2 rounded-lg bg-gray-100 px-3 py-2 text-gray-900  transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50": pathname === "/cms/publish"
               })}
               href="/cms/publish"
             >
@@ -59,8 +56,8 @@ export default function DashboardNav() {
               Publish Articles{" "}
             </Link>
             <Link
-              className={clsx("flex items-center gap-2 rounded-lg px-3 py-2 text-white transition-all hover:text-gray-100 hover:bg-gray-800", {
-                "flex items-center gap-2 rounded-lg bg-gray-900 px-3 py-2 text-white transition-all dark:bg-gray-100 dark:text-gray-50": pathname === "/cms/author"
+              className={clsx("flex items-center gap-2 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50", {
+                "flex items-center gap-2 rounded-lg bg-gray-100 px-3 py-2 text-gray-900  transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50": pathname === "/cms/author"
               })}
               href="/cms/author"
             >
@@ -68,8 +65,8 @@ export default function DashboardNav() {
               Create Author{" "}
             </Link>
             <Link
-              className={clsx("flex items-center gap-2 rounded-lg px-3 py-2 text-white transition-all hover:text-gray-100 hover:bg-gray-800", {
-                "flex items-center gap-2 rounded-lg bg-gray-900 px-3 py-2 text-white transition-all dark:bg-gray-100 dark:text-gray-50": pathname === "/cms/category"
+              className={clsx("flex items-center gap-2 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50", {
+                "flex items-center gap-2 rounded-lg bg-gray-100 px-3 py-2 text-gray-900  transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50": pathname === "/cms/category"
               })}
               href="/cms/category"
             >
@@ -78,8 +75,8 @@ export default function DashboardNav() {
             </Link>
             <Separator className="my-3" />
             <Link
-              className={clsx("flex items-center gap-2 rounded-lg px-3 py-2 text-white transition-all hover:text-gray-100 hover:bg-gray-800", {
-                "flex items-center gap-2 rounded-lg bg-gray-900 px-3 py-2 text-white transition-all dark:bg-gray-100 dark:text-gray-50": pathname === "/cms/api"
+              className={clsx("flex items-center gap-2 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50", {
+                "flex items-center gap-2 rounded-lg bg-gray-100 px-3 py-2 text-gray-900  transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50": pathname === "/cms/api"
               })}
               href="/cms/api"
             >
@@ -87,8 +84,8 @@ export default function DashboardNav() {
               API{" "}
             </Link>
             <Link
-              className={clsx("flex items-center gap-2 rounded-lg px-3 py-2 text-white transition-all hover:text-gray-100 hover:bg-gray-800", {
-                "flex items-center gap-2 rounded-lg bg-gray-900 px-3 py-2 text-white transition-all dark:bg-gray-100 dark:text-gray-50": pathname === "/cms/settings"
+              className={clsx("flex items-center gap-2 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50", {
+                "flex items-center gap-2 rounded-lg bg-gray-100 px-3 py-2 text-gray-900  transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50": pathname === "/cms/settings"
               })}
               href="/cms/settings"
             >

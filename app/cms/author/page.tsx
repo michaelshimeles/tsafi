@@ -92,17 +92,26 @@ export default function Author() {
 
             <div className="flex flex-col justify-center items-start w-full gap-3">
               <UploadButton
+                appearance={{
+                  button:
+                    "ut-ready:bg-green-500 ut-uploading:cursor-not-allowed rounded-r-none bg-red-500 bg-none after:bg-orange-400 px-5",
+                  container: "w-max flex-row rounded-md border-cyan-300 bg-slate-800",
+                  allowedContent:
+                    "flex h-8 flex-col items-center justify-center px-2 text-white",
+                }}
                 endpoint="imageUploader"
                 onClientUploadComplete={(res) => {
                   // Do something with the response
                   console.log("Files: ", res);
                   setImageUploadUrl(res?.[0]?.url)
+                  alert(`Image uploaded,`)
                 }}
                 onUploadError={(error: Error) => {
                   // Do something with the error.
                   alert(`ERROR! ${error.message}`);
                 }}
               />
+
             </div>
             <Button type="submit">Submit</Button>
           </form>
