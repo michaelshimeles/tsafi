@@ -12,10 +12,10 @@ export default async function CMS() {
   return (
     <main className="flex w-full mt-[1rem] flex-col items-start justify-between ">
       <h1 className="scroll-m-20 font-semibold tracking-tight text-4xl">
-        Blogs
+        Articles
       </h1>
       <div className="flex flex-wrap justify-start items-center gap-3 mt-[1rem] mb-[5rem] w-full">
-        {response?.map((info: any) => (
+        {response?.length > 0 ? response?.map((info: any) => (
           <Link href={`/cms/preview/${info?.slug}`} key={info?.id}>
             <article
               key={info?.id}
@@ -44,7 +44,24 @@ export default async function CMS() {
             </article>
           </Link>
 
-        ))}
+        ))
+          :
+          <main className="flex flex-col gap-2 lg:gap-2 min-h-[80vh] w-full">
+            <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
+              <div className="flex flex-col items-center text-center">
+                <h3 className="text-2xl font-bold tracking-tight">
+                  You have no articles
+                </h3>
+                <p className="text-sm text-muted-foreground mb-3">
+                  Articles will show here once you&apos;ve published articles
+                </p>
+                <Link href="/cms/documents">
+                  <Button>Create a document</Button>
+                </Link>
+              </div>
+            </div>
+          </main>
+        }
       </div>
     </main>
   )
