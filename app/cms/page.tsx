@@ -1,15 +1,23 @@
 
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import { getAllArticles } from "@/utils/actions/articles/get-all-articles"
 import Image from "next/image"
-import Link from "next/link"
+
 export default async function CMS() {
   const response = await getAllArticles()
   return (
-    <main className="flex items-center w-full flex-wrap justify-start gap-3 ">
-      {/* {response?.map((info: any) => (
-        <Link key={info?.id} href={`/blog/${info?.slug}`}>
+    <main className="flex w-full mt-[1rem] flex-col items-start justify-between ">
+      <h1 className="scroll-m-20 font-semibold tracking-tight text-4xl">
+        Published Blogs
+      </h1>
+      <div className="flex justify-end w-full">
+        <Button>Publish</Button>
+      </div>
+      <div className="flex flex-col gap-3 mb-[5rem] w-full">
+        {response?.map((info: any) => (
           <article
+            key={info?.id}
             className="flex flex-col space-y-2 p-4 rounded-md border max-w-[350px]"
           >
             <Image
@@ -30,8 +38,8 @@ export default async function CMS() {
               {new Date(info?.created_at)?.toLocaleDateString()}
             </p>
           </article>
-        </Link>
-      ))} */}
+        ))}
+      </div>
     </main>
   )
 }

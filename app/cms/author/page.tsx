@@ -22,6 +22,7 @@ import { z } from "zod";
 const FormSchema = z.object({
   name: z.string(),
   instagram: z.string(),
+  twitter: z.string()
 })
 
 export default function Author() {
@@ -31,17 +32,21 @@ export default function Author() {
     defaultValues: {
       name: "",
       instagram: "",
+      twitter: ""
     }
   })
 
   const [imageUploadUrl, setImageUploadUrl] = useState<string>("");
 
 
-
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     console.log('data', data)
     try {
-      const response = await createAuthor(data?.name, data?.instagram, imageUploadUrl!)
+      const response = await createAuthor(data?.name, data?.instagram, data?.twitter, imageUploadUrl!)
+      if (response?.error) {
+        toast("Author creation failed")
+        return
+      }
       toast("Author has been created")
       form.reset()
       return response
@@ -82,6 +87,19 @@ export default function Author() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Enter your instagram username</FormLabel>
+                  <FormControl>
+                    <Input {...field} placeholder="heytorontofoodie" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="twitter"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Enter your twitter username</FormLabel>
                   <FormControl>
                     <Input {...field} placeholder="heytorontofoodie" />
                   </FormControl>

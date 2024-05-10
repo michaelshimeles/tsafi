@@ -10,7 +10,7 @@ datasource db {
 
 model user {
   id                Int      @id @default(autoincrement())
-  created_time      DateTime @default(now())
+  created_at        DateTime @default(now())
   email             String   @unique
   first_name        String?
   last_name         String?
@@ -19,12 +19,12 @@ model user {
 }
 
 model documents {
-  id           Int      @id @default(autoincrement())
-  created_time DateTime @default(now())
-  document_id  String   @unique @default(uuid())
-  document     String
-  title        String
-  user_id      String
+  id          Int      @id @default(autoincrement())
+  created_at  DateTime @default(now())
+  document_id String   @unique @default(uuid())
+  document    String
+  title       String
+  user_id     String
 }
 
 model category {
@@ -44,16 +44,16 @@ model author {
 }
 
 model blog {
-  id           Int      @id @default(autoincrement())
-  created_time DateTime @default(now())
-  user_id      String
-  blog_html    String
-  image        String
-  image_alt    String
-  category_id  String
-  author_id    String
-  title        String
-  subtitle     String
-  slug         String
-  keywords     String[]
+  id          Int      @id @default(autoincrement())
+  created_at  DateTime @default(now())
+  user_id     String
+  blog_html   String
+  image       String
+  image_alt   String
+  category_id String
+  author_id   String
+  title       String
+  subtitle    String
+  slug        String
+  keywords    String[]
 }

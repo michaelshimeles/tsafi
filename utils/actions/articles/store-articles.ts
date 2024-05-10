@@ -1,4 +1,5 @@
 "use server";
+import { auth } from "@clerk/nextjs/server";
 import { createServerClient } from "@supabase/ssr";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
@@ -14,6 +15,12 @@ export const storeArticles = async (
   image: string,
   image_alt: string
 ) => {
+  const { userId } = auth();
+
+  if (!userId) {
+    return null;
+  }
+
   const cookieStore = cookies();
 
   const keywordArray = keywords?.split(',')
@@ -44,6 +51,7 @@ export const storeArticles = async (
           keywords: keywordArray,
           image,
           image_alt,
+          user_id: userId
         },
       ])
       .select();
