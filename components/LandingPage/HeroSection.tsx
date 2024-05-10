@@ -3,6 +3,8 @@ import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { motion } from 'framer-motion';
+
 export default function HeroSection() {
     return (
         <div className='flex flex-col items-center justify-center mt-[4rem] p-3'>
@@ -22,9 +24,17 @@ export default function HeroSection() {
             </div>
             <div>
                 <div className="relative flex max-w-6xl justify-center overflow-hidden">
-                    <div className='w-full mt-[1rem] p-3'>
-                        <Image src={"/home.png"} alt='' width={900} height={400} className='border border-gray-200 rounded drop-shadow-xl' />
-                    </div>
+                    <motion.div
+                        initial={{ y: -100, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ type: 'spring', stiffness: 100, damping: 3 }}
+                        className="relative flex max-w-6xl justify-center overflow-hidden"
+                    >
+                        <div className='w-full mt-[1rem] p-3'>
+                            <Image src={"/home.png"} alt='' width={900} height={400} className='border border-gray-200 rounded drop-shadow-xl' />
+                        </div>
+                        <div className="from-1% absolute inset-0 bg-gradient-to-t from-white to-35%" />
+                    </motion.div>
                     <div className="from-1% absolute inset-0 bg-gradient-to-t from-white to-35%" />
                 </div>
             </div>
