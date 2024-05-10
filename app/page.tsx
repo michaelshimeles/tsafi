@@ -1,6 +1,5 @@
 import PageWrapper from "@/components/Container/PageWrapper";
 import HeroSection from "@/components/LandingPage/HeroSection";
-import MarketingCards from "@/components/LandingPage/MarketingCards";
 
 export default function Home() {
   return (

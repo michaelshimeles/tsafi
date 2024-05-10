@@ -6,7 +6,7 @@ export default function PageWrapper({ children }: { children: React.ReactNode })
   return (
     <>
     <NavBar />
-    <main className="flex min-w-screen flex-col items-center justify-between pb-[4rem]">
+    <main className="flex min-w-screen min-[825px]:min-h-screen flex-col items-center justify-between pb-[4rem]">
       {children}
     </main>
     <Footer />
