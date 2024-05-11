@@ -4,10 +4,15 @@ import Image from 'next/image';
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { motion } from 'framer-motion';
+import { AnimatedGradientTextComponent } from './AnimatedGradientComponent';
+import { BorderBeam } from '../magicui/border-beam';
 
 export default function HeroSection() {
     return (
-        <div className='flex flex-col items-center justify-center mt-[4rem] p-3'>
+        <div className='flex flex-col items-center justify-center mt-[1.5rem] p-3'>
+            <div className="my-5">
+                <AnimatedGradientTextComponent />
+            </div>
             <h1 className="scroll-m-20 text-4xl sm:text-4xl md:text-6xl font-semibold tracking-tight lg:text-6xl text-center max-w-[1000px]">
                 SupaNext CMS
             </h1>
@@ -30,12 +35,18 @@ export default function HeroSection() {
                         transition={{ type: 'spring', stiffness: 100, damping: 3 }}
                         className="relative flex max-w-6xl justify-center overflow-hidden"
                     >
-                        <div className='w-full mt-[1rem] p-3'>
-                            <Image src={"/home.png"} alt='' width={900} height={400} className='border border-gray-200 rounded drop-shadow-xl' />
+                        <div className="relative flex max-w-6xl justify-center overflow-hidden mt-7">
+                            <div className="relative rounded-xl">
+                                <img
+                                    src="/dash-light.png"
+                                    alt="Hero Image"
+                                    className="block w-[900px] rounded-[inherit] border object-contain shadow-lg dark:hidden"
+                                />
+                                <BorderBeam size={250} duration={12} delay={9} />
+                            </div>
                         </div>
-                        <div className="from-1% absolute inset-0 bg-gradient-to-t from-white to-35%" />
                     </motion.div>
-                    <div className="from-1% absolute inset-0 bg-gradient-to-t from-white to-35%" />
+                    {/* <div className="from-1% absolute inset-0 bg-gradient-to-t from-white to-35%" /> */}
                 </div>
             </div>
 

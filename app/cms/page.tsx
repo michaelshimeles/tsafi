@@ -5,7 +5,6 @@ import { getAllArticles } from "@/utils/actions/articles/get-all-articles"
 import { StopCircle, VerifiedIcon } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { GiCancel, GiCheckMark } from "react-icons/gi"
 
 export default async function CMS() {
   const response = await getAllArticles()
