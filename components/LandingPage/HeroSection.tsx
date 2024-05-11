@@ -38,7 +38,7 @@ export default function HeroSection() {
                         <div className="relative flex max-w-6xl justify-center overflow-hidden mt-7">
                             <div className="relative rounded-xl">
                                 <img
-                                    src="/dash-light.png"
+                                    src="/home.png"
                                     alt="Hero Image"
                                     className="block w-[900px] rounded-[inherit] border object-contain shadow-lg dark:hidden"
                                 />
