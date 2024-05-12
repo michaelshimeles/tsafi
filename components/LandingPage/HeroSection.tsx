@@ -9,7 +9,7 @@ import { BorderBeam } from '../magicui/border-beam';
 
 export default function HeroSection() {
     return (
-        <div className='flex flex-col items-center justify-center mt-[1.5rem] p-3'>
+        <div className='flex flex-col items-center justify-center mt-[1rem] p-3'>
             <div className="my-5">
                 <AnimatedGradientTextComponent />
             </div>

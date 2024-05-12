@@ -34,31 +34,6 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   }
 }
 
-// export async function generateStaticParams() {
-//   try {
-//     const response = await fetch(`https://www.heytorontofoodie.com/api/articles`);
-
-//     if (!response.ok) {
-//       throw new Error(`Failed to fetch articles: ${response.statusText}`);
-//     }
-
-//     const result = await response.json()
-
-//     if (!Array.isArray(result)) {
-//       throw new Error(`Invalid data format received: ${typeof result}`);
-//     }
-
-//     if (result.length === 0) return [];
-
-//     return result.map((post) => ({
-//       slug: post.slug,
-//     }));
-
-//   } catch (error) {
-//     console.error('Error fetching articles:', error);
-//     return [];
-//   }
-// }
 
 export default async function BlogPostPage({ params }: { params: { id: string, slug: string } }) {
 
