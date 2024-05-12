@@ -68,6 +68,10 @@ const config: Config = {
         sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
+        "logo-cloud": {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(calc(-100% - 4rem))" },
+        },
         "border-beam": {
           "100%": {
             "offset-distance": "100%",
@@ -110,6 +114,7 @@ const config: Config = {
         },
       },
       animation: {
+        "logo-cloud": "logo-cloud 30s linear infinite", // Adjust duration and timing as needed for your design.
         gradient: "gradient 8s linear infinite",
         shimmer: "shimmer 8s infinite",
         buttonheartbeat: "buttonheartbeat 2s infinite ease-in-out",
