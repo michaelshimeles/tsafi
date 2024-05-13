@@ -9,7 +9,7 @@ const navigation = {
         },
     ],
     company: [
-        { name: 'Twitter', href: 'https://x.com/rasmickyy' },
+        { name: 'X', href: 'https://x.com/rasmickyy' },
         { name: 'YouTube', href: 'https://www.youtube.com/@rasmic' },
         { name: 'Discord', href: 'https://discord.gg/TRccaehh8n' },
     ],
@@ -30,11 +30,11 @@ const Footer = () => {
                         <div className="space-y-8">
                             <p className='font-semibold'>SupaNext CMS</p>
                             <p className="text-md max-w-xs leading-6 text-gray-700">
-                                I built this because I didn&apos;t want to read the docs of other CMS.
+                                I built this because I didn&apos;t want to read the docs of another CMS.
                             </p>
-                            <div className="flex space-x-6 text-sm text-gray-700">
+                            <Link href="https://x.com/rasmickyy" target='_blank' className="flex space-x-6 text-sm text-gray-700">
                                 <div>Made with ❤️ by Micky.</div>
-                            </div>
+                            </Link>
                         </div>
                         {/* Navigations */}
                         <div className="mt-16 grid grid-cols-2 gap-14 md:grid-cols-2 lg:mt-0 xl:col-span-2">
