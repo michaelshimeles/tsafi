@@ -1,9 +1,6 @@
-import React from 'react'
-import Documents from './(components)/Documents'
 import { getAllDocuments } from '@/utils/actions/articles/get-all-documents'
 import CreateDocument from '../(components)/CreateDocument'
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
+import Documents from './(components)/Documents'
 
 export default async function DocumentsPage() {
 
