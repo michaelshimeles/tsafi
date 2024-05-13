@@ -20,12 +20,12 @@ export default function HeroSection() {
                 An opensource blog CMS built using Nextjs, Supabase & TipTap
             </p>
             <div className="flex gap-3">
-                <Link href="/cms" className="mt-5">
-                    <Button className="animate-buttonheartbeat rounded-md bg-blue-600 text-sm font-semibold text-white">Dashboard</Button>
+                <Link href="/" className="mt-5">
+                    <Button disabled className="animate-buttonheartbeat rounded-md bg-blue-600 text-sm font-semibold text-white">Coming Soon</Button>
                 </Link>
-                <Link href="/methodology" className="mt-5">
+                {/* <Link href="/methodology" className="mt-5">
                     <Button variant="ghost" className="flex gap-1 text-blue-600 hover:text-blue-600 hover:bg-blue-100">YouTube Video<ArrowRight className='w-4 h-4' /></Button>
-                </Link>
+                </Link> */}
             </div>
             <div>
                 <div className="relative flex max-w-6xl justify-center overflow-hidden">
