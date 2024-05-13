@@ -39,7 +39,6 @@ export default function Author() {
 
   const [imageUploadUrl, setImageUploadUrl] = useState<string>("");
 
-
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     console.log('data', data)
     try {
@@ -56,7 +55,6 @@ export default function Author() {
       return error
     }
   }
-
 
   return (
     <main className="flex w-full mt-[1rem] flex-col items-center justify-between ">
@@ -139,7 +137,6 @@ export default function Author() {
             <Button type="submit">Submit</Button>
           </form>
         </Form>
-
       </div>
     </main>
   )

@@ -34,7 +34,6 @@ export default function Category() {
 
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log('data', data)
     try {
       const response = await createCategory(data?.category)
       toast("Category has been created")

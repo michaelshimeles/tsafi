@@ -1,5 +1,3 @@
-// import { userCreate } from "@/utils/db/userCreate";
-// import { userUpdate } from "@/utils/db/userUpdate";
 import { userCreate } from "@/utils/actions/user/user-create";
 import { userUpdate } from "@/utils/actions/user/user-update";
 import { WebhookEvent } from "@clerk/nextjs/server";
@@ -7,7 +5,6 @@ import { headers } from "next/headers";
 import { Webhook } from "svix";
 
 export async function POST(req: Request) {
-  // You can find this in the Clerk Dashboard -> Webhooks -> choose the webhook
   const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET;
 
   if (!WEBHOOK_SECRET) {
@@ -84,5 +81,5 @@ export async function POST(req: Request) {
       throw new Error(error.message);
     }
   }
-  return new Response("", { status: 201 });
+  return new Response("Done", { status: 201 });
 }

@@ -34,7 +34,6 @@ export function SubmitDocument({ html, id, title }: { html: string, id: string, 
     try {
       const result = await storeDocument(data?.title, html, id)
 
-      console.log('r', result)
       setLoading(false)
       toast("Article has been submitted, you can publish the article by going to 'Publish Article' tab", {
         description: new Date().toLocaleTimeString(),

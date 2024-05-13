@@ -17,6 +17,8 @@ export interface Article {
   keywords: string[];
   author: Author;
   category: Category;
+  shareable: boolean;
+  published: boolean;
 }
 
 export interface Author {
@@ -30,4 +32,13 @@ export interface Author {
 export interface Category {
   id: number;
   category: string;
+}
+
+export interface Document {
+  id: number;
+  created_at: string;
+  document_id: string;
+  document: string;
+  title: string;
+  user_id: string;
 }
