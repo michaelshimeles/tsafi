@@ -6,6 +6,7 @@ import Image from "next/image"
 import Link from 'next/link'
 import ReactHtmlParser from 'react-html-parser'
 import ManageArticle from '../(components)/ManageArticle'
+import { transformNode } from '@/utils/transform-node'
 
 export default async function BlogPostPage({ params }: { params: { slug: string } }) {
 
@@ -24,7 +25,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
           <h1 className="scroll-m-20 text-3xl font-bold pt-4 tracking-tight lg:text-3xl">
             {response?.[0]?.title}
           </h1>
-          <div className="mt-4 flex items-center space-x-3">
+          <div className="mt-4 flex items-center space-x-2">
             <Image
               src={response?.[0]?.author?.author_profile_img}
               alt={""}
@@ -36,9 +37,9 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
               <p className="font-medium">
                 {response?.[0]?.author?.author_name}
               </p>
-              <Link href={`https://www.instagram.com/${response?.[0]?.author?.author_instagram}`} target='_blank'>
+              {/* <Link href={response?.[0]?.author?.author_instagram ? `https://www.instagram.com/${response?.[0]?.author?.author_instagram}` : `https://www.x.com/${response?.[0]?.author?.author_twitter}`} target='_blank'>
                 <p className='text-xs text-gray-800 font-semibold hover:underline hover:cursor-pointer'>@{response?.[0]?.author?.author_instagram}</p>
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>
@@ -66,37 +67,3 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
   )
 
 }
-
-const transformNode = (node: any) => {
-  // Applying classes to paragraph tags
-  if (node.type === "tag" && node.name === "p") {
-    let className = "leading-7 mt-6";
-    if (node.attribs.class) {
-      className = `${node.attribs.class} ${className}`;
-    }
-    node.attribs.class = className;
-  }
-
-  // Example for adding classes to anchor tags
-  if (node.type === "tag" && node.name === "a") {
-    node.attribs.class =
-      "font-medium text-primary underline underline-offset-4";
-  }
-
-  // Add more conditions for other tags as needed
-  // Example for adding classes to anchor tags
-  if (node.type === "tag" && node.name === "h1") {
-    node.attribs.class =
-      "scroll-m-20 text-2xl font-extrabold pt-4 tracking-tight lg:text-3xl";
-  }
-
-  if (node.type === "tag" && node.name === "h2") {
-    node.attribs.class =
-      "mt-10 scroll-m-20 border-b pb-2 text-xl font-semibold tracking-tight transition-colors first:mt-0";
-  }
-
-  if (node.type === "tag" && node.name === "h3") {
-    node.attribs.class =
-      "mt-8 scroll-m-20 text-lg font-semibold tracking-tight";
-  }
-};
