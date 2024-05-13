@@ -1,19 +1,21 @@
-import { FileText } from 'lucide-react';
+import { FileText, Timer } from 'lucide-react';
 import Link from 'next/link';
 
 export default async function Documents({ info }: any) {
 
   return (
     <Link href={`/cms/documents/${info?.document_id}`}>
-      <div className='flex flex-col gap-2 border p-4 rounded hover:cursor-pointer hover:bg-gray-100 min-h-[300px] min-w-[250px]'>
-        <div className='flex p-8 border w-full h-full justify-center items-center rounded min-h-[250px]'>
-          <FileText className=' text-blue-600 w-[70px] h-[70px]' />
+      <article
+        className="flex flex-col space-y-2 p-4 rounded-md border hover:border-gray-400"
+      >
+        <div className='flex flex-col w-full justify-between items-start gap-3'>
+          <FileText className=' text-blue-600 w-[5] h-[5]' />
+          <h2 className={`font-bold`}>{info?.title}</h2>
+          <div className="text-xs text-muted-foreground">
+            <span className='flex justify-center items-center gap-1'><Timer className='w-4 h-4' /> {new Date(info?.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' })}, {new Date(info?.created_at!)?.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}</span>
+          </div>
         </div>
-        <div className='flex items-center justify-between w-full'>
-          <p>{info?.title}</p>
-        </div>
-        <p className='text-xs'>{new Date(info?.created_at).toLocaleDateString()}</p>
-      </div>
+      </article>
     </Link>
   )
 }
