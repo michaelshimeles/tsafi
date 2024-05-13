@@ -9,9 +9,9 @@ import {
   DialogTrigger
 } from "@/components/ui/dialog"
 import { deleteDocument } from '@/utils/actions/articles/delete-document'
-import { Trash } from 'lucide-react'
-import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+
 export default function DeleteDocument({ id }: { id: string }) {
   const [open, setOpen] = useState<boolean>(false);
   const router = useRouter()

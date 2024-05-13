@@ -201,7 +201,7 @@ export default function DocumentEditor({ params }: { params: { id: string } }) {
   const editor = useEditor({
     extensions,
     content: "",
-  }) as any
+  })
 
   useEffect(() => {
     if (editor && data?.[0]?.document) {
@@ -283,7 +283,7 @@ export default function DocumentEditor({ params }: { params: { id: string } }) {
           <EditorContent editor={editor} />
         </div>
         <div className="mt-4 w-full">
-          <SubmitDocument html={html} id={params?.id} title={data?.[0]?.title} />
+          <SubmitDocument html={html!} id={params?.id} title={data?.[0]?.title} />
         </div>
       </div>
     </div>

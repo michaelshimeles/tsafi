@@ -1,7 +1,8 @@
 import { FileText, Timer } from 'lucide-react';
 import Link from 'next/link';
+import { Document } from '@/utils/types';
 
-export default async function Documents({ info }: any) {
+export default async function Documents({ info }: { info: Document }) {
 
   return (
     <Link href={`/cms/documents/${info?.document_id}`}>

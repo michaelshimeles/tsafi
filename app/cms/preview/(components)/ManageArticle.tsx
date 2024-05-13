@@ -27,8 +27,17 @@ import { useForm } from 'react-hook-form'
 import { useGetArticleBySlug } from '@/utils/hooks/useGetArticleBySlug'
 import { toast } from 'sonner'
 import { shareArticle } from '@/utils/actions/articles/share-article'
+import { Article } from '@/utils/types'
 
-export default function ManageArticle({ params, response }: any) {
+export default function ManageArticle({ params, response }: {
+  params: {
+    slug: string
+  },
+  response: Article[]
+}) {
+
+  console.log('params', params)
+  console.log('response', response)
   const [open, setOpen] = useState<boolean>(false);
   const [openDelete, setOpenDelete] = useState<boolean>(false);
   const router = useRouter()
