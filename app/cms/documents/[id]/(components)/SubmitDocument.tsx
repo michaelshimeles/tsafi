@@ -13,11 +13,13 @@ import { useGetDocumentById } from "@/utils/hooks/useGetDocumentById";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export function SubmitDocument({ html, id, title }: { html: string, id: string, title: string }) {
   const [loading, setLoading] = useState<boolean>(false);
   const { refetch } = useGetDocumentById(id)
   const [open, setOpen] = useState<boolean>(false);
+  const router = useRouter()
 
   const {
     register,
@@ -34,7 +36,13 @@ export function SubmitDocument({ html, id, title }: { html: string, id: string, 
 
       console.log('r', result)
       setLoading(false)
-      toast("Article has been submitted")
+      toast("Article has been submitted, you can publish the article by going to 'Publish Article' tab", {
+        description: new Date().toLocaleTimeString(),
+        action: {
+          label: "Publish",
+          onClick: () => router.push("/cms/publish"),
+        },
+      })
       refetch()
       setOpen(false)
       reset()

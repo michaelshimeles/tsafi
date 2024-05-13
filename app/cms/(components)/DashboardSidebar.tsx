@@ -53,7 +53,7 @@ export default function DashboardNav() {
               href="/cms/publish"
             >
               <BookA className="h-4 w-4" />
-              Publish Articles{" "}
+              Publish Article
             </Link>
             <Link
               className={clsx("flex items-center gap-2 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50", {
@@ -62,7 +62,7 @@ export default function DashboardNav() {
               href="/cms/author"
             >
               <Pen className="h-4 w-4" />
-              Create Author{" "}
+              Create Author
             </Link>
             <Link
               className={clsx("flex items-center gap-2 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50", {
@@ -71,7 +71,7 @@ export default function DashboardNav() {
               href="/cms/category"
             >
               <Table className="h-4 w-4" />
-              Create Category{" "}
+              Create Category
             </Link>
             <Separator className="my-3" />
             <Link
@@ -81,7 +81,7 @@ export default function DashboardNav() {
               href="/cms/api"
             >
               <NetworkIcon className="h-4 w-4" />
-              API{" "}
+              API
             </Link>
             <Link
               className={clsx("flex items-center gap-2 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50", {
@@ -90,7 +90,7 @@ export default function DashboardNav() {
               href="/cms/settings"
             >
               <Settings className="h-4 w-4" />
-              Settings{" "}
+              Settings
             </Link>
           </nav>
         </div>

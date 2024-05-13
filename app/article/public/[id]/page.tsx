@@ -42,9 +42,6 @@ export default async function Article({ params }: { params: { id: string } }) {
               <p className="font-medium">
                 {data?.[0]?.author?.author_name}
               </p>
-              {/* <Link href={`https://www.instagram.com/${data?.[0]?.author?.author_instagram}`} target='_blank'>
-                <p className='text-xs text-gray-800 font-semibold hover:underline hover:cursor-pointer'>@{data?.[0]?.author?.author_instagram}</p>
-              </Link> */}
             </div>
           </div>
         </div>
@@ -60,7 +57,7 @@ export default async function Article({ params }: { params: { id: string } }) {
           transform: transformNode
         })}
         <Link href='https://cms.rasmic.xyz' target='_blank'>
-          <div className="w-[225px] fixed bg-gradient-to-r  bottom-5 right-5 text-sm p-3 rounded border">
+          <div className="w-[225px] fixed bg-white  bottom-5 right-5 text-sm p-3 rounded border">
             <p className='text-center '>Written on <span className='font-semibold'>SupaNext CMS</span></p>
           </div>
         </Link>

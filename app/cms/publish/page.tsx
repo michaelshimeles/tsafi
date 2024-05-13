@@ -10,6 +10,7 @@ import {
   FormMessage
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { storeArticles } from "@/utils/actions/articles/store-articles";
 import { useGetAllAuthors } from "@/utils/hooks/useGetAllAuthors";
@@ -142,6 +143,7 @@ export default function Publish() {
               />
             </div>
             <div className="flex flex-col justify-center items-start w-full gap-3">
+              <Label>Upload Article Image</Label>
               <UploadButton
                 appearance={{
                   button:
@@ -155,13 +157,17 @@ export default function Publish() {
                   // Do something with the response
                   console.log("Files: ", res);
                   setImageUploadUrl(res?.[0]?.url)
-                  alert(`Image uploaded,`)
+                  toast(`Image uploaded`)
                 }}
                 onUploadError={(error: Error) => {
                   // Do something with the error.
-                  alert(`ERROR! ${error.message}`);
+                  toast(`ERROR! ${error.message}`);
                 }}
               />
+             {imageUploadUrl !== "" && <div className="flex flex-col justify-center items-start w-full gap-3 mt-2">
+                <Label>Image Url</Label>
+                <Input value={imageUploadUrl} />
+              </div>}
             </div>
             <FormField
               control={form.control}

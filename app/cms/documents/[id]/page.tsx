@@ -239,7 +239,7 @@ export default function DocumentEditor({ params }: { params: { id: string } }) {
       <div className='flex justify-center items-center gap-3'>
         <DeleteDocument id={params?.id} />
         <a href="/cms/documents">
-          <Button>Back</Button>
+          <Button variant="outline">Back</Button>
         </a>
       </div>
       <div className="p-4 border rounded mt-5">
