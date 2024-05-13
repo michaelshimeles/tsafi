@@ -34,9 +34,6 @@ export const createCategory = async (category: string) => {
       ])
       .select();
 
-    console.log("err", error);
-    console.log("data", data);
-
     if (error?.code) return error;
 
     return data;

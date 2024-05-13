@@ -56,9 +56,6 @@ export const storeArticles = async (
       ])
       .select();
 
-    console.log("err", error);
-    console.log("data", data);
-
     if (error?.code) return error;
 
     revalidatePath('/cms')

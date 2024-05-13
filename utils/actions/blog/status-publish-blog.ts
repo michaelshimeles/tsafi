@@ -37,9 +37,6 @@ export const statusBlogs = async (slug: string, published: boolean) => {
       .eq("slug", slug)
       .select();
 
-    console.log("err", error);
-    console.log("data", data);
-
     if (error?.code) return error;
 
     revalidatePath("/cms");

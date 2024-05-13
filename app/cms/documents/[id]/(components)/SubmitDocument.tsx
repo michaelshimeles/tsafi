@@ -48,7 +48,6 @@ export function SubmitDocument({ html, id, title }: { html: string, id: string, 
       return result
 
     } catch (error) {
-      console.log("e", error)
       setLoading(false)
       return error
     }

@@ -8,7 +8,6 @@ export async function POST(
   { params }: { params: { slug: string } }
 ) {
   const authorization = headers().get("X-Auth-Key");
-  console.log("params", params);
   try {
     const result = await clerkClient.users.getUser(authorization!);
     const response = await getArticleBySlugApi(params?.slug!, result?.id!);
