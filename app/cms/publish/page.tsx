@@ -155,7 +155,6 @@ export default function Publish() {
                 endpoint="imageUploader"
                 onClientUploadComplete={(res) => {
                   // Do something with the response
-                  console.log("Files: ", res);
                   setImageUploadUrl(res?.[0]?.url)
                   toast(`Image uploaded`)
                 }}

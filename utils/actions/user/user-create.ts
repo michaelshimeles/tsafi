@@ -34,15 +34,11 @@ export const userCreate = async ({
       .from("user")
       .insert([{ email, first_name, last_name, profile_image_url, user_id }])
       .select();
-    console.log("d", data);
-    console.log("e", error);
 
     if (error?.code) return error;
 
     return data;
   } catch (error: any) {
-    console.log("e", error);
-
     return error;
   }
 };

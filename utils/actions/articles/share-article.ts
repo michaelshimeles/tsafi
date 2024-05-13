@@ -41,8 +41,6 @@ export const shareArticle = async (
       .select();
 
     if (error?.code) return error;
-    console.log("err", error);
-    console.log("data", data);
 
     revalidatePath("/cms");
 

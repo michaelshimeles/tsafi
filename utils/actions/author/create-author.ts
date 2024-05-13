@@ -43,9 +43,6 @@ export const createAuthor = async (
       ])
       .select();
 
-    console.log("err", error);
-    console.log("data", data);
-
     if (error?.code)
       return {
         error,

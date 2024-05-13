@@ -25,7 +25,6 @@ export const updateArticle = async (slug: string, blog: string) => {
     }
   );
 
-  console.log("slug", slug);
   try {
     const { data, error } = await supabase
       .from("blog")
@@ -39,8 +38,6 @@ export const updateArticle = async (slug: string, blog: string) => {
       .select();
 
     if (error?.code) return error;
-    console.log("err", error);
-    console.log("data", data);
 
     revalidatePath("/cms");
 
