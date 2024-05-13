@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export function AnimatedGradientTextComponent() {
   return (
-    <Link href="/" className="z-10 flex items-center justify-center">
+    <Link href="/cms" className="z-10 flex items-center justify-center">
       <AnimatedGradientText>
         🎉 <hr className="mx-2 h-4 w-[1px] shrink-0 bg-gray-300" />{" "}
         <span

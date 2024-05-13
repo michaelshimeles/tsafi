@@ -12,6 +12,8 @@ import { Button } from '@/components/ui/button'
 import { statusBlogs } from '@/utils/actions/blog/status-publish-blog'
 import { deleteBlog } from '@/utils/actions/blog/delete-blog'
 import { useRouter } from 'next/navigation'
+import { Edit } from 'lucide-react'
+import Link from 'next/link'
 
 export default function ManageArticle({ params, response }: any) {
   const [open, setOpen] = useState<boolean>(false);
@@ -19,10 +21,13 @@ export default function ManageArticle({ params, response }: any) {
   const router = useRouter()
 
   return (
-    <div className='flex justify-end w-full gap-2'>
+    <div className='flex justify-end items-center w-full gap-2'>
+      <Link href={`/cms/preview/${params?.slug}/edit`}>
+        <Edit />
+      </Link>
       <Dialog open={openDelete} onOpenChange={setOpenDelete} >
         <DialogTrigger asChild>
-          <Button>Delete</Button>
+          <Button size="sm">Delete</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
@@ -31,7 +36,7 @@ export default function ManageArticle({ params, response }: any) {
               Are you sure you want to delete this article?
             </DialogDescription>
           </DialogHeader>
-          <Button type="submit" onClick={async () => {
+          <Button type="submit" size="sm" onClick={async () => {
             await deleteBlog(params?.slug)
             setOpenDelete(false)
             router.push("/cms")

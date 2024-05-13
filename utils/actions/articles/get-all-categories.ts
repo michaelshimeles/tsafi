@@ -31,8 +31,6 @@ export const getAllCategories = async () => {
 
     if (error?.code) return error;
 
-    console.log("error", error);
-
     return data;
   } catch (error: any) {
     return error;

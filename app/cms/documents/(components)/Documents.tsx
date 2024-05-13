@@ -1,6 +1,5 @@
 import { FileText } from 'lucide-react';
 import Link from 'next/link';
-import DeleteDocument from '../../(components)/DeleteDocument';
 
 export default async function Documents({ info }: any) {
 
