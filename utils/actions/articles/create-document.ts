@@ -31,9 +31,6 @@ export const createDocument = async (title: string) => {
       .insert([{ title, user_id: userId }])
       .select();
 
-    console.log("d", data);
-    console.log("error", error);
-
     if (error?.code) return error;
 
     revalidatePath("/cms/documents");

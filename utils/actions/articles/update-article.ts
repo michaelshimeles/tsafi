@@ -1,14 +1,16 @@
 "use server";
 import { auth } from "@clerk/nextjs/server";
 import { createServerClient } from "@supabase/ssr";
+import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
-export const getDocumentById = async (id: string) => {
+export const updateArticle = async (slug: string, blog: string) => {
   const { userId } = auth();
 
   if (!userId) {
     return null;
   }
+
   const cookieStore = cookies();
 
   const supabase = createServerClient(
@@ -23,14 +25,24 @@ export const getDocumentById = async (id: string) => {
     }
   );
 
+  console.log("slug", slug);
   try {
     const { data, error } = await supabase
-      .from("documents")
-      .select("*")
-      .eq("document_id", id)
-      .eq("user_id", userId);
+      .from("blog")
+      .update([
+        {
+          blog_html: blog,
+        },
+      ])
+      .eq("user_id", userId)
+      .eq("slug", slug)
+      .select();
 
     if (error?.code) return error;
+    console.log("err", error);
+    console.log("data", data);
+
+    revalidatePath("/cms");
 
     return data;
   } catch (error: any) {

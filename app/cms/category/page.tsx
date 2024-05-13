@@ -57,7 +57,7 @@ export default function Category() {
           Categories help organize your blogs
         </p>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-3">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="max-w-[600px] space-y-3">
             <FormField
               control={form.control}
               name="category"

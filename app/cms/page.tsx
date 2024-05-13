@@ -55,7 +55,7 @@ export default async function CMS() {
                   Articles will show here once you&apos;ve published articles
                 </p>
                 <Link href="/cms/documents">
-                  <Button>Create a document</Button>
+                  <Button>My Documents</Button>
                 </Link>
               </div>
             </div>

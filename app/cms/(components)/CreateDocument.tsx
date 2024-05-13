@@ -27,7 +27,7 @@ export default function CreateDocument() {
   const onSubmit = async (data: any) => {
     try {
       const response = await createDocument(data?.name)
-
+      console.log('r', response)
       setOpen(false)
       return response
     } catch (error) {
