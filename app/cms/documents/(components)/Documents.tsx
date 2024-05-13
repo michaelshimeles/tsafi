@@ -6,7 +6,7 @@ export default async function Documents({ info }: any) {
   return (
     <Link href={`/cms/documents/${info?.document_id}`}>
       <article
-        className="flex flex-col space-y-2 p-4 rounded-md border hover:border-gray-400"
+        className="flex flex-col space-y-2 p-4 rounded-md border hover:border-gray-400 min-w-[300px]"
       >
         <div className='flex flex-col w-full justify-between items-start gap-3'>
           <FileText className=' text-blue-600 w-[5] h-[5]' />

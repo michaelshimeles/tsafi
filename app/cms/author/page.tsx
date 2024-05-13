@@ -9,6 +9,7 @@ import {
   FormMessage
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { createAuthor } from "@/utils/actions/author/create-author";
 import { UploadButton } from "@/utils/uploadthing";
 import "@blocknote/core/fonts/inter.css";
@@ -109,6 +110,7 @@ export default function Author() {
             />
 
             <div className="flex flex-col justify-center items-start w-full gap-3">
+              <Label>Upload Author Image</Label>
               <UploadButton
                 appearance={{
                   button:
@@ -122,14 +124,17 @@ export default function Author() {
                   // Do something with the response
                   console.log("Files: ", res);
                   setImageUploadUrl(res?.[0]?.url)
-                  alert(`Image uploaded,`)
+                  toast(`Image uploaded`)
                 }}
                 onUploadError={(error: Error) => {
                   // Do something with the error.
-                  alert(`ERROR! ${error.message}`);
+                  toast(`ERROR! ${error.message}`);
                 }}
               />
-
+              {imageUploadUrl !== "" && <div className="flex flex-col justify-center items-start w-full gap-3 mt-2">
+                <Label>Image Url</Label>
+                <Input value={imageUploadUrl} />
+              </div>}
             </div>
             <Button type="submit">Submit</Button>
           </form>
