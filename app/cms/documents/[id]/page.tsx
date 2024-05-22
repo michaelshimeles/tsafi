@@ -1,15 +1,30 @@
 "use client"
 import { Button } from '@/components/ui/button';
+import {
+  Card
+} from "@/components/ui/card";
 import { useGetDocumentById } from '@/utils/hooks/useGetDocumentById';
+import {
+  CodeSandboxLogoIcon,
+  FontBoldIcon,
+  FontItalicIcon,
+  Link1Icon,
+  ListBulletIcon
+} from "@radix-ui/react-icons";
 import Image from '@tiptap/extension-image';
 import Link from '@tiptap/extension-link';
 import { BubbleMenu, EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import { ImageIcon } from 'lucide-react';
+import { Code, ImageIcon, ListOrdered, Quote, Redo, Strikethrough, Undo, Unlink } from 'lucide-react';
 import { useCallback, useEffect } from 'react';
+import DeleteDocument from '../../(components)/DeleteDocument';
 import { SubmitDocument } from './(components)/SubmitDocument';
 import "./styles.scss";
-import DeleteDocument from '../../(components)/DeleteDocument';
+
+import {
+  ToggleGroup,
+  ToggleGroupItem,
+} from "@/components/ui/toggle-group";
 
 const MenuBar = ({ editor }: any) => {
 
@@ -26,141 +41,60 @@ const MenuBar = ({ editor }: any) => {
   }
 
   return (
-    <div className='flex gap-3 flex-wrap border-b pb-3 mb-5'>
-      <Button
-        variant="outline"
-        onClick={() => editor.chain().focus().toggleBold().run()}
-        disabled={
-          !editor.can()
-            .chain()
-            .focus()
-            .toggleBold()
-            .run()
-        }
-        className={editor.isActive('bold') ? 'is-active p-1 border rounded bg-black text-white' : 'p-1 border rounded'}
-      >
-        B
-      </Button>
-      <button onClick={addImage}
-        className={editor.isActive('img') ? 'is-active p-1 border rounded bg-black text-white' : 'p-1 border rounded'}
-      ><ImageIcon /></button>
-      <button
-        onClick={() => editor.chain().focus().toggleItalic().run()}
-        disabled={
-          !editor.can()
-            .chain()
-            .focus()
-            .toggleItalic()
-            .run()
-        }
-        className={editor.isActive('italic') ? 'is-active p-1 border rounded bg-black text-white' : 'p-1 border rounded'}
-      >
-        italic
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleStrike().run()}
-        disabled={
-          !editor.can()
-            .chain()
-            .focus()
-            .toggleStrike()
-            .run()
-        }
-        className={editor.isActive('strike') ? 'is-active p-1 border rounded bg-black text-white' : 'p-1 border rounded'}
-      >
-        strike
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleCode().run()}
-        disabled={
-          !editor.can()
-            .chain()
-            .focus()
-            .toggleCode()
-            .run()
-        }
-        className={editor.isActive('code') ? 'is-active p-1 border rounded bg-black text-white' : 'p-1 border rounded'}
-      >
-        code
-      </button>
-      <button onClick={() => editor.chain().focus().unsetAllMarks().run()} className="p-1 border rounded">
-        clear marks
-      </button>
-      <button onClick={() => editor.chain().focus().clearNodes().run()} className="p-1 border rounded">
-        clear nodes
-      </button>
-      <button
-        onClick={() => editor.chain().focus().setParagraph().run()}
-        className={editor.isActive('paragraph') ? 'is-active p-1 border rounded bg-black text-white' : 'p-1 border rounded'}
-      >
-        paragraph
-      </button>
-      <button onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} className={editor.isActive('heading', { level: 1 }) ? 'is-active p-1 border rounded bg-black text-white' : 'p-1 border rounded'}>
-        h1
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-        className={editor.isActive('heading', { level: 2 }) ? 'is-active p-1 border rounded bg-black text-white' : 'p-1 border rounded'}
-      >
-        h2
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-        className={editor.isActive('heading', { level: 3 }) ? 'is-active p-1 border rounded bg-black text-white' : 'p-1 border rounded'}
-      >
-        h3
-      </button>
-
-      <button
-        onClick={() => editor.chain().focus().toggleBulletList().run()}
-        className={editor.isActive('bulletList') ? 'is-active p-1 border rounded bg-black text-white' : 'p-1 border rounded'}
-      >
-        bullet list
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleOrderedList().run()}
-        className={editor.isActive('orderedList') ? 'is-active p-1 border rounded bg-black text-white' : 'p-1 border rounded'}
-      >
-        ordered list
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-        className={editor.isActive('codeBlock') ? 'is-active p-1 border rounded bg-black text-white' : 'p-1 border rounded'}
-      >
-        code block
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleBlockquote().run()}
-        className={editor.isActive('blockquote') ? 'is-active p-1 border rounded bg-black text-white' : 'p-1 border rounded'}
-      >
-        blockquote
-      </button>
-      <button
-        className="p-1 border rounded hover:cursor-pointer"
-        onClick={() => editor.chain().focus().undo().run()}
-        disabled={
-          !editor.can()
-            .chain()
-            .focus()
-            .undo()
-            .run()
-        }
-      >
-        undo
-      </button>
-      <button
-        className="p-1 border rounded hover:cursor-pointer"
-        onClick={() => editor.chain().focus().redo().run()}
-        disabled={
-          !editor.can()
-            .chain()
-            .focus()
-            .redo()
-            .run()
-        }
-      >
-        redo
-      </button>
+    <div className='flex gap-3 flex-wrap justify-center items-center border rounded px-2 py-2 mb-6 w-full'>
+      <ToggleGroup type="multiple" className='w-full flex justify-start items-center'>
+        <ToggleGroupItem value="bold" aria-label="Toggle bold" onClick={() => editor?.chain()?.focus()?.toggleBold()?.run()}>
+          <FontBoldIcon className="h-4 w-4" />
+        </ToggleGroupItem>
+        <ToggleGroupItem value="image" aria-label="Upload image" onClick={addImage}>
+          <ImageIcon className="h-4 w-4" />
+        </ToggleGroupItem>
+        <ToggleGroupItem value="italic" aria-label="Toggle italic" onClick={() => editor?.chain().focus().toggleItalic().run()}>
+          <FontItalicIcon className="h-4 w-4" />
+        </ToggleGroupItem>
+        <ToggleGroupItem value="paragraph" aria-label="Toggle paragraph" onClick={() => editor.chain().focus().setParagraph().run()}>
+          <div className="h-4 w-4">P</div>
+        </ToggleGroupItem>
+        <ToggleGroupItem value="strike" aria-label="Toggle strikethrough" onClick={() => editor.chain().focus().toggleStrike().run()}>
+          <Strikethrough className="h-4 w-4" />
+        </ToggleGroupItem>
+        <ToggleGroupItem value="code" aria-label="Toggle code" onClick={() => editor.chain().focus().toggleCode().run()}>
+          <Code className="h-4 w-4" />
+        </ToggleGroupItem>
+        {/* <ToggleGroupItem value="clear-marks" aria-label="Clear marks" onClick={() => editor.chain().focus().unsetAllMarks().run()}>
+          clear marks
+        </ToggleGroupItem>
+        <ToggleGroupItem value="clear-nodes" aria-label="Clear nodes" onClick={() => editor.chain().focus().clearNodes().run()}>
+          clear nodes
+        </ToggleGroupItem> */}
+        <ToggleGroupItem value="h1" aria-label="Toggle heading level 1" onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}>
+          h1
+        </ToggleGroupItem>
+        <ToggleGroupItem value="h2" aria-label="Toggle heading level 2" onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}>
+          h2
+        </ToggleGroupItem>
+        <ToggleGroupItem value="h3" aria-label="Toggle heading level 3" onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}>
+          h3
+        </ToggleGroupItem>
+        <ToggleGroupItem value="bullet-list" aria-label="Toggle bullet list" onClick={() => editor.chain().focus().toggleBulletList().run()}>
+          <ListBulletIcon className="h-4 w-4" />
+        </ToggleGroupItem>
+        <ToggleGroupItem value="ordered-list" aria-label="Toggle ordered list" onClick={() => editor.chain().focus().toggleOrderedList().run()}>
+          <ListOrdered className="h-4 w-4" />
+        </ToggleGroupItem>
+        <ToggleGroupItem value="code-block" aria-label="Toggle code block" onClick={() => editor.chain().focus().toggleCodeBlock().run()}>
+          <CodeSandboxLogoIcon className="h-4 w-4" />
+        </ToggleGroupItem>
+        <ToggleGroupItem value="blockquote" aria-label="Toggle blockquote" onClick={() => editor.chain().focus().toggleBlockquote().run()}>
+          <Quote className="h-4 w-4" />
+        </ToggleGroupItem>
+        <ToggleGroupItem value="undo" aria-label="Undo" onClick={() => editor.chain().focus().undo().run()} disabled={!editor.can().chain().focus().undo().run()}>
+          <Undo className="h-4 w-4" />
+        </ToggleGroupItem>
+        <ToggleGroupItem value="redo" aria-label="Redo" onClick={() => editor.chain().focus().redo().run()} disabled={!editor.can().chain().focus().redo().run()}>
+          <Redo className="h-4 w-4" />
+        </ToggleGroupItem>
+      </ToggleGroup>
     </div>
   )
 }
@@ -234,53 +168,54 @@ export default function DocumentEditor({ params }: { params: { id: string } }) {
       .run()
   }, [editor])
 
+  const addImage = useCallback(() => {
+    const url = window.prompt('URL')
+
+    if (url) {
+      editor?.chain().focus().setImage({ src: url }).run()
+    }
+  }, [editor])
+
   return (
     <div className='flex flex-col items-end w-full'>
-      <div className='flex justify-center items-center gap-3'>
-        <DeleteDocument id={params?.id} />
-        <a href="/cms/documents">
-          <Button variant="outline">Back</Button>
-        </a>
-      </div>
-      <div className="p-4 border rounded mt-5">
-        <div className='flex pb-3 my-7'>
-          <h1 className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-5xl">
+      <div className='flex justify-between items-center gap-3 w-full'>
+        <div className='flex justify-center items-center pb-3 my-7'>
+          <h1 className="scroll-m-20 text-3xl font-semibold tracking-tight lg:text-3xl">
             {data?.[0]?.title}
           </h1>
         </div>
+        <div className='flex gap-2'>
+          <DeleteDocument id={params?.id} />
+          <a href="/cms/documents">
+            <Button variant="outline">Back</Button>
+          </a>
+        </div>
+      </div>
+      <div className="p-4 border rounded w-full">
         <MenuBar editor={editor} />
         <BubbleMenu editor={editor!} tippyOptions={{ duration: 100 }}>
-          <button
-            onClick={() => editor?.chain()?.focus()?.toggleBold()?.run()}
-            className={editor?.isActive('bold') ? 'is-active border rounded bg-black text-white border-black px-1 mx-1' : 'border-black px-1 border rounded bg-white'}
-          >
-            bold
-          </button>
-          <button
-            onClick={() => editor?.chain().focus().toggleItalic().run()}
-            className={editor?.isActive('italic') ? 'is-active border rounded bg-black text-white border-black px-1 mx-1' : 'border-black px-1 border rounded bg-white mx-1'}
-          >
-            italic
-          </button>
-          <button
-            onClick={() => editor?.chain().focus().toggleStrike().run()}
-            className={editor?.isActive('strike') ? 'is-active border rounded bg-black text-white border-black px-1 mx-1' : 'border-black px-1 border rounded bg-white'}
-          >
-            strike
-          </button>
-          <button onClick={setLink} className={editor?.isActive('link') ? 'is-active border rounded bg-black text-white border-black px-1 mx-1' : 'border-black px-1 mx-1 border rounded bg-white'}>
-            link
-          </button>
-          <button
-            className={editor?.isActive('link') ? 'is-active border rounded bg-blue-700 text-white border-black px-1 mx-1' : 'border-black px-1 mx-1 border rounded bg-white'}
-            onClick={() => editor?.chain().focus().unsetLink().run()}
-            disabled={!editor?.isActive('link')}
-          >
-            unlink
-          </button>
+          <Card className="w-full p-2">
+            <ToggleGroup type="multiple">
+              <ToggleGroupItem value="bold" aria-label="Toggle bold" onClick={() => editor?.chain()?.focus()?.toggleBold()?.run()}>
+                <FontBoldIcon className="h-4 w-4" />
+              </ToggleGroupItem>
+              <ToggleGroupItem value="italic" aria-label="Toggle italic" onClick={() => editor?.chain().focus().toggleItalic().run()}>
+                <FontItalicIcon className="h-4 w-4" />
+              </ToggleGroupItem>
+              <ToggleGroupItem value="image" aria-label="Upload image" onClick={addImage}>
+                <ImageIcon className="h-4 w-4" />
+              </ToggleGroupItem>
+              <ToggleGroupItem value="link" aria-label="Toggle strikethrough" onClick={setLink}>
+                <Link1Icon className="h-4 w-4" />
+              </ToggleGroupItem>
+              <ToggleGroupItem value="link" aria-label="Toggle strikethrough" onClick={() => editor?.chain().focus().unsetLink().run()}>
+                <Unlink className="h-4 w-4" />
+              </ToggleGroupItem>
+            </ToggleGroup>
+          </Card>
         </BubbleMenu>
-        <div className="tiptap-editor">
-          <EditorContent editor={editor} />
+        <div className="tiptap-editor w-full">
+          <EditorContent editor={editor} className='min-h-[60vh]'/>
         </div>
         <div className="mt-4 w-full">
           <SubmitDocument html={html!} id={params?.id} title={data?.[0]?.title} />
