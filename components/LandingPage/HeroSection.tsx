@@ -23,7 +23,7 @@ export default function HeroSection() {
                 <Link href="/cms" className="mt-5">
                     <Button className="animate-buttonheartbeat rounded-md bg-blue-600 text-sm font-semibold text-white">Dashboard</Button>
                 </Link>
-                <Link href="/methodology" className="mt-5">
+                <Link href="https://www.youtube.com/watch?v=rUD3OYo6ziM" target='_blank' className="mt-5">
                     <Button variant="ghost" className="flex gap-1 text-blue-600 hover:text-blue-600 hover:bg-blue-100">YouTube Video<ArrowRight className='w-4 h-4' /></Button>
                 </Link>
             </div>
