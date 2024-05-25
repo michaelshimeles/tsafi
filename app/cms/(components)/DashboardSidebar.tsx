@@ -22,7 +22,7 @@ export default function DashboardNav() {
       <div className="flex h-full max-h-screen flex-col gap-2 ">
         <div className="flex h-[55px] items-center justify-between border-b px-3 w-full">
           <Link className="flex items-center gap-2 font-semibold ml-1" href="/">
-            <span className="text-lg">SupaNext CMS</span>
+            <span className="text-md">SupaNext CMS</span>
           </Link>
         </div>
         <div className="flex-1 overflow-auto py-2 ">
