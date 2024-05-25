@@ -18,7 +18,7 @@ export default async function CMS() {
           <Link href={`/cms/preview/${info?.slug}`} key={info?.id}>
             <article
               key={info?.id}
-              className="flex flex-col space-y-2 p-4 rounded-md border max-w-[350px]"
+              className="flex flex-col space-y-2 p-[0.75rem] rounded-md border max-w-[350px]"
             >
               <Image
                 src={info?.image}
