@@ -59,7 +59,7 @@ export default function Author() {
   return (
     <main className="flex w-full flex-col p-4 items-center justify-between ">
       <div className="flex flex-col gap-3 mb-[5rem] w-full">
-        <h1 className="scroll-m-20 text-4xl font-semibold tracking-tight lg:text-5xl">
+        <h1 className="scroll-m-20 text-3xl font-semibold tracking-tight">
           Create an Author
         </h1>
         <p className="leading-7">
