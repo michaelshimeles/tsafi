@@ -1,11 +1,14 @@
 import { NavBar } from '@/components/NavBar';
+import { BorderBeam } from '@/components/magicui/border-beam';
 import { Button } from '@/components/ui/button';
 import { readPublicArticle } from '@/utils/actions/articles/read-public-article';
 import { transformNode } from '@/utils/transform-node';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import ReactHtmlParser from 'react-html-parser';
+import WritteBy from '../(components)/WritteBy';
 
 
 export default async function Article({ params }: { params: { id: string } }) {
@@ -56,13 +59,9 @@ export default async function Article({ params }: { params: { id: string } }) {
         {ReactHtmlParser(data?.[0]?.blog_html, {
           transform: transformNode
         })}
-        <Link href='https://cms.rasmic.xyz' target='_blank'>
-          <div className="w-[225px] fixed bg-white  bottom-5 right-5 text-sm p-3 rounded border">
-            <p className='text-center '>Written on <span className='font-semibold'>SupaNext CMS</span></p>
-          </div>
-        </Link>
+        <WritteBy />
       </article>
-    </div>
+    </div >
 
   );
 }
