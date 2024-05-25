@@ -11,7 +11,7 @@ import {
 import { statusBlogs } from '@/utils/actions/blog/status-publish-blog'
 import { deleteBlog } from '@/utils/actions/blog/delete-blog'
 import { useRouter } from 'next/navigation'
-import { ClipboardCheckIcon, Edit, Share } from 'lucide-react'
+import { ClipboardCheckIcon, Delete, DeleteIcon, Edit, Share, Trash } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -70,11 +70,11 @@ export default function ManageArticle({ params, response }: {
       <Popover>
         <PopoverTrigger asChild>
           <Button size="icon" variant="outline">
-            <Share />
+            <Share className='w-4 h-4' />
           </Button>
         </PopoverTrigger>
         {!isPending &&
-          <PopoverContent className="w-80">
+          <PopoverContent className="w-80 dark:bg-opacity-40 dark:bg-black">
             <h4 className="font-medium leading-none">
               Shareability
             </h4>
@@ -107,12 +107,14 @@ export default function ManageArticle({ params, response }: {
 
       <Link href={`/cms/preview/${params?.slug}/edit`}>
         <Button size="icon" variant="outline">
-          <Edit />
+          <Edit className='w-4 h-4' />
         </Button>
       </Link>
       <Dialog open={openDelete} onOpenChange={setOpenDelete} >
         <DialogTrigger asChild>
-          <Button size="sm">Delete</Button>
+          <Button size="icon" variant="outline">
+            <Trash className='w-4 h-4' />
+          </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>

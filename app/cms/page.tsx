@@ -9,7 +9,7 @@ import Link from "next/link"
 export default async function CMS() {
   const response = await getAllArticles()
   return (
-    <main className="flex w-full mt-[1rem] flex-col items-start justify-between ">
+    <main className="flex w-full flex-col items-start p-4 justify-between ">
       <h1 className="scroll-m-20 font-semibold tracking-tight text-4xl">
         Articles
       </h1>
