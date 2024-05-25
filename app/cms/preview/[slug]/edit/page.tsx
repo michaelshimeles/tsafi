@@ -254,27 +254,27 @@ export default function ArticleEditor({ params }: { params: { slug: string } }) 
         <BubbleMenu editor={editor!} tippyOptions={{ duration: 100 }}>
           <button
             onClick={() => editor?.chain()?.focus()?.toggleBold()?.run()}
-            className={editor?.isActive('bold') ? 'is-active border rounded bg-black text-white border-black px-1 mx-1' : 'border-black px-1 border rounded bg-white'}
+            className={editor?.isActive('bold') ? 'is-active border rounded bg-black text-white border-black px-1 mx-1' : 'border-black px-1 border rounded text-black bg-white'}
           >
             bold
           </button>
           <button
             onClick={() => editor?.chain().focus().toggleItalic().run()}
-            className={editor?.isActive('italic') ? 'is-active border rounded bg-black text-white border-black px-1 mx-1' : 'border-black px-1 border rounded bg-white mx-1'}
+            className={editor?.isActive('italic') ? 'is-active border rounded bg-black text-white border-black px-1 mx-1' : 'border-black px-1 border rounded text-black bg-white mx-1'}
           >
             italic
           </button>
           <button
             onClick={() => editor?.chain().focus().toggleStrike().run()}
-            className={editor?.isActive('strike') ? 'is-active border rounded bg-black text-white border-black px-1 mx-1' : 'border-black px-1 border rounded bg-white'}
+            className={editor?.isActive('strike') ? 'is-active border rounded bg-black text-white border-black px-1 mx-1' : 'border-black px-1 border rounded text-black bg-white'}
           >
             strike
           </button>
-          <button onClick={setLink} className={editor?.isActive('link') ? 'is-active border rounded bg-black text-white border-black px-1 mx-1' : 'border-black px-1 mx-1 border rounded bg-white'}>
+          <button onClick={setLink} className={editor?.isActive('link') ? 'is-active border rounded bg-black text-white border-black px-1 mx-1' : 'border-black px-1 mx-1 border rounded text-black bg-white'}>
             link
           </button>
           <button
-            className={editor?.isActive('link') ? 'is-active border rounded bg-blue-700 text-white border-black px-1 mx-1' : 'border-black px-1 mx-1 border rounded bg-white'}
+            className={editor?.isActive('link') ? 'is-active border rounded bg-blue-700 text-white border-black px-1 mx-1' : 'border-black px-1 mx-1 border rounded text-black bg-white'}
             onClick={() => editor?.chain().focus().unsetLink().run()}
             disabled={!editor?.isActive('link')}
           >

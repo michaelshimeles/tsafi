@@ -1,7 +1,7 @@
 export const transformNode = (node: any) => {
   // Applying classes to paragraph tags
   if (node.type === "tag" && node.name === "p") {
-    let className = "leading-7 mt-6";
+    let className = "leading-7 my-5";
     if (node.attribs.class) {
       className = `${node.attribs.class} ${className}`;
     }
