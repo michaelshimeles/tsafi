@@ -21,7 +21,7 @@ export default function HeroSection() {
             </p>
             <div className="flex gap-3">
                 <Link href="/cms" className="mt-5">
-                    <Button className="animate-buttonheartbeat rounded-md bg-blue-600 text-sm font-semibold text-white">Dashboard</Button>
+                    <Button className="animate-buttonheartbeat rounded-md bg-blue-600 hover:bg-blue-400 text-sm font-semibold text-white">Dashboard</Button>
                 </Link>
                 <Link href="https://www.youtube.com/watch?v=rUD3OYo6ziM" target='_blank' className="mt-5">
                     <Button variant="ghost" className="flex gap-1 text-blue-600 hover:text-blue-600 hover:bg-blue-100">YouTube Video<ArrowRight className='w-4 h-4' /></Button>
@@ -40,7 +40,7 @@ export default function HeroSection() {
                                 <img
                                     src="/home.png"
                                     alt="Hero Image"
-                                    className="block w-[900px] rounded-[inherit] border object-contain shadow-lg dark:hidden"
+                                    className="block w-[900px] rounded-[inherit] border object-contain shadow-lg"
                                 />
                                 <BorderBeam size={250} duration={12} delay={9} />
                             </div>

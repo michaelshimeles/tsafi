@@ -29,17 +29,17 @@ const Footer = () => {
                     <div className="flex flex-col justify-between lg:flex-row">
                         <div className="space-y-8">
                             <p className='font-semibold'>SupaNext CMS</p>
-                            <p className="text-md max-w-xs leading-6 text-gray-700">
+                            <p className="text-md max-w-xs leading-6 text-gray-700 dark:text-gray-400">
                                 I built this because I didn&apos;t want to read the docs of another CMS.
                             </p>
-                            <Link href="https://x.com/rasmickyy" target='_blank' className="flex space-x-6 text-sm text-gray-700">
+                            <Link href="https://x.com/rasmickyy" target='_blank' className="flex space-x-6 text-sm dark:text-gray-400 text-gray-700">
                                 <div>Made with ❤️ by Micky.</div>
                             </Link>
                         </div>
                         {/* Navigations */}
                         <div className="mt-16 grid grid-cols-2 gap-14 md:grid-cols-2 lg:mt-0 xl:col-span-2">
                             <div className="md:mt-0">
-                                <h3 className="text-sm font-semibold leading-6 text-gray-900">
+                                <h3 className="text-sm font-semibold leading-6 dark:text-gray-200 text-gray-900">
                                     Code
                                 </h3>
                                 <div className="mt-6 space-y-4">
@@ -49,7 +49,7 @@ const Footer = () => {
                                                 href={item.href}
                                                 target="_blank"
                                                 rel="noreferrer"
-                                                className="text-sm leading-6 text-gray-700 hover:text-gray-900"
+                                                className="text-sm leading-6 dark:text-gray-400 text-gray-700 hover:text-gray-900"
                                             >
                                                 {item.name}
                                             </a>
@@ -59,7 +59,7 @@ const Footer = () => {
                             </div>
                             <div>
                                 <div>
-                                    <h3 className="text-sm font-semibold leading-6 text-gray-900">
+                                    <h3 className="text-sm font-semibold leading-6 dark:text-gray-200 text-gray-900">
                                         Social
                                     </h3>
                                     <div className="mt-6 space-y-4">
@@ -67,7 +67,7 @@ const Footer = () => {
                                             <div key={item.name}>
                                                 <Link
                                                     href={item.href}
-                                                    className="text-sm leading-6 text-gray-700 hover:text-gray-900"
+                                                    className="text-sm leading-6 dark:text-gray-400 text-gray-700 hover:text-gray-900"
                                                 >
                                                     {item.name}
                                                 </Link>
@@ -79,7 +79,7 @@ const Footer = () => {
                         </div>
                     </div>
                     <div className="mt-16 border-t border-gray-900/10 pt-8 sm:mt-20 lg:mt-24">
-                        <p className="text-xs leading-5 text-gray-700">
+                        <p className="text-xs leading-5 dark:text-gray-400 text-gray-700">
                             &copy; 2024 SupaNext CMS. All rights reserved.
                         </p>
                     </div>

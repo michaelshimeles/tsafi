@@ -11,7 +11,7 @@ export default function UserInfo() {
 
   return (
     <div className="flex flex-col gap-4  w-[90%] md:w-[60%] lg:w-[50%] mt-4">
-      <h2 className="mt-10 scroll-m-20 border-b pb-2 w-full text-3xl font-semibold tracking-tight transition-colors first:mt-0">
+      <h2 className="mt-10 scroll-m-20  pb-2 w-full text-3xl font-semibold tracking-tight transition-colors first:mt-0">
         My Profile
       </h2>
       <div className='flex w-full gap-3'>

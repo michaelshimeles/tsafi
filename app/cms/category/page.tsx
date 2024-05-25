@@ -45,10 +45,9 @@ export default function Category() {
     }
   }
 
-
   return (
-    <main className="flex w-full mt-[1rem] flex-col items-center justify-between ">
-      <div className="flex flex-col gap-3 mb-[5rem] w-full px-8">
+    <main className="flex w-full p-4 flex-col items-center justify-between ">
+      <div className="flex flex-col gap-3 mb-[5rem] w-full">
         <h1 className="scroll-m-20 text-4xl font-semibold tracking-tight lg:text-5xl">
           Create a Category
         </h1>

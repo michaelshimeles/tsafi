@@ -17,6 +17,7 @@ import { GiHamburgerMenu } from "react-icons/gi"
 import { Profile } from "./Profile"
 import { Button } from "./ui/button"
 import { SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet"
+import { ModeToggle } from "./ModeToggle"
 
 
 export function NavBar() {
@@ -58,6 +59,7 @@ export function NavBar() {
                 </NavigationMenuList>
             </NavigationMenu>
             <div className="flex items-center gap-3">
+                <ModeToggle />
                 {userId && <Profile />}
             </div>
         </div>
