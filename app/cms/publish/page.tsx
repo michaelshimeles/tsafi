@@ -76,7 +76,7 @@ export default function Publish() {
   return (
     <main className="flex min-w-screen p-4 flex-col items-center justify-between ">
       <div className="flex flex-col gap-3 mb-[5rem] w-full">
-        <h1 className="scroll-m-20 text-4xl font-semibold tracking-tight lg:text-5xl">
+        <h1 className="scroll-m-20 text-3xl font-semibold tracking-tight">
           Publish
         </h1>
         <p className="leading-7">

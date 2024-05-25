@@ -10,7 +10,7 @@ export default async function CMS() {
   const response = await getAllArticles()
   return (
     <main className="flex w-full flex-col items-start p-4 justify-between ">
-      <h1 className="scroll-m-20 font-semibold tracking-tight text-4xl">
+      <h1 className="scroll-m-20 font-semibold tracking-tight text-3xl">
         Articles
       </h1>
       <div className="flex flex-wrap justify-start items-center gap-3 mt-[1rem] mb-[5rem] w-full">
