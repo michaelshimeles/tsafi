@@ -75,15 +75,15 @@ export default function Publish() {
 
   return (
     <main className="flex min-w-screen p-4 flex-col items-center justify-between ">
-      <div className="flex flex-col gap-3 mb-[5rem] w-full">
-        <h1 className="scroll-m-20 text-3xl font-semibold tracking-tight">
+      <div className="flex flex-col mb-[5rem] w-full">
+        <h1 className=" text-3xl font-semibold tracking-tight">
           Publish
         </h1>
-        <p className="leading-7">
+        <p className="leading-7 text-sm dark:text-gray-400">
           Get ready to publish articles that have been written and saved
         </p>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-3">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="max-w-[600px] mt-[0.5rem] space-y-3">
             <FormField
               control={form.control}
               name="title"
@@ -163,7 +163,7 @@ export default function Publish() {
                   toast(`ERROR! ${error.message}`);
                 }}
               />
-             {imageUploadUrl !== "" && <div className="flex flex-col justify-center items-start w-full gap-3 mt-2">
+              {imageUploadUrl !== "" && <div className="flex flex-col justify-center items-start w-full gap-3 mt-2">
                 <Label>Image Url</Label>
                 <Input value={imageUploadUrl} />
               </div>}
@@ -256,7 +256,9 @@ export default function Publish() {
                 </FormItem>
               )}
             />
-            <Button type="submit">Submit</Button>
+            <div className="flex">
+              <Button type="submit" size="sm">Submit</Button>
+            </div>
           </form>
         </Form>
 

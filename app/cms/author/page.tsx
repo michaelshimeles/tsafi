@@ -58,15 +58,15 @@ export default function Author() {
 
   return (
     <main className="flex w-full flex-col p-4 items-center justify-between ">
-      <div className="flex flex-col gap-3 mb-[5rem] w-full">
-        <h1 className="scroll-m-20 text-3xl font-semibold tracking-tight">
+      <div className="flex flex-col mb-[5rem] w-full">
+        <h1 className=" text-3xl font-semibold tracking-tight">
           Create an Author
         </h1>
-        <p className="leading-7">
+        <p className="leading-7 text-sm dark:text-gray-400">
           Create an author to add to your articles
         </p>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="max-w-[600px] space-y-3">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="max-w-[600px] mt-[0.5rem] space-y-3">
             <FormField
               control={form.control}
               name="name"
@@ -133,7 +133,7 @@ export default function Author() {
                 <Input value={imageUploadUrl} />
               </div>}
             </div>
-            <Button type="submit">Submit</Button>
+            <Button type="submit" size="sm">Submit</Button>
           </form>
         </Form>
       </div>

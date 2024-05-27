@@ -11,7 +11,7 @@ import { ModeToggle } from "@/components/ModeToggle"
 export default function DashboardNavMobile() {
   return (
     <div className="flex flex-col">
-      <header className="flex h-14 lg:h-[55px] justify-end items-center gap-2 border-b px-3">
+      <header className="flex h-14 lg:h-[55px] justify-between md:justify-end  items-center gap-2 border-b px-3">
         <Dialog>
           <SheetTrigger className="min-[825px]:hidden p-2 transition">
             <GiHamburgerMenu />
@@ -62,8 +62,10 @@ export default function DashboardNavMobile() {
             </div>
           </SheetContent>
         </Dialog>
-        <Profile />
-        <ModeToggle />
+        <div className="flex gap-2">
+          <Profile />
+          <ModeToggle />
+        </div>
       </header>
     </div>
   )

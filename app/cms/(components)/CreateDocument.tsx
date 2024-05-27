@@ -38,7 +38,7 @@ export default function CreateDocument() {
   return (
     <Dialog open={open} onOpenChange={setOpen} >
       <DialogTrigger asChild>
-        <Button>Create</Button>
+        <Button size="sm" variant="outline">Create</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -57,7 +57,9 @@ export default function CreateDocument() {
               {...register("name", { required: true })}
             />
           </div>
-          <Button type="submit">Save changes</Button>
+          <div className='flex justify-end'>
+            <Button type="submit" size="sm">Save changes</Button>
+          </div>
         </form>
       </DialogContent>
     </Dialog>)

@@ -13,32 +13,34 @@ export default async function CMS() {
       <h1 className="scroll-m-20 font-semibold tracking-tight text-3xl">
         Articles
       </h1>
-      <div className="flex flex-wrap justify-start items-center gap-3 mt-[1rem] mb-[5rem] w-full">
+      <div className="flex flex-wrap justify-start items-center  gap-3 mt-[1.5rem] mb-[5rem] w-full">
         {response?.length > 0 ? response?.map((info: any) => (
           <Link href={`/cms/preview/${info?.slug}`} key={info?.id}>
             <article
               key={info?.id}
-              className="flex flex-col space-y-2 p-[0.75rem] rounded-md border max-w-[350px]"
+              className="flex flex-col space-y-2 border dark:border-zinc-600 border-zinc-200 rounded-md max-w-[350px]"
             >
               <Image
                 src={info?.image}
                 alt={info?.image_alt}
-                width={804}
+                width={900}
                 height={452}
-                className="rounded-md border bg-muted transition-colors"
+                className="rounded-t bg-muted border-b dark:border-zinc-600 border-zinc-200 transition-colors w-full"
               />
-              <div className='flex lg:flex-row w-full justify-between items-center'>
-                <h2 className="text-xl font-bold">{info?.title}</h2>
-                <div>
-                  <Badge>{info?.category?.category}</Badge>
+              <div className="flex flex-col px-[1rem] pt-[0.5rem] pb-[1.5rem]">
+                <div className='flex lg:flex-row w-full justify-between items-center'>
+                  <h2 className="text-lg font-bold">{info?.title}</h2>
                 </div>
-              </div>
-              <p className="text-muted-foreground">{info?.subtitle}</p>
-              <div className="flex justify-between items-center w-full">
-                <p className="text-sm text-muted-foreground">
-                  {new Date(info?.created_at)?.toLocaleDateString()}
-                </p>
-                {info?.published ? <VerifiedIcon /> : <StopCircle />}
+                <p className="text-muted-foreground pt-1 text-sm">{info?.subtitle}</p>
+                <div className="flex justify-between mt-2 items-center w-full">
+                  <p className="text-xs text-muted-foreground">
+                    {new Date(info?.created_at)?.toLocaleDateString()}
+                  </p>
+                  <div className="flex justify-center items-center gap-1">
+                    <Badge>{info?.category?.category}</Badge>
+                    {info?.published ? <VerifiedIcon /> : <StopCircle />}
+                  </div>
+                </div>
               </div>
             </article>
           </Link>

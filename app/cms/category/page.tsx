@@ -47,15 +47,15 @@ export default function Category() {
 
   return (
     <main className="flex w-full p-4 flex-col items-center justify-between ">
-      <div className="flex flex-col gap-3 mb-[5rem] w-full">
-        <h1 className="scroll-m-20 text-3xl font-semibold tracking-tight">
+      <div className="flex flex-col mb-[5rem] w-full">
+        <h1 className=" text-3xl font-semibold tracking-tight">
           Create a Category
         </h1>
-        <p className="leading-7">
+        <p className="leading-7 text-sm dark:text-gray-400">
           Categories help organize your blogs
         </p>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="max-w-[600px] space-y-3">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="max-w-[600px] mt-[0.5rem] space-y-3">
             <FormField
               control={form.control}
               name="category"
@@ -69,8 +69,9 @@ export default function Category() {
                 </FormItem>
               )}
             />
-
-            <Button type="submit">Submit</Button>
+            <div>
+              <Button type="submit" size="sm">Submit</Button>
+            </div>
           </form>
         </Form>
 

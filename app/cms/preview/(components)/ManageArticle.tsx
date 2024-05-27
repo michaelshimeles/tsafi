@@ -69,7 +69,7 @@ export default function ManageArticle({ params, response }: {
     <div className='flex justify-end items-center w-full gap-2'>
       <Popover>
         <PopoverTrigger asChild>
-          <Button size="icon" variant="outline">
+          <Button size="sm" variant="outline">
             <Share className='w-4 h-4' />
           </Button>
         </PopoverTrigger>
@@ -106,13 +106,13 @@ export default function ManageArticle({ params, response }: {
       </Popover>
 
       <Link href={`/cms/preview/${params?.slug}/edit`}>
-        <Button size="icon" variant="outline">
+        <Button size="sm" variant="outline">
           <Edit className='w-4 h-4' />
         </Button>
       </Link>
       <Dialog open={openDelete} onOpenChange={setOpenDelete} >
         <DialogTrigger asChild>
-          <Button size="icon" variant="outline">
+          <Button size="sm" variant="outline">
             <Trash className='w-4 h-4' />
           </Button>
         </DialogTrigger>
@@ -133,7 +133,7 @@ export default function ManageArticle({ params, response }: {
       {response?.[0]?.published ?
         <Dialog open={open} onOpenChange={setOpen} >
           <DialogTrigger asChild>
-            <Button variant="outline">Unpublish</Button>
+            <Button variant="outline" size="sm">Unpublish</Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
@@ -149,7 +149,7 @@ export default function ManageArticle({ params, response }: {
           </DialogContent>
         </Dialog> : <Dialog>
           <DialogTrigger asChild>
-            <Button variant="outline">Publish</Button>
+            <Button variant="outline" size="sm">Publish</Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
