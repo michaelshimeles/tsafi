@@ -35,7 +35,7 @@ export default async function SiteLayout({
           <div className='flex flex-col justify-start items-center gap-2 w-full'>
             <div className='flex gap-3 justify-start items-center w-full'>
               <h1 className="scroll-m-20 text-3xl md:text-4xl tracking-tight font-bold text-center">
-                CMS Site
+                CMS Site {params?.domain}
               </h1>
             </div>
             <div className='flex gap-3 justify-start items-center w-full border-b pb-4'>
