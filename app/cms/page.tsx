@@ -18,7 +18,7 @@ export default async function CMS() {
           <Link href={`/cms/preview/${info?.slug}`} key={info?.id}>
             <article
               key={info?.id}
-              className="flex flex-col space-y-2 border dark:border-zinc-600 border-zinc-200 rounded-md max-w-[350px]"
+              className="flex flex-col space-y-2 border dark:border-zinc-900 border-zinc-200 rounded-md max-w-[350px] hover:shadow-2xl hover:shadow-purple-500/50 transition-shadow duration-300"
             >
               <Image
                 src={info?.image}
