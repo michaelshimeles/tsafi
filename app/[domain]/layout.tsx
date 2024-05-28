@@ -3,6 +3,9 @@ import Link from "next/link";
 import { ReactNode } from "react";
 import { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
+import { readAllArticles } from "@/utils/actions/sites/articles/read-articles";
+import { readSiteDomain } from "@/utils/actions/sites/read-site-domain";
+import { NavBar } from "./_components/NavBar";
 
 
 export default async function SiteLayout({
@@ -27,26 +30,15 @@ export default async function SiteLayout({
   // ) {
   //   return redirect(`https://${data.customDomain}`);
   // }
+  const result = await readSiteDomain(params?.domain)
+
 
   return (
-    <main className="flex min-w-screen flex-col items-center justify-between mt-[5rem]">
-      <div className="flex flex-col mt-[1rem] justify-center items-center w-[90%]">
-        <div className='flex flex-col items-center p-3 w-full'>
-          <div className='flex flex-col justify-start items-center gap-2 w-full'>
-            <div className='flex gap-3 justify-start items-center w-full'>
-              <h1 className="scroll-m-20 text-3xl md:text-4xl tracking-tight font-bold text-center">
-                CMS Site {params?.domain}
-              </h1>
-            </div>
-            <div className='flex gap-3 justify-start items-center w-full border-b pb-4'>
-              <p className="text-gray-500">
-                Building a multi tenant website is difficult
-              </p>
-            </div>
-          </div>
-        </div>
-        {children}
-      </div>
-    </main>
+    <>
+      <NavBar title={result?.[0]?.site_name} description={result?.[0]?.site_description} logo={result?.[0]?.site_logo} />
+        <main className="flex min-w-screen flex-col items-center justify-between mt-[1rem]">
+          {children}
+        </main>
+    </>
   );
 }

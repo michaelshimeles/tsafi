@@ -2,7 +2,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
-export const readSiteDomain = async (domain: string) => {
+export const readArticleSlug = async (slug: string) => {
   const cookieStore = cookies();
 
   const supabase = createServerClient(
@@ -16,12 +16,17 @@ export const readSiteDomain = async (domain: string) => {
       },
     }
   );
-
   try {
     const { data, error } = await supabase
-      .from("sites")
-      .select()
-      .eq("site_subdomain", domain);
+      .from("blog")
+      .select(
+        `*,
+      author (*),
+      category (*)
+      `
+      )
+      .eq("slug", slug)
+      .eq("shareable", true);
 
     if (error?.code) return error;
 

@@ -49,10 +49,10 @@ export default clerkMiddleware(async (auth, req) => {
   // Get the tenant's subdomain from the response
   const tenantSubdomain = response[0]?.site_subdomain;
 
-  // Special case for the root path: rewrite to the tenant's subdomain if necessary
-  if (tenantSubdomain && pathname === "/") {
-    return NextResponse.rewrite(new URL(`/${tenantSubdomain}`, req.url));
+  if (tenantSubdomain) {
+    return NextResponse.rewrite(new URL(`/${tenantSubdomain}${pathname}`, req.url));
   }
+
 
   // Rewrite the URL to the tenant-specific path
   return NextResponse.rewrite(
