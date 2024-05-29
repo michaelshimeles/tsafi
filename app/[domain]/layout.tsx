@@ -24,14 +24,14 @@ export default async function SiteLayout({
 
   return (
     <>
-      <Head>
+      <head>
         <title>{siteName}</title>
-        <meta property="og:site_name" content={siteName} />
-        <meta property="description" content={siteDescription} />
-        <meta property="og:image" content={siteCover} />
-        <meta property="og:url" content={params?.domain + "." + process.env.BASE_DOMAIN}></meta>
+        <meta name="site_name" content={siteName} />
+        <meta name="description" content={siteDescription} />
+        <meta name="image" content={siteCover} />
+        <meta name="url" content={params?.domain + "." + process.env.BASE_DOMAIN}></meta>
         <link rel="icon" href={siteLogo} />
-      </Head >
+      </head >
       <NavBar
         title={siteName}
         description={siteDescription}
