@@ -4,12 +4,7 @@ import { createServerClient } from "@supabase/ssr";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
-export const createSites = async (
-  site_name: string,
-  site_description: string,
-  site_subdomain: string,
-  site_logo: string
-) => {
+export const changeSiteSubdomain = async (site_id: string, site_subdomain: string) => {
   const { userId } = auth();
 
   if (!userId) {
@@ -32,16 +27,13 @@ export const createSites = async (
   try {
     const { data, error } = await supabase
       .from("sites")
-      .insert([
-        {
-          user_id: userId,
-          site_name,
-          site_description,
-          site_subdomain,
-          site_logo,
-        },
-      ])
+      .update({
+        site_subdomain: site_subdomain,
+      })
+      .eq("user_id", userId)
+      .eq("site_id", site_id)
       .select();
+
     if (error?.code) {
       return {
         error,

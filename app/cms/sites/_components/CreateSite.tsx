@@ -51,6 +51,14 @@ export default function CreateSite() {
     try {
       const response = await createSites(data?.site_name, data?.site_description, data?.site_subdomain, logoUploadUrl)
       console.log('response', response)
+      if (response?.error) {
+        if (response?.error?.code === 23505) {
+          toast("Subdomain already exists, try another subdomain")
+          return response
+        }
+        toast(response?.error?.message)
+        return response
+      }
       toast("Site is published")
       form.reset()
       setOpen(false)
