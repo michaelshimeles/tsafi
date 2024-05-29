@@ -13,8 +13,8 @@ export default function HeroSection() {
             <div className="my-5">
                 <AnimatedGradientTextComponent />
             </div>
-            <h1 className="scroll-m-20 text-4xl sm:text-4xl md:text-6xl font-semibold tracking-tight lg:text-6xl text-center max-w-[1000px]">
-                SupaNext CMS
+            <h1 className="scroll-m-20 text-4xl sm:text-4xl md:text-6xl font-semibold tracking-tight lg:text-6xl text-center max-w-[700px]">
+                Launch your blog with tsafi in just a few clicks
             </h1>
             <p className="mx-auto max-w-[700px] text-gray-500 md:text-lg text-center mt-2 dark:text-gray-400">
                 An opensource blog CMS built using Nextjs, Supabase & TipTap

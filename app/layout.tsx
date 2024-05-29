@@ -10,8 +10,8 @@ import { ThemeProvider } from "next-themes"
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'SupaNext CMS',
-  description: 'An opensource blog CMS built using Nextjs, Supabase & TipTap',
+  title: 'tsafi',
+  description: 'An opensource blog site and CMS built using Nextjs, Supabase & TipTap',
 }
 
 export default function RootLayout({

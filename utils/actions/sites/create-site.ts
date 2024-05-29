@@ -1,12 +1,14 @@
 "use server";
 import { auth } from "@clerk/nextjs/server";
 import { createServerClient } from "@supabase/ssr";
+import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
 export const createSites = async (
   site_name: string,
   site_description: string,
-  site_subdomain: string
+  site_subdomain: string,
+  site_logo: string
 ) => {
   const { userId } = auth();
 
@@ -36,13 +38,13 @@ export const createSites = async (
           site_name,
           site_description,
           site_subdomain,
+          site_logo
         },
       ])
       .select();
 
     if (error?.code) return error;
-
-
+    revalidatePath("/cms/sites");
 
     return data;
   } catch (error: any) {

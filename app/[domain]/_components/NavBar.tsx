@@ -11,6 +11,7 @@ import { SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger }
 import { cn } from "@/lib/utils"
 import { Dialog, DialogClose } from "@radix-ui/react-dialog"
 import { BookOpen } from 'lucide-react'
+import Image from "next/image"
 import Link from "next/link"
 import * as React from "react"
 import { GiHamburgerMenu } from "react-icons/gi"
@@ -51,7 +52,7 @@ export function NavBar({
       <NavigationMenu>
         <NavigationMenuList className="max-[825px]:hidden ">
           <Link href="/" className="pl-2">
-            <BookOpen />
+            {logo ? <Image src={logo} width={40} height={40} alt="logo"/>: <p className="font-semibold">{title}</p>}
           </Link>
         </NavigationMenuList>
       </NavigationMenu>

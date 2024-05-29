@@ -18,7 +18,7 @@ export default function DashboardNavMobile() {
           </SheetTrigger>
           <SheetContent side="left">
             <SheetHeader>
-              <SheetTitle>SupaNext CMS</SheetTitle>
+              <SheetTitle>tsafi</SheetTitle>
               <SheetDescription>
                 An opensource blog CMS built using Nextjs, Supabase & TipTap
               </SheetDescription>

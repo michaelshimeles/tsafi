@@ -1,5 +1,11 @@
-"use client"
+"use client";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogTrigger
+} from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -16,7 +22,8 @@ import { storeArticles } from "@/utils/actions/articles/store-articles";
 import { useGetAllAuthors } from "@/utils/hooks/useGetAllAuthors";
 import { useGetAllCategories } from "@/utils/hooks/useGetAllCategories";
 import { useGetAllDocuments } from "@/utils/hooks/useGetAllDocuments";
-import { UploadButton } from "@/utils/uploadthing";
+import { useGetAllSites } from "@/utils/hooks/useGetAllSites";
+import { UploadDropzone } from "@/utils/uploadthing";
 import "@blocknote/core/fonts/inter.css";
 import "@blocknote/react/style.css";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -33,11 +40,11 @@ const FormSchema = z.object({
   image_alt: z.string(),
   author: z.string(),
   category: z.string(),
-  article: z.string()
-})
+  article: z.string(),
+  site_id: z.string(),
+});
 
 export default function Publish() {
-
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -48,37 +55,48 @@ export default function Publish() {
       image_alt: "",
       author: "",
       category: "",
-      article: ""
-    }
-  })
+      article: "",
+      site_id: "",
+    },
+  });
 
-  const [imageUploadUrl, setImageUploadUrl] = useState<string>("")
+  const [imageUploadUrl, setImageUploadUrl] = useState<string>("");
 
-
-  const { data: documentData } = useGetAllDocuments()
-  const { data: authorsData } = useGetAllAuthors()
-  const { data: categoryData } = useGetAllCategories()
+  const { data: documentData } = useGetAllDocuments();
+  const { data: authorsData } = useGetAllAuthors();
+  const { data: categoryData } = useGetAllCategories();
+  const { data: sitesData } = useGetAllSites();
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
-      const response = await storeArticles(data?.title, data?.subtitle, data?.slug, data?.article, data?.author, data?.category, data?.keywords, imageUploadUrl, data?.image_alt)
-      console.log('r', response)
-      toast("Article is published")
-      form.reset()
-      return response
+      const response = await storeArticles(
+        data?.title,
+        data?.subtitle,
+        data?.slug,
+        data?.article,
+        data?.author,
+        data?.category,
+        data?.keywords,
+        imageUploadUrl,
+        data?.image_alt,
+        data?.site_id
+      );
+      console.log("response", response);
+      toast("Article is published");
+      form.reset();
+      return response;
     } catch (error) {
-      console.log('error', error)
-      return error
+      console.log("error", error);
+      return error;
     }
   }
 
+  console.log("sitesData", sitesData);
 
   return (
     <main className="flex min-w-screen p-4 flex-col items-center justify-between ">
       <div className="flex flex-col mb-[5rem] w-full">
-        <h1 className=" text-3xl font-semibold tracking-tight">
-          Publish
-        </h1>
+        <h1 className=" text-3xl font-semibold tracking-tight">Publish</h1>
         <p className="leading-7 text-sm dark:text-gray-400">
           Get ready to publish articles that have been written and saved
         </p>
@@ -91,7 +109,7 @@ export default function Publish() {
                 <FormItem>
                   <FormLabel>Enter title here</FormLabel>
                   <FormControl>
-                    <Input  {...field} />
+                    <Input {...field} />
                   </FormControl>
                   <FormDescription>This is your article title.</FormDescription>
                   <FormMessage />
@@ -120,7 +138,7 @@ export default function Publish() {
                   <FormItem className="w-full">
                     <FormLabel>Enter slug here</FormLabel>
                     <FormControl>
-                      <Input  {...field} />
+                      <Input {...field} />
                     </FormControl>
                     <FormDescription>This is your article slug.</FormDescription>
                     <FormMessage />
@@ -134,7 +152,7 @@ export default function Publish() {
                   <FormItem className="w-full">
                     <FormLabel>Enter keywords here</FormLabel>
                     <FormControl>
-                      <Input  {...field} placeholder="Pizza, Chicken, Food" />
+                      <Input {...field} placeholder="Pizza, Chicken, Food" />
                     </FormControl>
                     <FormDescription>Separate keywords by comma.</FormDescription>
                     <FormMessage />
@@ -142,46 +160,52 @@ export default function Publish() {
                 )}
               />
             </div>
-            <div className="flex flex-col justify-center items-start w-full gap-3">
-              <Label>Upload Article Image</Label>
-              <UploadButton
-                appearance={{
-                  button:
-                    "ut-ready:bg-green-500 ut-uploading:cursor-not-allowed rounded-r-none bg-red-500 bg-none after:bg-orange-400 px-5",
-                  container: "w-max flex-row rounded-md border-cyan-300 bg-slate-800",
-                  allowedContent:
-                    "flex h-8 flex-col items-center justify-center px-2 text-white",
-                }}
-                endpoint="imageUploader"
-                onClientUploadComplete={(res) => {
-                  // Do something with the response
-                  setImageUploadUrl(res?.[0]?.url)
-                  toast(`Image uploaded`)
-                }}
-                onUploadError={(error: Error) => {
-                  // Do something with the error.
-                  toast(`ERROR! ${error.message}`);
-                }}
-              />
-              {imageUploadUrl !== "" && <div className="flex flex-col justify-center items-start w-full gap-3 mt-2">
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button type="button" size="sm">
+                  Upload Cover
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <UploadDropzone
+                  className="p-8"
+                  endpoint="imageUploader"
+                  onClientUploadComplete={(res) => {
+                    setImageUploadUrl(res?.[0]?.url);
+                    toast(`Image uploaded`);
+                  }}
+                  onUploadError={(error: Error) => {
+                    toast(`ERROR! ${error.message}`);
+                  }}
+                />
+                <DialogClose asChild>
+                  <div className="flex justify-end">
+                    <Button type="button" variant="outline">Close</Button>
+                  </div>
+                </DialogClose>
+              </DialogContent>
+            </Dialog>
+
+            {imageUploadUrl !== "" && (
+              <div className="flex flex-col justify-center items-start w-full gap-3 mt-2">
                 <Label>Image Url</Label>
-                <Input value={imageUploadUrl} />
-              </div>}
-            </div>
-            <FormField
-              control={form.control}
-              name="image_alt"
-              render={({ field }) => (
-                <FormItem className="w-full">
-                  <FormLabel>Enter Image alt text</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Image alt text" {...field} />
-                  </FormControl>
-                  <FormDescription>This is your image alt text.</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                <Input value={imageUploadUrl} readOnly />
+                <FormField
+                  control={form.control}
+                  name="image_alt"
+                  render={({ field }) => (
+                    <FormItem className="w-full">
+                      <FormLabel>Enter Image alt text</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Image alt text" {...field} />
+                      </FormControl>
+                      <FormDescription>This is your image alt text.</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            )}
             <div className="flex justify-center items-center w-full gap-3">
               <FormField
                 control={form.control}
@@ -197,9 +221,9 @@ export default function Publish() {
                       </FormControl>
                       <SelectContent>
                         {authorsData?.map((info: any) => (
-                          <div key={info?.id}>
-                            <SelectItem value={info?.author_id}>{info?.author_name}</SelectItem>
-                          </div>
+                          <SelectItem key={info?.id} value={info?.author_id}>
+                            {info?.author_name}
+                          </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
@@ -221,9 +245,9 @@ export default function Publish() {
                       </FormControl>
                       <SelectContent>
                         {categoryData?.map((info: any) => (
-                          <div key={info?.id}>
-                            <SelectItem value={String(info?.id)}>{info?.category}</SelectItem>
-                          </div>
+                          <SelectItem key={info?.id} value={String(info?.id)}>
+                            {info?.category}
+                          </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
@@ -246,9 +270,33 @@ export default function Publish() {
                     </FormControl>
                     <SelectContent>
                       {documentData?.map((info: any) => (
-                        <div key={info?.id}>
-                          <SelectItem value={info?.document}>{info?.title}</SelectItem>
-                        </div>
+                        <SelectItem key={info?.id} value={info?.document}>
+                          {info?.title}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="site_id"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Publish to Site</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select the site" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {sitesData?.map((site: any) => (
+                        <SelectItem key={site?.site_id} value={site?.site_id}>
+                          {site?.site_name}
+                        </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
@@ -257,12 +305,13 @@ export default function Publish() {
               )}
             />
             <div className="flex">
-              <Button type="submit" size="sm">Submit</Button>
+              <Button type="submit" size="sm">
+                Submit
+              </Button>
             </div>
           </form>
         </Form>
-
       </div>
     </main>
-  )
+  );
 }

@@ -1,5 +1,7 @@
 import { UUID } from "crypto";
+import { type ClientUploadedFileData } from "uploadthing/types"
 
+export interface UploadedFile<T = unknown> extends ClientUploadedFileData<T> {}
 export interface Article {
   id: number;
   created_at: string;

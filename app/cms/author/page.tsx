@@ -1,5 +1,6 @@
 "use client"
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogClose, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -11,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createAuthor } from "@/utils/actions/author/create-author";
-import { UploadButton } from "@/utils/uploadthing";
+import { UploadButton, UploadDropzone } from "@/utils/uploadthing";
 import "@blocknote/core/fonts/inter.css";
 import "@blocknote/react/style.css";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -66,7 +67,7 @@ export default function Author() {
           Create an author to add to your articles
         </p>
         <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="max-w-[600px] mt-[0.5rem] space-y-3">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="max-w-[600px] mt-[0.5rem] space-y-3">
             <FormField
               control={form.control}
               name="name"
@@ -106,34 +107,36 @@ export default function Author() {
                 </FormItem>
               )}
             />
-
-            <div className="flex flex-col justify-center items-start w-full gap-3">
-              <Label>Upload Author Image</Label>
-              <UploadButton
-                appearance={{
-                  button:
-                    "ut-ready:bg-green-500 ut-uploading:cursor-not-allowed rounded-r-none bg-red-500 bg-none after:bg-orange-400 px-5",
-                  container: "w-max flex-row rounded-md border-cyan-300 bg-slate-800",
-                  allowedContent:
-                    "flex h-8 flex-col items-center justify-center px-2 text-white",
-                }}
-                endpoint="imageUploader"
-                onClientUploadComplete={(res) => {
-                  // Do something with the response
-                  setImageUploadUrl(res?.[0]?.url)
-                  toast(`Image uploaded`)
-                }}
-                onUploadError={(error: Error) => {
-                  // Do something with the error.
-                  toast(`ERROR! ${error.message}`);
-                }}
-              />
-              {imageUploadUrl !== "" && <div className="flex flex-col justify-center items-start w-full gap-3 mt-2">
-                <Label>Image Url</Label>
-                <Input value={imageUploadUrl} />
-              </div>}
+            <div>
+              <Dialog>
+                <DialogTrigger asChild>
+                  {!imageUploadUrl ? <Button type="button" size="sm" >
+                    Upload Cover
+                  </Button> : <Button type="button" size="sm">
+                    Image Uploaded
+                  </Button>}
+                </DialogTrigger>
+                <DialogContent>
+                  <UploadDropzone
+                    className="p-8"
+                    endpoint="imageUploader"
+                    onClientUploadComplete={(res) => {
+                      setImageUploadUrl(res?.[0]?.url);
+                      toast(`Image uploaded`);
+                    }}
+                    onUploadError={(error: Error) => {
+                      toast(`ERROR! ${error.message}`);
+                    }}
+                  />
+                  <DialogClose asChild>
+                    <div className="flex justify-end">
+                      <Button type="button" variant="outline">Close</Button>
+                    </div>
+                  </DialogClose>
+                </DialogContent>
+              </Dialog>
             </div>
-            <Button type="submit" size="sm">Submit</Button>
+            <Button type="submit" size="sm" variant="outline">Submit</Button>
           </form>
         </Form>
       </div>

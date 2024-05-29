@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import { withUt } from "uploadthing/tw";
 
 const config: Config = {
   // Merging the content arrays and removing duplicates
@@ -131,4 +132,4 @@ const config: Config = {
   ],
 };
 
-export default config;
+export default withUt(config);

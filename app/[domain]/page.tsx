@@ -6,10 +6,10 @@ import { Article } from "@/utils/types"
 import { readSiteDomain } from "@/utils/actions/sites/read-site-domain"
 
 export default async function page({ params }: { params: { domain: string } }) {
-  console.log('params?.domain', params?.domain)
+
   const result = await readSiteDomain(params?.domain)
 
-  const response = await readAllArticles(params?.domain) as Article[]
+  const response = await readAllArticles(params?.domain, result?.[0]?.site_id) as Article[]
 
   return (
     <div className="flex flex-col mt-[1rem] justify-center items-center w-[90%]">

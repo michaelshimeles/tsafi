@@ -3,7 +3,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
-export const readAllArticles = async (domain: string) => {
+export const readAllArticles = async (domain: string, site_id: string) => {
   const cookieStore = cookies();
 
   // Initialize Supabase client
@@ -36,7 +36,8 @@ export const readAllArticles = async (domain: string) => {
     const { data: articles, error: articleError } = await supabase
       .from("blog")
       .select("*, category(*), author(*)")
-      .eq("user_id", siteData.user_id);
+      .eq("user_id", siteData.user_id)
+      .eq("site_id", site_id);
 
     if (articleError) {
       console.error("Error fetching articles:", articleError);

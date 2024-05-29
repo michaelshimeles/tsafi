@@ -12,7 +12,7 @@ export default function ApiPage() {
             <pre className="bg-gray-950 dark:bg-zinc-900 p-4 rounded-md max-w-[600px]">
               <code className="text-gray-50 dark:text-white font-mono">
                 {`const response = await fetch(
-  \`\https://cms.rasmic.xyz/api/blog/all\`,
+  \`\https://tsafi.xyz/api/blog/all\`,
   {
     headers: {
       "X-Auth-Key": API_KEY,
@@ -29,7 +29,7 @@ export default function ApiPage() {
             <pre className="bg-gray-950 dark:bg-zinc-900 p-4 rounded-md max-w-[600px]">
               <code className="text-gray-50 dark:text-white font-mono">
                 {`const response = await fetch(
-  \`\https://cms.rasmic.xyz/api/blog/slugs\`,
+  \`\https://tsafi.xyz/api/blog/slugs\`,
   {
     headers: {
       "X-Auth-Key": API_KEY,
@@ -46,7 +46,7 @@ export default function ApiPage() {
             <pre className="bg-gray-950 dark:bg-zinc-900 p-4 rounded-md max-w-[600px]">
               <code className="text-gray-50 dark:text-white font-mono">
                 {`const response = await fetch(
-  \`\https://cms.rasmic.xyz/api/blog/[slug]\`,
+  \`\https://tsafi.xyz/api/blog/[slug]\`,
   {
     method: "POST",
     headers: {

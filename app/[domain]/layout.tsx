@@ -1,12 +1,8 @@
-import Image from "next/image";
-import Link from "next/link";
-import { ReactNode } from "react";
-import { Metadata } from "next";
-import { notFound, redirect } from "next/navigation";
-import { readAllArticles } from "@/utils/actions/sites/articles/read-articles";
 import { readSiteDomain } from "@/utils/actions/sites/read-site-domain";
+import { notFound } from "next/navigation";
+import { ReactNode } from "react";
 import { NavBar } from "./_components/NavBar";
-
+import Head from "next/head";
 
 export default async function SiteLayout({
   params,
@@ -15,30 +11,35 @@ export default async function SiteLayout({
   params: { domain: string };
   children: ReactNode;
 }) {
-  // const domain = decodeURIComponent(params.domain);
-  // const data = await getSiteData(domain);
+  const result = await readSiteDomain(params?.domain);
 
-  // if (!data) {
-  //   notFound();
-  // }
+  if (!result) {
+    notFound();
+  }
 
-  // // Optional: Redirect to custom domain if it exists
-  // if (
-  //   domain.endsWith(`.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`) &&
-  //   data.customDomain &&
-  //   process.env.REDIRECT_TO_CUSTOM_DOMAIN_IF_EXISTS === "true"
-  // ) {
-  //   return redirect(`https://${data.customDomain}`);
-  // }
-  const result = await readSiteDomain(params?.domain)
-
+  const siteName = result?.[0]?.site_name;
+  const siteDescription = result?.[0]?.site_description;
+  const siteLogo = result?.[0]?.site_logo;
+  const siteCover = result?.[0]?.site_cover_image;
 
   return (
     <>
-      <NavBar title={result?.[0]?.site_name} description={result?.[0]?.site_description} logo={result?.[0]?.site_logo} />
-        <main className="flex min-w-screen flex-col items-center justify-between mt-[1rem]">
-          {children}
-        </main>
+      <Head>
+        <title>{siteName}</title>
+        <meta property="og:site_name" content={siteName} />
+        <meta property="description" content={siteDescription} />
+        <meta property="og:image" content={siteCover} />
+        <meta property="og:url" content={params?.domain + "." + process.env.BASE_DOMAIN}></meta>
+        <link rel="icon" href={siteLogo} />
+      </Head >
+      <NavBar
+        title={siteName}
+        description={siteDescription}
+        logo={siteLogo}
+      />
+      <main className="flex min-w-screen flex-col items-center justify-between mt-[1rem]">
+        {children}
+      </main>
     </>
   );
 }

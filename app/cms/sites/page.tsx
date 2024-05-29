@@ -1,19 +1,17 @@
 import { readSites } from '@/utils/actions/sites/read-sites'
-import CreateSite from './(components)/CreateSite'
 import { Site } from '@/utils/types'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
+import CreateSite from './_components/CreateSite'
 
 export default async function Sites() {
-  redirect("/cms")
 
   const response = await readSites()
 
   return (
     <main className="flex min-w-screen p-4 flex-col items-center justify-between w-full">
-      <div className="flex mb-[2rem] w-full justify-between items-center">
+      <div className="flex mb-[1.5rem] w-full justify-between items-center">
         <h1 className=" text-3xl font-semibold tracking-tight">
-          Sites
+          Site(s)
         </h1>
         <CreateSite />
       </div>
@@ -24,15 +22,17 @@ export default async function Sites() {
             <Link
               key={site?.id}
               href={`/cms/sites/${site?.site_id}`}
+              prefetch={true}
               className="flex flex-col border dark:border-zinc-800 border-zinc-200 rounded-md w-[350px] hover:cursor-pointer hover:shadow-2xl hover:shadow-purple-500/50 transition-shadow duration-300"
             >
-              <div className="flex flex-col px-[1rem] justify-between py-[1rem]">
-                <div className='flex lg:flex-row w-full justify-between items-center'>
+              <div className="flex flex-col px-[1rem] justify-between h-full py-[1rem]">
+                <div className='flex flex-col w-full justify-center items-startxw'>
                   <h2 className="text-lg font-bold">{site?.site_name}</h2>
+                  <p className="text-gray-400 pt-1 text-sm">{site?.site_description}</p>
                 </div>
-                <p className="text-muted-foreground pt-1 text-sm">{site?.site_description}</p>
                 <div className="flex justify-between mt-2 items-center w-full">
-                  <p className="text-xs text-muted-foreground">
+                  <p className='text-xs px-2 py-1 rounded-full border bg-zinc-900 text-gray-300'>{site?.site_subdomain}.{process.env.BASE_DOMAIN}</p>
+                  <p className="text-xs text-muted-foreground ">
                     {new Date(site?.created_at)?.toLocaleDateString()}
                   </p>
                 </div>
