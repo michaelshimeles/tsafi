@@ -25,8 +25,7 @@ export const readArticleSlug = async (slug: string) => {
       category (*)
       `
       )
-      .eq("slug", slug)
-      .eq("shareable", true);
+      .eq("slug", slug);
 
     if (error?.code) return error;
 

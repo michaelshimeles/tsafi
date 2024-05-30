@@ -99,9 +99,9 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
               <p className="font-medium">
                 {response?.[0]?.author?.author_name}
               </p>
-              <Link href={`https://www.instagram.com/${response?.[0]?.author?.author_instagram}`} target='_blank'>
+              {/* <Link href={`https://www.instagram.com/${response?.[0]?.author?.author_instagram}`} target='_blank'>
                 <p className='text-xs text-gray-800 font-semibold hover:underline hover:cursor-pointer'>@{response?.[0]?.author?.author_instagram}</p>
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>

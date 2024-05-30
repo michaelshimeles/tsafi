@@ -14,7 +14,7 @@ export default clerkMiddleware(async (auth, req) => {
   const url = req.nextUrl;
   const pathname = url.pathname;
 
-  // Get hostname (e.g., 'vercel.com', 'test.vercel.app')
+  // Get hostname (e.g., 'mike.com', 'test.mike.com')
   const hostname = req.headers.get("host");
 
   let currentHost;
@@ -50,16 +50,14 @@ export default clerkMiddleware(async (auth, req) => {
   const tenantSubdomain = response[0]?.site_subdomain;
 
   if (tenantSubdomain) {
-    return NextResponse.rewrite(new URL(`/${tenantSubdomain}${pathname}`, req.url));
+    return NextResponse.rewrite(
+      new URL(`/${tenantSubdomain}${pathname}`, req.url)
+    );
   }
-
 
   // Rewrite the URL to the tenant-specific path
   return NextResponse.rewrite(
-    new URL(
-      tenantSubdomain === "/" ? "" : `cms.rasmic.xyz`,
-      req.url
-    )
+    new URL(tenantSubdomain === "/" ? "" : `tsafi.xyz`, req.url)
   );
 });
 
