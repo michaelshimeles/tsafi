@@ -32,14 +32,17 @@ export default async function SiteLayout({
         <meta name="url" content={params?.domain + "." + process.env.BASE_DOMAIN}></meta>
         <link rel="icon" href={siteLogo} />
       </head >
-      <NavBar
-        title={siteName}
-        description={siteDescription}
-        logo={siteLogo}
-      />
-      <main className="flex min-w-screen flex-col items-center justify-between mt-[1rem]">
-        {children}
-      </main>
+      <body>
+
+        <NavBar
+          title={siteName}
+          description={siteDescription}
+          logo={siteLogo}
+        />
+        <main className="flex min-w-screen flex-col items-center justify-between mt-[1rem]">
+          {children}
+        </main>
+      </body>
     </>
   );
 }

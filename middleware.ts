@@ -3,19 +3,16 @@ import { NextResponse } from "next/server";
 import { readSiteDomain } from "./utils/actions/sites/read-site-domain";
 
 // Define the routes that require authentication
-const isProtectedRoute = createRouteMatcher(["/cms(.*)", "/test"]);
+const isProtectedRoute = createRouteMatcher(["/cms(.*)"]);
 
 // Main middleware function
 export default clerkMiddleware(async (auth, req) => {
   // Check if the route is protected and enforce authentication if it is
   if (isProtectedRoute(req)) auth().protect();
 
-  // Get the request URL and pathname
-  const url = req.nextUrl;
-  const pathname = url.pathname;
-
   // Get hostname (e.g., 'mike.com', 'test.mike.com')
   const hostname = req.headers.get("host");
+
 
   let currentHost;
   if (process.env.NODE_ENV === "production") {
@@ -51,7 +48,7 @@ export default clerkMiddleware(async (auth, req) => {
 
   if (tenantSubdomain) {
     return NextResponse.rewrite(
-      new URL(`/${tenantSubdomain}${pathname}`, req.url)
+      new URL(`/${tenantSubdomain}`, req.url)
     );
   }
 
