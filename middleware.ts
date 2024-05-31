@@ -9,10 +9,10 @@ const isProtectedRoute = createRouteMatcher(["/cms(.*)"]);
 export default clerkMiddleware(async (auth, req) => {
   // Check if the route is protected and enforce authentication if it is
   if (isProtectedRoute(req)) auth().protect();
-
+  const url = req.nextUrl;
+  const pathname = url.pathname;
   // Get hostname (e.g., 'mike.com', 'test.mike.com')
   const hostname = req.headers.get("host");
-
 
   let currentHost;
   if (process.env.NODE_ENV === "production") {
@@ -48,7 +48,7 @@ export default clerkMiddleware(async (auth, req) => {
 
   if (tenantSubdomain) {
     return NextResponse.rewrite(
-      new URL(`/${tenantSubdomain}`, req.url)
+      new URL(`/${tenantSubdomain}${pathname}`, req.url)
     );
   }
 

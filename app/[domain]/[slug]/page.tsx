@@ -65,6 +65,7 @@ import ReactHtmlParser from 'react-html-parser'
 
 export default async function BlogPostPage({ params }: { params: { slug: string } }) {
   const response = await readArticleSlug(params?.slug)
+  console.log('r', response)
   return (
     <>
       <article className="container relative max-w-3xl py-6 lg:py-10">
