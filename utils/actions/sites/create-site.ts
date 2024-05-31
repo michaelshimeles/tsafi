@@ -15,6 +15,10 @@ export const createSites = async (
   if (!userId) {
     return null;
   }
+
+  if (site_subdomain.toLocaleLowerCase() === "www") {
+    return null;
+  }
   const cookieStore = cookies();
 
   const supabase = createServerClient(
