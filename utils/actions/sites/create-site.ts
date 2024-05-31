@@ -37,7 +37,7 @@ export const createSites = async (
           user_id: userId,
           site_name,
           site_description,
-          site_subdomain,
+          site_subdomain: site_subdomain.toLowerCase(),
           site_logo,
         },
       ])
