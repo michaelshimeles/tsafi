@@ -57,13 +57,15 @@ export default function CreateSite() {
           return response
         }
 
-        if (response?.message) {
-          toast(response?.message)
-          return response
-        }
         toast(response?.error?.message)
         return response
       }
+
+      if (response?.message) {
+        toast(response?.message)
+        return response
+      }
+
       toast("Site is published")
       form.reset()
       setOpen(false)
