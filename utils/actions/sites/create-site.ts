@@ -10,15 +10,19 @@ export const createSites = async (
   site_subdomain: string,
   site_logo: string
 ) => {
+
+  if (site_subdomain.toLocaleLowerCase() === "www") {
+    return {
+      message: "Not allowed to use www as a subdomain",
+    };
+  }
+
   const { userId } = auth();
 
   if (!userId) {
     return null;
   }
 
-  if (site_subdomain.toLocaleLowerCase() === "www") {
-    return null;
-  }
   const cookieStore = cookies();
 
   const supabase = createServerClient(

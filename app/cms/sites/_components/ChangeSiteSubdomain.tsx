@@ -29,6 +29,11 @@ export default function ChangeSiteSubdomain({ response, site_id }: {
         return response
       }
 
+      if (response?.message) {
+        toast(response?.message)
+        return response
+      }
+
       toast("Site subdomain has been updated")
 
       return response

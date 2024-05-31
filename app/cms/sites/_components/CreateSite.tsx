@@ -56,6 +56,11 @@ export default function CreateSite() {
           toast("Subdomain already exists, try another subdomain")
           return response
         }
+
+        if (response?.message) {
+          toast(response?.message)
+          return response
+        }
         toast(response?.error?.message)
         return response
       }

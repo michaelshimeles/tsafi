@@ -17,7 +17,7 @@ export default async function Sites() {
       </div>
       {response?.length > 0
         ?
-        <div className="flex  gap-2 w-full">
+        <div className="flex flex-wrap  gap-2 w-full">
           {response?.map((site: Site) => (
             <Link
               key={site?.id}

@@ -22,7 +22,7 @@ export default async function CMS() {
         </div>
         {result?.length > 0
           ?
-          <div className="flex gap-2 w-full">
+          <div className="flex flex-wrap   gap-2 w-full">
             {result?.map((site: Site) => (
               <Link
                 key={site?.id}
