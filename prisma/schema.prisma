@@ -44,16 +44,34 @@ model author {
 }
 
 model blog {
-  id          Int      @id @default(autoincrement())
-  created_at  DateTime @default(now())
+  id          Int       @id @default(autoincrement())
+  created_at  DateTime  @default(now())
   user_id     String
-  blog_html   String
-  image       String
-  image_alt   String
-  category_id String
+  blog_html   String?
+  image       String?
+  image_alt   String?
+  category_id Int
   author_id   String
   title       String
   subtitle    String
-  slug        String
+  slug        String    @unique
   keywords    String[]
+  published   Boolean
+  shareable   Boolean
+  site_id     String
+  updated_at  DateTime? @updatedAt
+}
+
+model sites {
+  id                 Int       @id @default(autoincrement())
+  created_at         DateTime  @default(now())
+  user_id            String
+  site_id            String    @unique
+  site_name          String
+  site_description   String?
+  site_subdomain     String
+  site_logo          String?
+  site_cover_image   String?
+  site_custom_domain String?
+  updated_at         DateTime? @updatedAt
 }
