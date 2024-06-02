@@ -1,4 +1,5 @@
 "use client"
+"use client"
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -26,10 +27,16 @@ import { useForm } from "react-hook-form"
 import { toast } from 'sonner'
 import { z } from "zod"
 
+// Define a custom validation regex for subdomain
+const subdomainRegex = /^[a-zA-Z0-9-]+$/;
+
 const FormSchema = z.object({
   site_name: z.string(),
   site_description: z.string(),
-  site_subdomain: z.string(),
+  site_subdomain: z.string()
+    .min(1, "Subdomain is required")
+    .max(63, "Subdomain must be less than 64 characters")
+    .regex(subdomainRegex, "Subdomain must only contain alphanumeric characters or hyphens"),
   site_cover_image: z.string()
 })
 
@@ -58,11 +65,13 @@ export default function CreateSite() {
         }
 
         toast(response?.error?.message)
+        form.reset()
         return response
       }
 
       if (response?.message) {
         toast(response?.message)
+        form.reset()
         return response
       }
 
@@ -72,7 +81,7 @@ export default function CreateSite() {
       return response
     } catch (error) {
       console.log('error', error)
-      toast("Error occured")
+      toast("Error occurred")
       return error
     }
   }
@@ -122,7 +131,7 @@ export default function CreateSite() {
                   <FormLabel>Site Subdomain</FormLabel>
                   <FormControl>
                     <div className='flex justify-center items-center gap-3 border rounded'>
-                      <Input  {...field} className='border-none' placeholder='.tsafi.xyz' />
+                      <Input  {...field} className='border-none' placeholder='' />
                     </div>
                   </FormControl>
                   <FormMessage />

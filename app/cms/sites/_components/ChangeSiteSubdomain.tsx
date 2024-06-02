@@ -10,18 +10,34 @@ import {
 } from "@/components/ui/card"
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { changeSiteName } from '@/utils/actions/sites/settings/change-site-name'
 import { toast } from 'sonner'
 import { changeSiteSubdomain } from '@/utils/actions/sites/settings/change-site-subdomain'
+
+// Define a custom validation regex for subdomain
+const subdomainRegex = /^[a-zA-Z0-9-]+$/;
 
 export default function ChangeSiteSubdomain({ response, site_id }: {
   response: any,
   site_id: string
-},) {
+}) {
   const [siteSubdomain, setSiteSubDomain] = useState(response?.[0]?.site_subdomain || '')
 
   const handleChangeSiteDomain = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    // Validate the subdomain
+    if (!subdomainRegex.test(siteSubdomain)) {
+      toast("Subdomain must only contain alphanumeric characters or hyphens, and must not contain '.', '#', or '$'")
+      setSiteSubDomain(response?.[0]?.site_subdomain)
+      return
+    }
+
+    if (siteSubdomain.length < 1 || siteSubdomain.length > 63) {
+      toast("Subdomain must be between 1 and 63 characters")
+      setSiteSubDomain(response?.[0]?.site_subdomain)
+      return
+    }
+
     try {
       const response = await changeSiteSubdomain(site_id, siteSubdomain)
       if (response?.error) {
@@ -39,7 +55,7 @@ export default function ChangeSiteSubdomain({ response, site_id }: {
       return response
     } catch (error) {
       console.log('error', error)
-      toast("Error occured while trying to update site subdomain")
+      toast("Error occurred while trying to update site subdomain")
 
       return error
     }

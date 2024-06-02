@@ -27,7 +27,7 @@ import { UploadDropzone } from "@/utils/uploadthing";
 import "@blocknote/core/fonts/inter.css";
 import "@blocknote/react/style.css";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -67,6 +67,19 @@ export default function Publish() {
   const { data: categoryData } = useGetAllCategories();
   const { data: sitesData } = useGetAllSites();
 
+  // Function to generate slug from title
+  const generateSlug = (title: string) => {
+    return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  };
+
+  // useEffect to update slug when title changes
+  useEffect(() => {
+    const title = form.watch('title');
+    if (title) {
+      form.setValue('slug', generateSlug(title));
+    }
+  }, [form.watch('title')]);
+
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
       const response = await storeArticles(
@@ -90,8 +103,6 @@ export default function Publish() {
       return error;
     }
   }
-
-  console.log("sitesData", sitesData);
 
   return (
     <main className="flex min-w-screen p-4 flex-col items-center justify-between ">
