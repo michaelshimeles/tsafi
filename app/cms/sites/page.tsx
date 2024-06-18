@@ -1,7 +1,7 @@
-import { readSites } from '@/utils/actions/sites/read-sites'
 import { Site } from '@/utils/types'
 import Link from 'next/link'
 import CreateSite from './_components/CreateSite'
+import { readSites } from '@/utils/functions/sites/read-sites'
 
 export default async function Sites() {
 

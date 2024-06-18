@@ -10,9 +10,8 @@ import {
   FormMessage
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { createAuthor } from "@/utils/actions/author/create-author";
-import { UploadButton, UploadDropzone } from "@/utils/uploadthing";
+import { UploadDropzone } from "@/utils/uploadthing";
 import "@blocknote/core/fonts/inter.css";
 import "@blocknote/react/style.css";
 import { zodResolver } from "@hookform/resolvers/zod";

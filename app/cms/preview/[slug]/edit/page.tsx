@@ -1,17 +1,14 @@
 "use client"
 import { Button } from '@/components/ui/button';
 import { useGetArticleBySlug } from '@/utils/hooks/useGetArticleBySlug';
-import { useGetDocumentById } from '@/utils/hooks/useGetDocumentById';
 import Image from '@tiptap/extension-image';
 import Link from '@tiptap/extension-link';
 import { BubbleMenu, EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { ImageIcon } from 'lucide-react';
 import { useCallback, useEffect } from 'react';
-import "./styles.scss";
-import ManageArticle from '../../(components)/ManageArticle';
-import { SubmitDocument } from '@/app/cms/documents/[id]/(components)/SubmitDocument';
 import { UpdateArticle } from '../../(components)/UpdateArticle';
+import "./styles.scss";
 
 const MenuBar = ({ editor }: any) => {
 

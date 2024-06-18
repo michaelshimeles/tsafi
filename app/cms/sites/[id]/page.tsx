@@ -6,24 +6,16 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { readSiteId } from '@/utils/actions/sites/read-site-id'
+import { Button } from "@/components/ui/button"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ExternalLinkIcon } from 'lucide-react'
 import Link from 'next/link'
-import DeleteSite from "../_components/DeleteSite"
-import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import ChangeSiteName from "../_components/ChangeSiteName"
 import ChangeSiteDescription from "../_components/ChangeSiteDescription"
+import ChangeSiteName from "../_components/ChangeSiteName"
 import ChangeSiteSubdomain from "../_components/ChangeSiteSubdomain"
+import DeleteSite from "../_components/DeleteSite"
+import SetupCustomDomain from "../_components/SetupCustomDomain"
+import { readSiteId } from "@/utils/functions/sites/read-site-id"
 
 export default async function SiteId({ params }: { params: { id: string } }) {
   const response = await readSiteId(params?.id)
@@ -65,6 +57,7 @@ export default async function SiteId({ params }: { params: { id: string } }) {
         <TabsContent value="domain">
           <div className="w-full">
             <ChangeSiteSubdomain response={response} site_id={params?.id}/>
+            <SetupCustomDomain response={response} site_id={params?.id}/>
           </div>
         </TabsContent>
       </Tabs>

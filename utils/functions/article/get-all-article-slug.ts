@@ -1,9 +1,8 @@
-"use server";
 import { auth } from "@clerk/nextjs/server";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
-export const getAllAuthors = async () => {
+export const getAllArticleBySlug = async (slug: string) => {
   const { userId } = auth();
 
   if (!userId) {
@@ -22,11 +21,16 @@ export const getAllAuthors = async () => {
       },
     }
   );
-
   try {
     const { data, error } = await supabase
-      .from("author")
-      .select("*")
+      .from("blog")
+      .select(
+        `*,
+      author (*),
+      category (*)
+      `
+      )
+      .eq("slug", slug)
       .eq("user_id", userId);
 
     if (error?.code) return error;

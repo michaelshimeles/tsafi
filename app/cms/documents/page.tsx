@@ -1,11 +1,10 @@
-import { getAllDocuments } from '@/utils/actions/articles/get-all-documents'
+import { getAllDocuments } from '@/utils/functions/article/get-all-documents'
 import CreateDocument from '../(components)/CreateDocument'
 import Documents from './(components)/Documents'
 
 export default async function DocumentsPage() {
 
   const response = await getAllDocuments()
-
 
   return (
     <div className='flex flex-col gap-3'>

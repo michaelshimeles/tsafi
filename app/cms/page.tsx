@@ -1,8 +1,8 @@
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { getAllArticles } from "@/utils/actions/articles/get-all-articles"
-import { readSites } from "@/utils/actions/sites/read-sites"
+import { getAllArticles } from "@/utils/functions/article/get-all-articles"
+import { readSites } from "@/utils/functions/sites/read-sites"
 import { Site } from "@/utils/types"
 import { StopCircle, VerifiedIcon } from "lucide-react"
 import Image from "next/image"

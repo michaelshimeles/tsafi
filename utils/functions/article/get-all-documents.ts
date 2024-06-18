@@ -1,9 +1,8 @@
-"use server"
 import { auth } from "@clerk/nextjs/server";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
-export const readSites = async () => {
+export const getAllDocuments = async () => {
   const { userId } = auth();
 
   if (!userId) {
@@ -25,8 +24,8 @@ export const readSites = async () => {
 
   try {
     const { data, error } = await supabase
-      .from("sites")
-      .select()
+      .from("documents")
+      .select("*")
       .eq("user_id", userId);
 
     if (error?.code) return error;

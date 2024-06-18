@@ -1,12 +1,12 @@
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { getAllArticleBySlug } from '@/utils/actions/articles/get-article-slug'
 import { ChevronLeft } from 'lucide-react'
 import Image from "next/image"
 import Link from 'next/link'
 import ReactHtmlParser from 'react-html-parser'
 import ManageArticle from '../(components)/ManageArticle'
 import { transformNode } from '@/utils/transform-node'
+import { getAllArticleBySlug } from '@/utils/functions/article/get-all-article-slug'
 
 export default async function BlogPostPage({ params }: { params: { slug: string } }) {
 

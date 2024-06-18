@@ -36,8 +36,6 @@ export default function ManageArticle({ params, response }: {
   response: Article[]
 }) {
 
-  console.log('params', params)
-  console.log('response', response)
   const [open, setOpen] = useState<boolean>(false);
   const [openDelete, setOpenDelete] = useState<boolean>(false);
   const router = useRouter()
