@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react'
+import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
@@ -9,9 +9,9 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { toast } from 'sonner'
 import { changeSiteDomain } from '@/utils/actions/sites/settings/change-site-domain'
+import React, { useState } from 'react'
+import { toast } from 'sonner'
 
 export default function SetupCustomDomain({ response, site_id }: {
   response: any,
@@ -36,6 +36,7 @@ export default function SetupCustomDomain({ response, site_id }: {
         return response
       }
 
+      console.log('response', response)
       toast("Site custom domain has been updated")
 
       return response
@@ -47,6 +48,7 @@ export default function SetupCustomDomain({ response, site_id }: {
     }
   }
 
+  console.log("")
   return (
     <div className="w-[80%] mt-[1rem]">
       <Card>

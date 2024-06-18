@@ -1,10 +1,8 @@
 "use client"
 import { ArrowRight } from 'lucide-react';
-import Image from 'next/image';
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { motion } from 'framer-motion';
-import { AnimatedGradientTextComponent } from './AnimatedGradientComponent';
 import { BorderBeam } from '../magicui/border-beam';
 
 export default function HeroSection() {
@@ -51,7 +49,6 @@ export default function HeroSection() {
                     {/* <div className="from-1% absolute inset-0 bg-gradient-to-t from-white to-35%" /> */}
                 </div>
             </div>
-
         </div>
     )
 }

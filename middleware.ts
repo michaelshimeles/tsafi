@@ -31,8 +31,6 @@ export default clerkMiddleware(async (auth, req) => {
     return NextResponse.next();
   }
 
-  console.log("currentHost", currentHost);
-
   // Fetch tenant-specific data based on the subdomain
   const response = await readSiteDomain(currentHost);
 
@@ -44,11 +42,19 @@ export default clerkMiddleware(async (auth, req) => {
   }
 
   // Get the tenant's subdomain from the response
-  const tenantSubdomain = response[0]?.site_subdomain;
+  const tenantSubdomain = response?.[0]?.site_subdomain;
+
+  const tenantCustomDomain = response?.[0].site_custom_domain;
+
+  if (tenantCustomDomain) {
+    return NextResponse.rewrite(
+      new URL(`/_sites/${tenantSubdomain}${pathname}`, req.url)
+    );
+  }
 
   if (tenantSubdomain) {
     return NextResponse.rewrite(
-      new URL(`/${tenantSubdomain}${pathname}`, req.url)
+      new URL(`/_sites/${tenantSubdomain}${pathname}`, req.url)
     );
   }
 

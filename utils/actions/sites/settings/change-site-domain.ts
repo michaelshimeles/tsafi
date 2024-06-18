@@ -52,9 +52,20 @@ export const changeSiteDomain = async (
 
     revalidatePath("/cms/sites");
 
+    // Return the static DNS records
     return {
       domainAdding,
       wwwDomainAdding,
+      cnameRecord: {
+        type: "CNAME",
+        name: "www",
+        value: "cname.vercel-dns.com",
+      },
+      aRecord: {
+        type: "A",
+        name: "@",
+        value: "76.76.21.21",
+      },
     };
   } catch (error: any) {
     return error;
