@@ -9,10 +9,7 @@ import { BorderBeam } from '../magicui/border-beam';
 
 export default function HeroSection() {
     return (
-        <div className='flex flex-col items-center justify-center mt-[1rem] p-3'>
-            <div className="my-5">
-                <AnimatedGradientTextComponent />
-            </div>
+        <div className='flex flex-col items-center justify-center my-[3rem] p-3'>
             <h1 className="scroll-m-20 text-4xl sm:text-4xl md:text-6xl font-semibold tracking-tight lg:text-6xl text-center max-w-[700px]">
                 Launch your blog with tsafi in just a few clicks
             </h1>
