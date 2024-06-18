@@ -1,23 +1,25 @@
-import { readSiteDomain } from "@/utils/actions/sites/read-site-domain";
+import { readSiteById } from "@/utils/actions/sites/read-site-id";
 import { notFound } from "next/navigation";
 import { ReactNode } from "react";
 import { NavBar } from "./_components/NavBar";
-import Head from "next/head";
 
 export default async function SiteLayout({
   params,
   children,
 }: {
-  params: { domain: string };
+  params: { site_id: string };
   children: ReactNode;
 }) {
-  const result = await readSiteDomain(params?.domain);
+
+  console.log('params', params)
+  const result = await readSiteById(params?.site_id);
 
   if (!result) {
     notFound();
   }
 
   const siteName = result?.[0]?.site_name;
+  const siteDomain = result?.[0]?.site_custom_domain;
   const siteDescription = result?.[0]?.site_description;
   const siteLogo = result?.[0]?.site_logo;
   const siteCover = result?.[0]?.site_cover_image;
@@ -29,7 +31,7 @@ export default async function SiteLayout({
         <meta name="site_name" content={siteName} />
         <meta name="description" content={siteDescription} />
         <meta name="image" content={siteCover} />
-        <meta name="url" content={params?.domain + "." + process.env.BASE_DOMAIN}></meta>
+        <meta name="url" content={siteDomain + "." + process.env.BASE_DOMAIN}></meta>
         <link rel="icon" href={siteLogo} />
       </head >
       <body>
