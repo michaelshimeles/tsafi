@@ -1,17 +1,17 @@
-import './globals.css'
+import { Toaster } from "@/components/ui/sonner"
+import { ClerkProvider } from '@clerk/nextjs'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import { ClerkProvider } from '@clerk/nextjs'
-import { ThemeProvider } from "@/components/theme-provider"
-import { Toaster } from "@/components/ui/sonner"
-import { NavBar } from '@/components/NavBar'
-import Provider from '@/app/_trpc/provider'
+import './globals.css'
+import Provider from './provider'
+import { Analytics } from "@vercel/analytics/react"
+import { ThemeProvider } from "next-themes"
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Nextjs 14 Starter Template',
-  description: 'Build your next SAAS product',
+  title: 'tsafi',
+  description: 'An opensource blog site and CMS built using Nextjs, Supabase & TipTap',
 }
 
 export default function RootLayout({
@@ -22,6 +22,9 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
+        <head>
+        <script defer src={process.env.TINY_SRC} data-host={process.env.TINY_BIRD_DATA_HOST} data-token={process.env.TINY_BIRD_DATA_TOKEN}></script>
+        </head>
         <body className={inter.className}>
           <Provider>
             <ThemeProvider
@@ -30,10 +33,12 @@ export default function RootLayout({
               enableSystem
               disableTransitionOnChange
             >
+
               {children}
-              <Toaster />
             </ThemeProvider>
+            <Toaster />
           </Provider>
+          <Analytics />
         </body>
       </html>
     </ClerkProvider>

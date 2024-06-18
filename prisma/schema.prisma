@@ -10,27 +10,68 @@ datasource db {
 
 model user {
   id                Int      @id @default(autoincrement())
-  created_time      DateTime @default(now())
+  created_at        DateTime @default(now())
   email             String   @unique
   first_name        String?
   last_name         String?
-  gender            String?
   profile_image_url String?
   user_id           String   @unique
 }
 
-model payments {
-  id              Int      @id @default(autoincrement())
-  created_time    DateTime @default(now())
-  payment         String
-  type            String
-  email           String
-  amount          String
-  payment_time    String
-  payment_date    String
-  receipt_email   String
-  receipt_url     String
-  payment_details String
-  billing_details String
-  currency        String
+model documents {
+  id          Int      @id @default(autoincrement())
+  created_at  DateTime @default(now())
+  document_id String   @unique @default(uuid())
+  document    String
+  title       String
+  user_id     String
+}
+
+model category {
+  id       Int    @id @default(autoincrement())
+  user_id  String
+  category String
+}
+
+model author {
+  id                 Int    @id @default(autoincrement())
+  user_id            String
+  author_id          String @unique @default(uuid())
+  author_name        String
+  author_profile_img String
+  author_instagram   String
+  author_twitter     String
+}
+
+model blog {
+  id          Int       @id @default(autoincrement())
+  created_at  DateTime  @default(now())
+  user_id     String
+  blog_html   String?
+  image       String?
+  image_alt   String?
+  category_id Int
+  author_id   String
+  title       String
+  subtitle    String
+  slug        String    @unique
+  keywords    String[]
+  published   Boolean
+  shareable   Boolean
+  site_id     String
+  updated_at  DateTime? @updatedAt
+}
+
+model sites {
+  id                 Int       @id @default(autoincrement())
+  created_at         DateTime  @default(now())
+  user_id            String
+  site_id            String    @unique
+  site_name          String
+  site_description   String?
+  site_subdomain     String
+  site_logo          String?
+  site_cover_image   String?
+  site_custom_domain String?
+  updated_at         DateTime? @updatedAt
 }

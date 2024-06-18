@@ -1,12 +1,11 @@
-import { userCreate } from "@/utils/db/userCreate";
-import { userUpdate } from "@/utils/db/userUpdate";
+import { userCreate } from "@/utils/actions/user/user-create";
+import { userUpdate } from "@/utils/actions/user/user-update";
 import { WebhookEvent } from "@clerk/nextjs/server";
 import { headers } from "next/headers";
 import { Webhook } from "svix";
 
 export async function POST(req: Request) {
-  // You can find this in the Clerk Dashboard -> Webhooks -> choose the webhook
-  const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
+  const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET;
 
   if (!WEBHOOK_SECRET) {
     throw new Error(
@@ -55,6 +54,7 @@ export async function POST(req: Request) {
   const eventType = evt.type;
 
   if (eventType === "user.created") {
+    // console.log("payload?.data", payload?.data);
     try {
       await userCreate({
         email: payload?.data?.email_addresses?.[0]?.email_address,
@@ -77,10 +77,9 @@ export async function POST(req: Request) {
         profile_image_url: payload?.data?.profile_image_url,
         user_id: payload?.data?.id,
       });
+    } catch (error: any) {
+      throw new Error(error.message);
     }
-     catch (error: any) {
-    throw new Error(error.message);
   }
-  }
-  return new Response("", { status: 201 });
+  return new Response("Done", { status: 201 });
 }

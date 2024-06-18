@@ -10,7 +10,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'seo-heist.s3.amazonaws.com',
+        hostname: 'utfs.io',
         port: '',
         pathname: '/**',
       },
