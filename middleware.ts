@@ -9,8 +9,10 @@ const isProtectedRoute = createRouteMatcher(["/cms(.*)"]);
 export default clerkMiddleware(async (auth, req) => {
   // Check if the route is protected and enforce authentication if it is
   if (isProtectedRoute(req)) auth().protect();
+
   const url = req.nextUrl;
   const pathname = url.pathname;
+
   // Get hostname (e.g., 'mike.com', 'test.mike.com')
   const hostname = req.headers.get("host");
 
@@ -23,6 +25,8 @@ export default clerkMiddleware(async (auth, req) => {
     // In development, handle localhost case
     currentHost = hostname?.replace(`.localhost:3000`, "");
   }
+
+  console.log("hostname", hostname);
 
   // If there's no currentHost, likely accessing the root domain, handle accordingly
   if (!currentHost) {
@@ -43,12 +47,13 @@ export default clerkMiddleware(async (auth, req) => {
     return NextResponse.next();
   }
 
+  const site_id = response?.[0]?.site_id;
   // Get the tenant's subdomain from the response
   const tenantSubdomain = response[0]?.site_subdomain;
 
   if (tenantSubdomain) {
     return NextResponse.rewrite(
-      new URL(`/${tenantSubdomain}${pathname}`, req.url)
+      new URL(`/${site_id}${pathname}`, req.url)
     );
   }
 

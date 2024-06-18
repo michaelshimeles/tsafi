@@ -1,15 +1,16 @@
-import { readAllArticles } from "@/utils/actions/sites/articles/read-articles"
-import Link from "next/link"
-import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
+import { readAllArticles } from "@/utils/actions/sites/articles/read-articles"
+import { readSiteById } from "@/utils/actions/sites/read-site-id"
 import { Article } from "@/utils/types"
-import { readSiteDomain } from "@/utils/actions/sites/read-site-domain"
+import Image from "next/image"
+import Link from "next/link"
 
-export default async function page({ params }: { params: { domain: string } }) {
+export default async function page({ params }: { params: { site_id: string }}) {
 
-  const result = await readSiteDomain(params?.domain)
+  console.log('PARAMS', params)
+  const result = await readSiteById(params?.site_id);
 
-  const response = await readAllArticles(params?.domain, result?.[0]?.site_id) as Article[]
+  const response = await readAllArticles(params?.site_id) as Article[]
 
   return (
     <div className="flex flex-col mt-[1rem] justify-center items-center w-[90%]">
