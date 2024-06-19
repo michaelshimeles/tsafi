@@ -28,7 +28,7 @@ const Footer = () => {
                 <div className="mx-auto max-w-7xl px-2">
                     <div className="flex flex-col justify-between lg:flex-row">
                         <div className="space-y-8">
-                            <p className='font-semibold'>SupaNext CMS</p>
+                            <p className='font-semibold'>tsafi</p>
                             <p className="text-md max-w-xs leading-6 text-gray-700 dark:text-gray-400">
                                 I built this because I didn&apos;t want to read the docs of another CMS.
                             </p>

@@ -33,7 +33,7 @@ export function Profile() {
                     <AvatarFallback></AvatarFallback>
                 </Avatar>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56">
+            <DropdownMenuContent className="w-56 borderborder-zinc-100 border-transparent">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
@@ -41,22 +41,22 @@ export function Profile() {
                         <DropdownMenuItem>
                             <User className="mr-2 h-4 w-4" />
                             <span>Profile</span>
-                            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+                            {/* <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut> */}
                         </DropdownMenuItem>
                     </Link>
                     <Link href="/cms/settings">
                         <DropdownMenuItem>
                             <Settings className="mr-2 h-4 w-4" />
                             <span>Settings</span>
-                            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+                            {/* <DropdownMenuShortcut>⌘S</DropdownMenuShortcut> */}
                         </DropdownMenuItem>
                     </Link>
                 </DropdownMenuGroup>
                 <SignOutButton>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem className="border border-slate-100 mt-[0.15rem]">
                         <LogOut className="mr-2 h-4 w-4" />
                         <span>Log out</span>
-                        <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+                        {/* <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut> */}
                     </DropdownMenuItem>
                 </SignOutButton>
             </DropdownMenuContent>

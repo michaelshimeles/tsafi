@@ -16,13 +16,13 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 const navItems = [
-  { href: "/cms", label: "Dashboard", icon: Home },
+  { href: "/cms", label: "Home", icon: Home },
+  { href: "/cms/sites", label: "Site(s)", icon: Globe, },
+  { href: "/cms/api", label: "API", icon: NetworkIcon },
   { href: "/cms/documents", label: "My Documents", icon: BookCheck },
   { href: "/cms/publish", label: "Publish Article", icon: BookA },
   { href: "/cms/author", label: "Create Author", icon: Pen },
   { href: "/cms/category", label: "Create Category", icon: Table },
-  { href: "/cms/sites", label: "Site(s)", icon: Globe, },
-  { href: "/cms/api", label: "API", icon: NetworkIcon },
   { href: "/cms/settings", label: "Settings", icon: Settings },
 ];
 
@@ -32,7 +32,7 @@ export default function DashboardNav() {
   return (
     <div className="lg:block hidden border-r h-full">
       <div className="flex h-full max-h-screen flex-col gap-2">
-        <div className="flex h-[55px] items-center justify-between border-b px-3 w-full">
+        <div className="flex h-[50px] items-center justify-between border-b px-3 w-full">
           <Link className="flex items-center gap-2 font-semibold ml-1" href="/">
             <span className="text-md">tsafi</span>
           </Link>
@@ -56,7 +56,7 @@ export default function DashboardNav() {
                   </div>
                   {label}
                 </Link>
-               {index === 4 && <Separator className="my-[0.75rem]" />}
+                {index === 2 && <Separator className="my-[0.75rem]" />}
               </div>
             ))}
           </nav>

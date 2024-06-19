@@ -27,7 +27,7 @@
   }
 
   .dark {
-    --background: 240 10% 3.9%;
+    --background: 240 3.7% 5.294%;
     --foreground: 0 0% 98%;
     --card: 240 10% 3.9%;
     --card-foreground: 0 0% 98%;
@@ -48,9 +48,6 @@
     --ring: 240 4.9% 83.9%;
   }
 }
-
-
-
 
 @layer base {
   * {
