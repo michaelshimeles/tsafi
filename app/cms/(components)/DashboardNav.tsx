@@ -6,12 +6,12 @@ import { Dialog, DialogClose } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "../../../components/ui/sheet"
 import Link from "next/link"
-import { ModeToggle } from "@/components/ModeToggle"
+import ModeToggle from "@/components/ModeToggle"
 
 export default function DashboardNavMobile() {
   return (
     <div className="flex flex-col">
-      <header className="flex h-14 lg:h-[55px] justify-between lg:justify-end  items-center gap-2 border-b px-3">
+      <header className="flex h-14 lg:h-[50px] justify-between lg:justify-end  items-center gap-2 border-b px-3">
         <Dialog>
           <SheetTrigger className="min-[1024px]:hidden p-2 transition">
             <GiHamburgerMenu />

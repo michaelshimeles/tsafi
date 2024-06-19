@@ -14,7 +14,16 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
 
   return (
     <main className="flex min-w-screen flex-col items-center justify-between ">
-      <ManageArticle response={response} params={params} />
+      <div className='flex justify-between items-center w-full'>
+        <div className="flex justify-start py-6 lg:py-10 w-full">
+          <Link href={`/cms`}
+            className={cn(buttonVariants({ variant: "ghost" }))}>
+            <ChevronLeft className="mr-2 h-4 w-4" />
+            See all posts
+          </Link>
+        </div>
+        <ManageArticle response={response} params={params} />
+      </div>
       <article className="container relative max-w-3xl pt-3 pb-6 lg:pb-10">
         <div>
           <p
