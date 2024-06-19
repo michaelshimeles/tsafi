@@ -1,6 +1,6 @@
 "use client"
 
-import { ModeToggle } from "@/components/ModeToggle"
+import ModeToggle from "@/components/ModeToggle"
 import { Button } from "@/components/ui/button"
 import {
   NavigationMenu,
