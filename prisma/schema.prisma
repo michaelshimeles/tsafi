@@ -25,6 +25,7 @@ model documents {
   document    String
   title       String
   user_id     String
+  site_id     String
 }
 
 model category {

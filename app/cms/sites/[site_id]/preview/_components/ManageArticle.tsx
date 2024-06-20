@@ -125,7 +125,7 @@ export default function ManageArticle({ params, response }: {
           <Button type="submit" size="sm" onClick={async () => {
             await deleteBlog(params?.slug)
             setOpenDelete(false)
-            router.push("/cms")
+            router.push(`/cms/sites/${params?.site_id}`)
           }}>Yes, Delete</Button>
         </DialogContent>
       </Dialog>
