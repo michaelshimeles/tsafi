@@ -22,7 +22,7 @@ export function NavBar() {
 
     return (
         <div className="flex items-center min-w-full w-full fixed justify-center p-2 z-10">
-            <div className="flex justify-between md:w-[620px] w-[95%] mt-[1rem] border dark:bg-black bg-opacity-10 relative backdrop-filter backdrop-blur-lg bg-white border-white border-opacity-20 rounded-xl p-2 shadow-lg">
+            <div className="flex justify-between md:w-[620px] w-[95%] mt-[1rem] border dark:border-zinc-900 dark:bg-black bg-opacity-10 relative backdrop-filter backdrop-blur-lg bg-white border-white border-opacity-20 rounded-xl p-2 shadow-lg">
                 <Dialog>
                     <SheetTrigger className="min-[825px]:hidden p-2 transition">
                         <GiHamburgerMenu />
@@ -55,9 +55,12 @@ export function NavBar() {
                         </Link>
                     </NavigationMenuList>
                 </NavigationMenu>
-                <div className="flex items-center gap-3">
-                    {userId && <Profile />}
+                <div className="flex items-center gap-2">
+                    {/* <Link href="/cms">
+                        <Button variant="ghost" className="dark:bg-black dark:hover:bg-zinc-900" size="sm">Dashboard</Button>
+                    </Link> */}
                     <ModeToggle />
+                    {userId && <Profile />}
                 </div>
             </div>
         </div>

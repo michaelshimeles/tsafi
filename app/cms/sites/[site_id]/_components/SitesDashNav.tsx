@@ -1,13 +1,11 @@
 "use client"
 
-import { Separator } from '@/components/ui/separator'
+import { Button } from '@/components/ui/button'
 import clsx from 'clsx'
 import {
   BookA,
   BookCheck,
-  Globe,
   Home,
-  NetworkIcon,
   Pen,
   Settings,
   Table
@@ -15,19 +13,18 @@ import {
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-const navItems = [
-  { href: "/cms", label: "Home", icon: Home },
-  { href: "/cms/sites", label: "Site(s)", icon: Globe, },
-  { href: "/cms/api", label: "API", icon: NetworkIcon },
-  { href: "/cms/documents", label: "My Documents", icon: BookCheck },
-  { href: "/cms/publish", label: "Publish Article", icon: BookA },
-  { href: "/cms/author", label: "Create Author", icon: Pen },
-  { href: "/cms/category", label: "Create Category", icon: Table },
-  { href: "/cms/settings", label: "Settings", icon: Settings },
-];
 
-export default function DashboardNav() {
-  const pathname = usePathname();
+
+export default function SitesDashNav({ site_id }: { site_id: string }) {
+  const pathname = usePathname()
+
+  const navItems = [
+    { href: `/cms/sites/${site_id}`, label: "My Site", icon: Home },
+    { href: `/cms/sites/${site_id}/documents`, label: "My Documents", icon: BookCheck },
+    { href: `/cms/sites/${site_id}/publish`, label: "Publish Article", icon: BookA },
+    { href: `/cms/sites/${site_id}/author`, label: "Create Author", icon: Pen },
+    { href: `/cms/sites/${site_id}/category`, label: "Create Category", icon: Table },
+  ];
 
   return (
     <div className="lg:block hidden border-r h-full">
@@ -39,6 +36,11 @@ export default function DashboardNav() {
         </div>
         <div className="flex-1 overflow-auto py-2">
           <nav className="grid items-start px-4 text-sm font-medium">
+            <div className='my-2 w-full'>
+              <Link href="/cms/sites">
+                <Button size="sm" variant="outline">Back</Button>
+              </Link>
+            </div>
             {navItems.map(({ href, label, icon: Icon }, index: number) => (
               <div key={href}>
                 <Link
@@ -46,7 +48,7 @@ export default function DashboardNav() {
                   className={clsx(
                     "flex items-center gap-2 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50",
                     {
-                      "bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-50": pathname === href || (href !== "/cms" && pathname.startsWith(href))
+                      "bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-50": pathname === href || (href !== `/cms/sites/${site_id}` && pathname.startsWith(href))
                     }
                   )}
                   href={href}
@@ -56,7 +58,6 @@ export default function DashboardNav() {
                   </div>
                   {label}
                 </Link>
-                {index === 2 && <Separator className="my-[0.75rem]" />}
               </div>
             ))}
           </nav>

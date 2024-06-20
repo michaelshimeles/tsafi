@@ -2,10 +2,10 @@ import { FileText, Timer } from 'lucide-react';
 import Link from 'next/link';
 import { Document } from '@/utils/types';
 
-export default async function Documents({ info }: { info: Document }) {
+export default async function Documents({ info, site_id }: { info: Document, site_id: string }) {
 
   return (
-    <Link href={`/cms/documents/${info?.document_id}`}>
+    <Link href={`/cms/sites/${site_id}/documents/${info?.document_id}`}>
       <article
         className="flex flex-col space-y-2 p-4 rounded-md border border-zinc-100 dark:border-zinc-900 min-w-[300px] hover:shadow-2xl hover:shadow-purple-500/50 transition-shadow duration-300"
       >

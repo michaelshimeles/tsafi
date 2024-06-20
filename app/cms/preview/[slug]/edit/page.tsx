@@ -7,8 +7,9 @@ import { BubbleMenu, EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { ImageIcon } from 'lucide-react';
 import { useCallback, useEffect } from 'react';
-import { UpdateArticle } from '../../(components)/UpdateArticle';
+import { UpdateArticle } from '../../_components/UpdateArticle';
 import "./styles.scss";
+import DashWrapper from '@/app/cms/_components/DashWrapper';
 
 const MenuBar = ({ editor }: any) => {
 
@@ -235,57 +236,58 @@ export default function ArticleEditor({ params }: { params: { slug: string } }) 
   }, [editor])
 
   return (
-    <div className='flex flex-col items-end w-full'>
-      <div className='flex justify-center items-center gap-3'>
-        <a href={`/cms/preview/${params?.slug}`}>
-          <Button>Preview</Button>
-        </a>
+    <DashWrapper>
+      <div className='flex flex-col items-end w-full'>
+        <div className='flex justify-center items-center gap-3'>
+          <a href={`/cms/preview/${params?.slug}`}>
+            <Button>Preview</Button>
+          </a>
+        </div>
+        <div className="p-4 border rounded mt-5">
+          <div className='flex pb-3 my-7'>
+            <h1 className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-5xl">
+              {data?.[0]?.title}
+            </h1>
+          </div>
+          <MenuBar editor={editor} />
+          <BubbleMenu editor={editor!} tippyOptions={{ duration: 100 }}>
+            <button
+              onClick={() => editor?.chain()?.focus()?.toggleBold()?.run()}
+              className={editor?.isActive('bold') ? 'is-active border rounded bg-black text-white border-black px-1 mx-1' : 'border-black px-1 border rounded text-black bg-white'}
+            >
+              bold
+            </button>
+            <button
+              onClick={() => editor?.chain().focus().toggleItalic().run()}
+              className={editor?.isActive('italic') ? 'is-active border rounded bg-black text-white border-black px-1 mx-1' : 'border-black px-1 border rounded text-black bg-white mx-1'}
+            >
+              italic
+            </button>
+            <button
+              onClick={() => editor?.chain().focus().toggleStrike().run()}
+              className={editor?.isActive('strike') ? 'is-active border rounded bg-black text-white border-black px-1 mx-1' : 'border-black px-1 border rounded text-black bg-white'}
+            >
+              strike
+            </button>
+            <button onClick={setLink} className={editor?.isActive('link') ? 'is-active border rounded bg-black text-white border-black px-1 mx-1' : 'border-black px-1 mx-1 border rounded text-black bg-white'}>
+              link
+            </button>
+            <button
+              className={editor?.isActive('link') ? 'is-active border rounded bg-blue-700 text-white border-black px-1 mx-1' : 'border-black px-1 mx-1 border rounded text-black bg-white'}
+              onClick={() => editor?.chain().focus().unsetLink().run()}
+              disabled={!editor?.isActive('link')}
+            >
+              unlink
+            </button>
+          </BubbleMenu>
+          <div className="tiptap-editor">
+            <EditorContent editor={editor} />
+          </div>
+          <div className="mt-4 w-full">
+            <UpdateArticle slug={params?.slug} html={html} />
+          </div>
+        </div>
       </div>
-      <div className="p-4 border rounded mt-5">
-        <div className='flex pb-3 my-7'>
-          <h1 className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-5xl">
-            {data?.[0]?.title}
-          </h1>
-        </div>
-        <MenuBar editor={editor} />
-        <BubbleMenu editor={editor!} tippyOptions={{ duration: 100 }}>
-          <button
-            onClick={() => editor?.chain()?.focus()?.toggleBold()?.run()}
-            className={editor?.isActive('bold') ? 'is-active border rounded bg-black text-white border-black px-1 mx-1' : 'border-black px-1 border rounded text-black bg-white'}
-          >
-            bold
-          </button>
-          <button
-            onClick={() => editor?.chain().focus().toggleItalic().run()}
-            className={editor?.isActive('italic') ? 'is-active border rounded bg-black text-white border-black px-1 mx-1' : 'border-black px-1 border rounded text-black bg-white mx-1'}
-          >
-            italic
-          </button>
-          <button
-            onClick={() => editor?.chain().focus().toggleStrike().run()}
-            className={editor?.isActive('strike') ? 'is-active border rounded bg-black text-white border-black px-1 mx-1' : 'border-black px-1 border rounded text-black bg-white'}
-          >
-            strike
-          </button>
-          <button onClick={setLink} className={editor?.isActive('link') ? 'is-active border rounded bg-black text-white border-black px-1 mx-1' : 'border-black px-1 mx-1 border rounded text-black bg-white'}>
-            link
-          </button>
-          <button
-            className={editor?.isActive('link') ? 'is-active border rounded bg-blue-700 text-white border-black px-1 mx-1' : 'border-black px-1 mx-1 border rounded text-black bg-white'}
-            onClick={() => editor?.chain().focus().unsetLink().run()}
-            disabled={!editor?.isActive('link')}
-          >
-            unlink
-          </button>
-        </BubbleMenu>
-        <div className="tiptap-editor">
-          <EditorContent editor={editor} />
-        </div>
-        <div className="mt-4 w-full">
-          <UpdateArticle slug={params?.slug} html={html} />
-        </div>
-      </div>
-    </div>
-
+    </DashWrapper>
   )
 }

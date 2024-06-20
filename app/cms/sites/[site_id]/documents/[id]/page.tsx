@@ -17,7 +17,6 @@ import { BubbleMenu, EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { Code, ImageIcon, ListOrdered, Quote, Redo, Strikethrough, Undo, Unlink } from 'lucide-react';
 import { useCallback, useEffect } from 'react';
-import DeleteDocument from '../../(components)/DeleteDocument';
 import { SubmitDocument } from './(components)/SubmitDocument';
 import "./styles.scss";
 
@@ -25,6 +24,8 @@ import {
   ToggleGroup,
   ToggleGroupItem,
 } from "@/components/ui/toggle-group";
+import SiteDashWrapper from '../../_components/SiteDashWrapper';
+import DeleteDocument from '@/app/cms/_components/DeleteDocument';
 
 const MenuBar = ({ editor }: any) => {
 
@@ -103,6 +104,8 @@ export default function DocumentEditor({ params }: { params: { id: string } }) {
 
   const { data } = useGetDocumentById(params?.id)
 
+  console.log('params', params)
+
   const extensions: any = [
     StarterKit.configure({
       bulletList: {
@@ -177,51 +180,52 @@ export default function DocumentEditor({ params }: { params: { id: string } }) {
   }, [editor])
 
   return (
-    <div className='flex flex-col items-end w-full'>
-      <div className='flex justify-between items-center gap-3 w-full'>
-        <div className='flex justify-center items-center pb-3 my-7'>
-          <h1 className="scroll-m-20 text-3xl font-semibold tracking-tight lg:text-3xl">
-            {data?.[0]?.title}
-          </h1>
+    <SiteDashWrapper site_id={null}>
+      <div className='flex flex-col items-end w-full'>
+        <div className='flex justify-between items-center gap-3 w-full'>
+          <div className='flex justify-center items-center pb-3 my-7'>
+            <h1 className="scroll-m-20 text-3xl font-semibold tracking-tight lg:text-3xl">
+              {data?.[0]?.title}
+            </h1>
+          </div>
+          <div className='flex gap-2'>
+            <DeleteDocument id={params?.id} />
+            <a href="/cms/documents">
+              <Button variant="outline">Back</Button>
+            </a>
+          </div>
         </div>
-        <div className='flex gap-2'>
-          <DeleteDocument id={params?.id} />
-          <a href="/cms/documents">
-            <Button variant="outline">Back</Button>
-          </a>
+        <div className="p-4 border rounded w-full">
+          <MenuBar editor={editor} />
+          <BubbleMenu editor={editor!} tippyOptions={{ duration: 100 }}>
+            <Card className="w-full p-2">
+              <ToggleGroup type="multiple">
+                <ToggleGroupItem value="bold" aria-label="Toggle bold" onClick={() => editor?.chain()?.focus()?.toggleBold()?.run()}>
+                  <FontBoldIcon className="h-4 w-4" />
+                </ToggleGroupItem>
+                <ToggleGroupItem value="italic" aria-label="Toggle italic" onClick={() => editor?.chain().focus().toggleItalic().run()}>
+                  <FontItalicIcon className="h-4 w-4" />
+                </ToggleGroupItem>
+                <ToggleGroupItem value="image" aria-label="Upload image" onClick={addImage}>
+                  <ImageIcon className="h-4 w-4" />
+                </ToggleGroupItem>
+                <ToggleGroupItem value="link" aria-label="Toggle strikethrough" onClick={setLink}>
+                  <Link1Icon className="h-4 w-4" />
+                </ToggleGroupItem>
+                <ToggleGroupItem value="link" aria-label="Toggle strikethrough" onClick={() => editor?.chain().focus().unsetLink().run()}>
+                  <Unlink className="h-4 w-4" />
+                </ToggleGroupItem>
+              </ToggleGroup>
+            </Card>
+          </BubbleMenu>
+          <div className="tiptap-editor w-full">
+            <EditorContent editor={editor} className='min-h-[60vh]' />
+          </div>
+          <div className="mt-4 w-full">
+            <SubmitDocument html={html!} id={params?.id} title={data?.[0]?.title} />
+          </div>
         </div>
       </div>
-      <div className="p-4 border rounded w-full">
-        <MenuBar editor={editor} />
-        <BubbleMenu editor={editor!} tippyOptions={{ duration: 100 }}>
-          <Card className="w-full p-2">
-            <ToggleGroup type="multiple">
-              <ToggleGroupItem value="bold" aria-label="Toggle bold" onClick={() => editor?.chain()?.focus()?.toggleBold()?.run()}>
-                <FontBoldIcon className="h-4 w-4" />
-              </ToggleGroupItem>
-              <ToggleGroupItem value="italic" aria-label="Toggle italic" onClick={() => editor?.chain().focus().toggleItalic().run()}>
-                <FontItalicIcon className="h-4 w-4" />
-              </ToggleGroupItem>
-              <ToggleGroupItem value="image" aria-label="Upload image" onClick={addImage}>
-                <ImageIcon className="h-4 w-4" />
-              </ToggleGroupItem>
-              <ToggleGroupItem value="link" aria-label="Toggle strikethrough" onClick={setLink}>
-                <Link1Icon className="h-4 w-4" />
-              </ToggleGroupItem>
-              <ToggleGroupItem value="link" aria-label="Toggle strikethrough" onClick={() => editor?.chain().focus().unsetLink().run()}>
-                <Unlink className="h-4 w-4" />
-              </ToggleGroupItem>
-            </ToggleGroup>
-          </Card>
-        </BubbleMenu>
-        <div className="tiptap-editor w-full">
-          <EditorContent editor={editor} className='min-h-[60vh]'/>
-        </div>
-        <div className="mt-4 w-full">
-          <SubmitDocument html={html!} id={params?.id} title={data?.[0]?.title} />
-        </div>
-      </div>
-    </div>
-
+    </SiteDashWrapper>
   )
 }

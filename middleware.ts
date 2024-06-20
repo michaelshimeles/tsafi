@@ -26,8 +26,6 @@ export default clerkMiddleware(async (auth, req) => {
     currentHost = hostname?.replace(`.localhost:3000`, "");
   }
 
-  console.log("hostname", hostname);
-
   // If there's no currentHost, likely accessing the root domain, handle accordingly
   if (!currentHost) {
     console.log("No subdomain, serving root domain content");
@@ -35,14 +33,11 @@ export default clerkMiddleware(async (auth, req) => {
     return NextResponse.next();
   }
 
-  console.log("currentHost", currentHost);
-
   // Fetch tenant-specific data based on the subdomain
   const response = await readSiteDomain(currentHost);
 
   // Handle the case where no subdomain data is found
   if (!response || !response.length) {
-    console.log("Subdomain not found, serving root domain content");
     // Continue to the next middleware or serve the root content
     return NextResponse.next();
   }
