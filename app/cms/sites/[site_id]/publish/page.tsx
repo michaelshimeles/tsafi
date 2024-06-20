@@ -42,7 +42,6 @@ const FormSchema = z.object({
   author: z.string(),
   category: z.string(),
   article: z.string(),
-  site_id: z.string(),
 });
 
 export default function Publish({params}: any) {
@@ -57,7 +56,6 @@ export default function Publish({params}: any) {
       author: "",
       category: "",
       article: "",
-      site_id: "",
     },
   });
 
@@ -93,7 +91,7 @@ export default function Publish({params}: any) {
         data?.keywords,
         imageUploadUrl,
         data?.image_alt,
-        data?.site_id
+        params?.site_id
       );
       console.log("response", response);
       toast("Article is published");
@@ -285,30 +283,6 @@ export default function Publish({params}: any) {
                         {documentData?.map((info: any) => (
                           <SelectItem key={info?.id} value={info?.document}>
                             {info?.title}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="site_id"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Publish to Site</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select the site" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {sitesData?.map((site: any) => (
-                          <SelectItem key={site?.site_id} value={site?.site_id}>
-                            {site?.site_name}
                           </SelectItem>
                         ))}
                       </SelectContent>
