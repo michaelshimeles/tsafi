@@ -53,7 +53,7 @@ export function Profile() {
                     </Link>
                 </DropdownMenuGroup>
                 <SignOutButton>
-                    <DropdownMenuItem className="border border-slate-100 mt-[0.15rem]">
+                    <DropdownMenuItem className="border dark:border-zinc-800 border-slate-100 mt-[0.15rem]">
                         <LogOut className="mr-2 h-4 w-4" />
                         <span>Log out</span>
                         {/* <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut> */}

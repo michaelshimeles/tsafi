@@ -7,11 +7,11 @@ import Link from "next/link"
 
 export default async function page({ params }: { params: { site_id: string }}) {
 
-  console.log('PARAMS', params)
   const result = await readSiteById(params?.site_id);
 
   const response = await readAllArticles(params?.site_id) as Article[]
 
+  console.log('resp', response)
   return (
     <div className="flex flex-col mt-[1rem] justify-center items-center w-[90%]">
       <div className='flex flex-col items-center p-3 w-full'>

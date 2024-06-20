@@ -25,9 +25,6 @@ export const readSiteById = async (site_id: string) => {
 
     if (error?.code) return error;
 
-    console.log('data', data)
-    console.log('error', error)
-
     return data;
   } catch (error: any) {
     return error;

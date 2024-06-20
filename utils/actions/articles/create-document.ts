@@ -4,7 +4,7 @@ import { createServerClient } from "@supabase/ssr";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
-export const createDocument = async (title: string) => {
+export const createDocument = async (title: string, site_id: string) => {
   const { userId } = auth();
 
   if (!userId) {
@@ -28,12 +28,12 @@ export const createDocument = async (title: string) => {
   try {
     const { data, error } = await supabase
       .from("documents")
-      .insert([{ title, user_id: userId }])
+      .insert([{ title, user_id: userId, site_id }])
       .select();
 
     if (error?.code) return error;
 
-    revalidatePath("/cms/documents");
+    revalidatePath(`/cms/sites/${site_id}/documents`);
 
     return data;
   } catch (error: any) {

@@ -19,21 +19,7 @@ export const readAllArticles = async (site_id: string) => {
     }
   );
 
-  console.log("site_id", site_id);
   try {
-    // Fetch site data based on the site_id
-    const { data: siteData, error: siteError } = await supabase
-      .from("sites")
-      .select() // Select only the required fields
-      .eq("site_id", site_id);
-
-    console.log("siteData", siteData);
-
-    if (siteError) {
-      console.error("Error fetching site data:", siteError);
-      throw siteError;
-    }
-
     // Fetch blog articles, including category and author details, using the userId from siteData
     const { data: articles, error: articleError } = await supabase
       .from("blog")

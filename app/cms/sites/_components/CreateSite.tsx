@@ -57,7 +57,7 @@ export default function CreateSite() {
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
       const response = await createSites(data?.site_name, data?.site_description, data?.site_subdomain, logoUploadUrl)
-      console.log('response', response)
+
       if (response?.error) {
         if (response?.error?.code === 23505) {
           toast("Subdomain already exists, try another subdomain")

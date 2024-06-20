@@ -32,8 +32,6 @@ export const changeSiteSubdomain = async (site_id: string, site_subdomain: strin
   if (!userId) {
     return null;
   }
-  console.log('site_subdomain', site_subdomain)
-
   const cookieStore = cookies();
 
   const supabase = createServerClient(

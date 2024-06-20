@@ -24,7 +24,7 @@ export const storeArticles = async (
 
   const cookieStore = cookies();
 
-  const keywordArray = keywords?.split(',')
+  const keywordArray = keywords?.split(",");
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -53,14 +53,14 @@ export const storeArticles = async (
           image,
           image_alt,
           user_id: userId,
-          site_id
+          site_id,
         },
       ])
       .select();
 
     if (error?.code) return error;
 
-    revalidatePath('/cms')
+    revalidatePath("/cms");
 
     return data;
   } catch (error: any) {

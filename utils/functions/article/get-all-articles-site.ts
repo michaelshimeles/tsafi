@@ -1,11 +1,8 @@
-"use server";
 import { auth } from "@clerk/nextjs/server";
 import { createServerClient } from "@supabase/ssr";
-import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
-export const deleteSite = async (site_id: string) => {
-
+export const getAllArticlsBySite = async (site_id: string) => {
   const { userId } = auth();
 
   if (!userId) {
@@ -24,16 +21,19 @@ export const deleteSite = async (site_id: string) => {
       },
     }
   );
-
   try {
     const { data, error } = await supabase
-      .from("sites")
-      .delete()
-      .eq("user_id", userId)
-      .eq("site_id", site_id);
+      .from("blog")
+      .select(
+        `*,
+      author (*),
+      category (*)
+      `
+      )
+      .eq("site_id", site_id)
+      .eq("user_id", userId);
 
     if (error?.code) return error;
-    revalidatePath("/cms/sites");
 
     return data;
   } catch (error: any) {
