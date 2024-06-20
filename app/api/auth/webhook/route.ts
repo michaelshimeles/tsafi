@@ -54,7 +54,6 @@ export async function POST(req: Request) {
   const eventType = evt.type;
 
   if (eventType === "user.created") {
-    // console.log("payload?.data", payload?.data);
     try {
       await userCreate({
         email: payload?.data?.email_addresses?.[0]?.email_address,

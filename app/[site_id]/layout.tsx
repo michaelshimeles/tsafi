@@ -11,7 +11,6 @@ export default async function SiteLayout({
   children: ReactNode;
 }) {
 
-  console.log('params', params)
   const result = await readSiteById(params?.site_id);
 
   if (!result) {

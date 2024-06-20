@@ -22,9 +22,6 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
-        <head>
-        <script defer src={process.env.TINY_SRC} data-host={process.env.TINY_BIRD_DATA_HOST} data-token={process.env.TINY_BIRD_DATA_TOKEN}></script>
-        </head>
         <body className={inter.className}>
           <Provider>
             <ThemeProvider

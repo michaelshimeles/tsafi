@@ -104,8 +104,6 @@ export default function DocumentEditor({ params }: { params: { id: string } }) {
 
   const { data } = useGetDocumentById(params?.id)
 
-  console.log('params', params)
-
   const extensions: any = [
     StarterKit.configure({
       bulletList: {

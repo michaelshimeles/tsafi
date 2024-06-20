@@ -41,7 +41,6 @@ export default function Author({ params }: { params: { site_id: string } }) {
   const [imageUploadUrl, setImageUploadUrl] = useState<string>("");
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log('data', data)
     try {
       const response = await createAuthor(data?.name, data?.instagram, data?.twitter, imageUploadUrl!)
       if (response?.error) {

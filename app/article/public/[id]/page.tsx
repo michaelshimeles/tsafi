@@ -14,7 +14,6 @@ import WritteBy from '../(components)/WritteBy';
 export default async function Article({ params }: { params: { id: string } }) {
 
   const data = await readPublicArticle((params?.id));
-  console.log('r', data)
 
   if (data?.[0]?.shareable !== true) {
     redirect("/")

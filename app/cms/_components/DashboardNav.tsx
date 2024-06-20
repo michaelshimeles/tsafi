@@ -30,23 +30,8 @@ export default function DashboardNavMobile() {
                 </Link>
               </DialogClose>
               <DialogClose asChild>
-                <Link href="/cms/documents">
-                  <Button variant="outline" className="w-full">My Documents</Button>
-                </Link>
-              </DialogClose>
-              <DialogClose asChild>
-                <Link href="/cms/publish">
-                  <Button variant="outline" className="w-full">Publish Article</Button>
-                </Link>
-              </DialogClose>
-              <DialogClose asChild>
-                <Link href="/cms/author">
-                  <Button variant="outline" className="w-full">Create Author</Button>
-                </Link>
-              </DialogClose>
-              <DialogClose asChild>
-                <Link href="/cms/category">
-                  <Button variant="outline" className="w-full">Create Category</Button>
+                <Link href="/cms/sites">
+                  <Button variant="outline" className="w-full">Dashboard</Button>
                 </Link>
               </DialogClose>
               <DialogClose asChild>

@@ -24,8 +24,6 @@ export default function SetupCustomDomain({ response, site_id }: {
     try {
       const response = await changeSiteDomain(site_id, siteCustomDomain)
 
-      console.log('response', response)
-
       if (response?.error) {
         toast(response?.error?.message)
         return response

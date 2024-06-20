@@ -44,7 +44,7 @@ const FormSchema = z.object({
   article: z.string(),
 });
 
-export default function Publish({params}: any) {
+export default function Publish({ params }: { params: { site_id: string } }) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -81,6 +81,7 @@ export default function Publish({params}: any) {
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
+
       const response = await storeArticles(
         data?.title,
         data?.subtitle,
@@ -93,7 +94,6 @@ export default function Publish({params}: any) {
         data?.image_alt,
         params?.site_id
       );
-      console.log("response", response);
       toast("Article is published");
       form.reset();
       return response;

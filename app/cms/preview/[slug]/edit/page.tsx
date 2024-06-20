@@ -167,7 +167,6 @@ const MenuBar = ({ editor }: any) => {
 
 export default function ArticleEditor({ params }: { params: { slug: string } }) {
 
-  // console.log('params', params)
   const { data } = useGetArticleBySlug(params?.slug)
 
   const extensions: any = [

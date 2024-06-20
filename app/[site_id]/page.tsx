@@ -7,7 +7,6 @@ import Link from "next/link"
 
 export default async function page({ params }: { params: { site_id: string }}) {
 
-  console.log('PARAMS', params)
   const result = await readSiteById(params?.site_id);
 
   const response = await readAllArticles(params?.site_id) as Article[]

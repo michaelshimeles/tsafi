@@ -6,13 +6,12 @@ import {
   BookA,
   BookCheck,
   Home,
+  MoveLeft,
   Pen,
-  Settings,
   Table
 } from "lucide-react"
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-
 
 
 export default function SitesDashNav({ site_id }: { site_id: string }) {
@@ -38,7 +37,10 @@ export default function SitesDashNav({ site_id }: { site_id: string }) {
           <nav className="grid items-start px-4 text-sm font-medium">
             <div className='my-2 w-full'>
               <Link href="/cms/sites">
-                <Button size="sm" variant="outline">Back</Button>
+                <Button size="sm" variant="outline">
+                  <MoveLeft className="mr-2 h-4 w-4" />
+                  Back
+                </Button>
               </Link>
             </div>
             {navItems.map(({ href, label, icon: Icon }, index: number) => (

@@ -6,7 +6,6 @@ import { cookies } from "next/headers";
 
 export const deleteSite = async (site_id: string) => {
 
-  console.log('site_id', site_id)
   const { userId } = auth();
 
   if (!userId) {
