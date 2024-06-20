@@ -30,11 +30,6 @@ export default function DashboardNavMobile() {
                 </Link>
               </DialogClose>
               <DialogClose asChild>
-                <Link href="/cms/sites">
-                  <Button variant="outline" className="w-full">Dashboard</Button>
-                </Link>
-              </DialogClose>
-              <DialogClose asChild>
                 <Link href="/cms/api">
                   <Button variant="outline" className="w-full">API</Button>
                 </Link>

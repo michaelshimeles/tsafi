@@ -39,7 +39,7 @@ export function SubmitDocument({ html, id, title }: { html: string, id: string, 
         description: new Date().toLocaleTimeString(),
         action: {
           label: "Publish",
-          onClick: () => router.push("/cms/publish"),
+          onClick: () => router.push(`/cms/sites/${id}/publish`),
         },
       })
       refetch()

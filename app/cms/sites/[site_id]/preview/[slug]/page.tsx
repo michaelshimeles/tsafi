@@ -7,18 +7,18 @@ import ReactHtmlParser from 'react-html-parser'
 import ManageArticle from '../_components/ManageArticle'
 import { transformNode } from '@/utils/transform-node'
 import { getAllArticleBySlug } from '@/utils/functions/article/get-all-article-slug'
-import DashWrapper from '../../_components/DashWrapper'
+import SiteDashWrapper from '../../_components/SiteDashWrapper'
 
 export default async function BlogPostPage({ params }: { params: { slug: string } }) {
 
   const response = await getAllArticleBySlug(params?.slug)
 
   return (
-    <DashWrapper>
+    <SiteDashWrapper site_id={null}>
       <main className="flex min-w-screen flex-col items-center justify-between ">
         <div className='flex justify-between items-center w-full'>
           <div className="flex justify-start py-6 lg:py-10 w-full">
-            <Link href={`/cms`}
+            <Link href={`/cms/sites`}
               className={cn(buttonVariants({ variant: "ghost" }))}>
               <ChevronLeft className="mr-2 h-4 w-4" />
               See all posts
@@ -67,7 +67,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
           })}
           <hr className="mt-12" />
           <div className="flex justify-center py-6 lg:py-10">
-            <Link href={`/cms`}
+            <Link href={`/cms/sites`}
               className={cn(buttonVariants({ variant: "ghost" }))}>
               <ChevronLeft className="mr-2 h-4 w-4" />
               See all posts
@@ -75,7 +75,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
           </div>
         </article>
       </main>
-    </DashWrapper>
+    </SiteDashWrapper>
   )
 
 }

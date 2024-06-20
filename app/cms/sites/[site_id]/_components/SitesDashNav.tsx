@@ -23,6 +23,7 @@ export default function SitesDashNav({ site_id }: { site_id: string }) {
     { href: `/cms/sites/${site_id}/publish`, label: "Publish Article", icon: BookA },
     { href: `/cms/sites/${site_id}/author`, label: "Create Author", icon: Pen },
     { href: `/cms/sites/${site_id}/category`, label: "Create Category", icon: Table },
+    { href: `/cms/sites/${site_id}/settings`, label: "Settings", icon: Table },
   ];
 
   return (
@@ -36,7 +37,7 @@ export default function SitesDashNav({ site_id }: { site_id: string }) {
         <div className="flex-1 overflow-auto py-2">
           <nav className="grid items-start px-4 text-sm font-medium">
             <div className='my-2 w-full'>
-              <Link href="/cms/sites">
+              <Link href="/cms">
                 <Button size="sm" variant="outline">
                   <MoveLeft className="mr-2 h-4 w-4" />
                   Back

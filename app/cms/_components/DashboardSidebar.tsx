@@ -17,7 +17,6 @@ import { usePathname } from 'next/navigation'
 
 const navItems = [
   { href: "/cms", label: "Home", icon: Home },
-  { href: "/cms/sites", label: "Site(s)", icon: Globe, },
   { href: "/cms/api", label: "API", icon: NetworkIcon },
   { href: "/cms/settings", label: "Settings", icon: Settings },
 ];
