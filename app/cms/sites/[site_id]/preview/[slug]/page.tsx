@@ -18,7 +18,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string,
       <main className="flex min-w-screen flex-col items-center justify-between ">
         <div className='flex justify-between items-center w-full'>
           <div className="flex justify-start py-6 lg:py-10 w-full">
-            <Link href={`/cms`}
+            <Link href={`/cms/sites/${params?.site_id}`}
               className={cn(buttonVariants({ variant: "ghost" }))}>
               <ChevronLeft className="mr-2 h-4 w-4" />
               See all posts
@@ -54,20 +54,22 @@ export default async function BlogPostPage({ params }: { params: { slug: string,
               </div>
             </div>
           </div>
-          <Image
+          {response?.[0]?.image && <Image
             src={response?.[0]?.image}
             alt={""}
             width={720}
             height={405}
             className="my-8 rounded-md border bg-muted transition-colors"
             priority
-          />
-          {ReactHtmlParser(response?.[0]?.blog_html, {
-            transform: transformNode
-          })}
+          />}
+          <div className='mt-[1rem]'>
+            {ReactHtmlParser(response?.[0]?.blog_html, {
+              transform: transformNode
+            })}
+          </div>
           <hr className="mt-12" />
           <div className="flex justify-center py-6 lg:py-10">
-            <Link href={`/cms`}
+            <Link href={`/cms/sites/${params?.site_id}`}
               className={cn(buttonVariants({ variant: "ghost" }))}>
               <ChevronLeft className="mr-2 h-4 w-4" />
               See all posts

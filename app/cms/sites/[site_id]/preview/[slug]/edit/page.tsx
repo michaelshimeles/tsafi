@@ -7,9 +7,9 @@ import { BubbleMenu, EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { ImageIcon } from 'lucide-react';
 import { useCallback, useEffect } from 'react';
+import SiteDashWrapper from '../../../_components/SiteDashWrapper';
 import { UpdateArticle } from '../../_components/UpdateArticle';
 import "./styles.scss";
-import DashWrapper from '@/app/cms/_components/DashWrapper';
 
 const MenuBar = ({ editor }: any) => {
 
@@ -165,7 +165,7 @@ const MenuBar = ({ editor }: any) => {
   )
 }
 
-export default function ArticleEditor({ params }: { params: { slug: string } }) {
+export default function ArticleEditor({ params }: { params: { slug: string, site_id: string } }) {
 
   const { data } = useGetArticleBySlug(params?.slug)
 
@@ -235,10 +235,10 @@ export default function ArticleEditor({ params }: { params: { slug: string } }) 
   }, [editor])
 
   return (
-    <DashWrapper>
+    <SiteDashWrapper site_id={params?.site_id}>
       <div className='flex flex-col items-end w-full'>
         <div className='flex justify-center items-center gap-3'>
-          <a href={`/cms/preview/${params?.slug}`}>
+          <a href={`/cms/sites/${params?.site_id}/preview/${params?.slug}`}>
             <Button>Preview</Button>
           </a>
         </div>
@@ -287,6 +287,6 @@ export default function ArticleEditor({ params }: { params: { slug: string } }) 
           </div>
         </div>
       </div>
-    </DashWrapper>
+    </SiteDashWrapper>
   )
 }
