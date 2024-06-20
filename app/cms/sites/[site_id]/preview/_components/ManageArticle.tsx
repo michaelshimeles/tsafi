@@ -31,7 +31,8 @@ import { Article } from '@/utils/types'
 
 export default function ManageArticle({ params, response }: {
   params: {
-    slug: string
+    slug: string,
+    site_id: string
   },
   response: Article[]
 }) {
@@ -103,7 +104,7 @@ export default function ManageArticle({ params, response }: {
 
       </Popover>
 
-      <Link href={`/cms/preview/${params?.slug}/edit`}>
+      <Link href={`/cms/sites/${params?.site_id}/preview/${params?.slug}/edit`}>
         <Button size="sm" variant="outline">
           <Edit className='w-4 h-4' />
         </Button>

@@ -33,7 +33,7 @@ export function Profile() {
                     <AvatarFallback></AvatarFallback>
                 </Avatar>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56 borderborder-zinc-100 border-transparent">
+            <DropdownMenuContent className="w-56 borderborder-zinc-100">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>

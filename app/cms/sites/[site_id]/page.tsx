@@ -25,10 +25,10 @@ export default async function CMS({ params }: { params: { site_id: string } }) {
                   className="flex flex-col space-y-2 border dark:border-zinc-900 border-zinc-200 rounded-md max-w-[350px] hover:shadow-2xl hover:shadow-purple-500/50 transition-shadow duration-300"
                 >
                   <Image
-                    src={info?.image}
+                    src={info?.image ? info?.image : process.env.NEXT_PUBLIC_PLACEHOLDER_IMAGE}
                     alt={info?.image_alt}
-                    width={900}
-                    height={452}
+                    width={600}
+                    height={400}
                     className="rounded-t bg-muted border-b dark:border-zinc-600 border-zinc-200 transition-colors w-full"
                   />
                   <div className="flex flex-col px-[1rem] pt-[0.5rem] pb-[1.5rem]">
