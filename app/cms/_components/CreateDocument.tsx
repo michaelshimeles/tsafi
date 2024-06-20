@@ -14,7 +14,7 @@ import { createDocument } from '@/utils/actions/articles/create-document'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-export default function CreateDocument() {
+export default function CreateDocument({ site_id }: { site_id: string }) {
   const [open, setOpen] = useState<boolean>(false);
 
   const {
@@ -26,7 +26,7 @@ export default function CreateDocument() {
 
   const onSubmit = async (data: any) => {
     try {
-      const response = await createDocument(data?.name)
+      const response = await createDocument(data?.name, site_id)
       setOpen(false)
       return response
     } catch (error) {

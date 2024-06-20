@@ -5,13 +5,13 @@ import SiteDashWrapper from '../_components/SiteDashWrapper'
 
 export default async function DocumentsPage({ params }: { params: { site_id: string } }) {
 
-  const response = await getAllDocuments()
+  const response = await getAllDocuments(params?.site_id)
 
   return (
     <SiteDashWrapper site_id={params?.site_id}>
       <div className='flex flex-col gap-3'>
         <div className="flex justify-end">
-          <CreateDocument />
+          <CreateDocument site_id={params?.site_id} />
         </div>
         <div className='flex justify-start flex-wrap items-center gap-3'>
           {response?.length > 0 ? response?.map((info: any) => (
@@ -26,7 +26,7 @@ export default async function DocumentsPage({ params }: { params: { site_id: str
                   <p className="text-sm text-muted-foreground mb-3">
                     Documents will show here once you&apos;ve created documents
                   </p>
-                  <CreateDocument />
+                  <CreateDocument site_id={params?.site_id} />
                 </div>
               </div>
             </main>

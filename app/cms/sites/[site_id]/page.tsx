@@ -19,7 +19,7 @@ export default async function CMS({ params }: { params: { site_id: string } }) {
           </h1>
           <div className="flex flex-wrap justify-start items-center  gap-3 mt-[1.5rem] mb-[2rem] w-full">
             {response?.length > 0 ? response?.map((info: any) => (
-              <Link href={`/cms/preview/${info?.slug}`} key={info?.id}>
+              <Link href={`/cms/sites/${params?.site_id}/preview/${info?.slug}`} key={info?.id}>
                 <article
                   key={info?.id}
                   className="flex flex-col space-y-2 border dark:border-zinc-900 border-zinc-200 rounded-md max-w-[350px] hover:shadow-2xl hover:shadow-purple-500/50 transition-shadow duration-300"
@@ -60,7 +60,7 @@ export default async function CMS({ params }: { params: { site_id: string } }) {
                     <p className="text-sm text-muted-foreground mb-3">
                       Articles will show here once you&apos;ve published articles
                     </p>
-                    <Link href="/cms/documents">
+                    <Link href={`/cms/sites/${params?.site_id}/documents`}>
                       <Button>My Documents</Button>
                     </Link>
                   </div>

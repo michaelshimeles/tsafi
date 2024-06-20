@@ -9,16 +9,16 @@ import { transformNode } from '@/utils/transform-node'
 import { getAllArticleBySlug } from '@/utils/functions/article/get-all-article-slug'
 import SiteDashWrapper from '../../_components/SiteDashWrapper'
 
-export default async function BlogPostPage({ params }: { params: { slug: string } }) {
+export default async function BlogPostPage({ params }: { params: { slug: string, site_id: string } }) {
 
   const response = await getAllArticleBySlug(params?.slug)
 
   return (
-    <SiteDashWrapper site_id={null}>
+    <SiteDashWrapper site_id={params?.site_id}>
       <main className="flex min-w-screen flex-col items-center justify-between ">
         <div className='flex justify-between items-center w-full'>
           <div className="flex justify-start py-6 lg:py-10 w-full">
-            <Link href={`/cms/sites`}
+            <Link href={`/cms`}
               className={cn(buttonVariants({ variant: "ghost" }))}>
               <ChevronLeft className="mr-2 h-4 w-4" />
               See all posts
@@ -67,7 +67,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
           })}
           <hr className="mt-12" />
           <div className="flex justify-center py-6 lg:py-10">
-            <Link href={`/cms/sites`}
+            <Link href={`/cms`}
               className={cn(buttonVariants({ variant: "ghost" }))}>
               <ChevronLeft className="mr-2 h-4 w-4" />
               See all posts

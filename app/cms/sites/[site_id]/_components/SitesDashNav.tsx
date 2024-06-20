@@ -16,6 +16,7 @@ import { usePathname } from 'next/navigation'
 
 export default function SitesDashNav({ site_id }: { site_id: string }) {
   const pathname = usePathname()
+  console.log('pathname', pathname?.split("/cms/sites/")?.[1]?.split('/')?.[0])
 
   const navItems = [
     { href: `/cms/sites/${site_id}`, label: "My Site", icon: Home },

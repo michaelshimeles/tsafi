@@ -100,7 +100,7 @@ const MenuBar = ({ editor }: any) => {
   )
 }
 
-export default function DocumentEditor({ params }: { params: { id: string } }) {
+export default function DocumentEditor({ params }: { params: { id: string, site_id: string } }) {
 
   const { data } = useGetDocumentById(params?.id)
 
@@ -178,7 +178,7 @@ export default function DocumentEditor({ params }: { params: { id: string } }) {
   }, [editor])
 
   return (
-    <SiteDashWrapper site_id={null}>
+    <SiteDashWrapper site_id={params?.site_id}>
       <div className='flex flex-col items-end w-full'>
         <div className='flex justify-between items-center gap-3 w-full'>
           <div className='flex justify-center items-center pb-3 my-7'>

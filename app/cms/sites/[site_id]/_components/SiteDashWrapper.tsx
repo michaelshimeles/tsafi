@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 import SitesDashNav from './SitesDashNav'
 import SitesDashNavMobile from './SitesDashNavMobile'
 
-export default function SiteDashWrapper({ children, site_id }: { children: ReactNode, site_id: string | null }) {
+export default function SiteDashWrapper({ children, site_id }: { children: ReactNode, site_id: string }) {
 
   return (
     <>
