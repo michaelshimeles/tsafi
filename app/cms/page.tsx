@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { readSites } from '@/utils/functions/sites/read-sites'
 import DashWrapper from './_components/DashWrapper'
 import CreateSite from './sites/_components/CreateSite'
+import { Card } from '@/components/ui/card'
 
 export default async function Sites() {
 
@@ -25,9 +26,9 @@ export default async function Sites() {
                 key={site?.id}
                 href={`/cms/sites/${site?.site_id}`}
                 prefetch={true}
-                className="flex flex-col border dark:border-zinc-800 border-zinc-200 rounded-md w-[350px] hover:cursor-pointer hover:shadow-2xl hover:shadow-purple-500/50 transition-shadow duration-300"
+                className="flex flex-col rounded-md w-[350px] hover:cursor-pointer hover:shadow-2xl hover:shadow-purple-500/50 transition-shadow duration-300"
               >
-                <div className="flex flex-col px-[1rem] justify-between h-full py-[1rem]">
+                <Card className="flex flex-col px-[1rem] justify-between h-full py-[1rem]">
                   <div className='flex flex-col w-full justify-center items-startxw'>
                     <h2 className="text-lg font-bold">{site?.site_name}</h2>
                     <p className="text-gray-400 pt-1 text-sm">{site?.site_description}</p>
@@ -38,7 +39,7 @@ export default async function Sites() {
                       {new Date(site?.created_at)?.toLocaleDateString()}
                     </p>
                   </div>
-                </div>
+                </Card>
               </Link>
             ))}
           </div>

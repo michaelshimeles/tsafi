@@ -7,7 +7,8 @@ export const createAuthor = async (
   name: string,
   instagram: string,
   twitter: string,
-  image_url: string
+  image_url: string,
+  site_id: string
 ) => {
   const { userId } = auth();
 
@@ -39,6 +40,7 @@ export const createAuthor = async (
           author_instagram: instagram,
           author_twitter: twitter,
           user_id: userId,
+          site_id,
         },
       ])
       .select();

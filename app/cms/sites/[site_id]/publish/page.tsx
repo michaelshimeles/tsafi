@@ -22,11 +22,12 @@ import { storeArticles } from "@/utils/actions/articles/store-articles";
 import { useGetAllAuthors } from "@/utils/hooks/useGetAllAuthors";
 import { useGetAllCategories } from "@/utils/hooks/useGetAllCategories";
 import { useGetAllDocuments } from "@/utils/hooks/useGetAllDocuments";
-import { useGetAllSites } from "@/utils/hooks/useGetAllSites";
 import { UploadDropzone } from "@/utils/uploadthing";
 import "@blocknote/core/fonts/inter.css";
 import "@blocknote/react/style.css";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { PlusIcon } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -44,6 +45,7 @@ const FormSchema = z.object({
   article: z.string(),
 });
 
+
 export default function Publish({ params }: { params: { site_id: string } }) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -59,12 +61,12 @@ export default function Publish({ params }: { params: { site_id: string } }) {
     },
   });
 
+
   const [imageUploadUrl, setImageUploadUrl] = useState<string>("");
 
   const { data: documentData } = useGetAllDocuments();
-  const { data: authorsData } = useGetAllAuthors();
-  const { data: categoryData } = useGetAllCategories();
-  const { data: sitesData } = useGetAllSites();
+  const { data: authorsData } = useGetAllAuthors(params?.site_id);
+  const { data: categoryData } = useGetAllCategories(params?.site_id);
 
   // Function to generate slug from title
   const generateSlug = (title: string) => {
@@ -231,11 +233,17 @@ export default function Publish({ params }: { params: { site_id: string } }) {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {authorsData?.map((info: any) => (
+                          {authorsData?.length > 0 ? authorsData?.map((info: any) => (
                             <SelectItem key={info?.id} value={info?.author_id}>
                               {info?.author_name}
                             </SelectItem>
-                          ))}
+                          )) :
+                            <Link href={`/cms/sites/${params?.site_id}/author`}>
+                              <Button variant="ghost" className="w-full">
+                                <PlusIcon className="mr-2 w-4 h-4 border rounded-full" />
+                                Create Author
+                              </Button>
+                            </Link>}
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -255,11 +263,17 @@ export default function Publish({ params }: { params: { site_id: string } }) {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {categoryData?.map((info: any) => (
+                          {categoryData?.length > 0 ? categoryData?.map((info: any) => (
                             <SelectItem key={info?.id} value={String(info?.id)}>
                               {info?.category}
                             </SelectItem>
-                          ))}
+                          )) :
+                            <Link href={`/cms/sites/${params?.site_id}/category`}>
+                              <Button variant="ghost" className="w-full">
+                                <PlusIcon className="mr-2 w-4 h-4 border rounded-full" />
+                                Create Category
+                              </Button>
+                            </Link>}
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -291,6 +305,7 @@ export default function Publish({ params }: { params: { site_id: string } }) {
                   </FormItem>
                 )}
               />
+
               <div className="flex">
                 <Button type="submit" size="sm">
                   Submit

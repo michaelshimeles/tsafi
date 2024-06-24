@@ -3,7 +3,7 @@ import { auth } from "@clerk/nextjs/server";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
-export const createCategory = async (category: string) => {
+export const createCategory = async (category: string, site_id: string) => {
   const { userId } = auth();
 
   if (!userId) {
@@ -30,6 +30,7 @@ export const createCategory = async (category: string) => {
         {
           category,
           user_id: userId,
+          site_id: site_id
         },
       ])
       .select();

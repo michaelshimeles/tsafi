@@ -29,10 +29,10 @@ export default async function SiteLayout({
         <title>{siteName}</title>
         <meta name="site_name" content={siteName} />
         <meta name="description" content={siteDescription} />
-        <meta name="image" content={siteCover} />
+        {siteCover && <meta name="image" content={siteCover} />}
         <meta name="url" content={siteDomain + "." + process.env.BASE_DOMAIN}></meta>
-        <link rel="icon" href={siteLogo} />
-      </head >
+        {siteLogo && <link rel="icon" href={siteLogo} />}
+      </head>
       <body>
 
         <NavBar

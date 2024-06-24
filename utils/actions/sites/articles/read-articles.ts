@@ -24,6 +24,7 @@ export const readAllArticles = async (site_id: string) => {
     const { data: articles, error: articleError } = await supabase
       .from("blog")
       .select("*, category(*), author(*)")
+      .eq("published", true)
       .eq("site_id", site_id);
 
     if (articleError) {

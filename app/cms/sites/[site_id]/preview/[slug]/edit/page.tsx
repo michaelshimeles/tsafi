@@ -242,7 +242,7 @@ export default function ArticleEditor({ params }: { params: { slug: string, site
             <Button>Preview</Button>
           </a>
         </div>
-        <div className="p-4 border rounded mt-5">
+        <div className="p-4 border rounded mt-5 w-full">
           <div className='flex pb-3 my-7'>
             <h1 className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-5xl">
               {data?.[0]?.title}
@@ -280,7 +280,7 @@ export default function ArticleEditor({ params }: { params: { slug: string, site
             </button>
           </BubbleMenu>
           <div className="tiptap-editor">
-            <EditorContent editor={editor} />
+            <EditorContent editor={editor} className='min-h-[55vh]'/>
           </div>
           <div className="mt-4 w-full">
             <UpdateArticle slug={params?.slug} html={html} />

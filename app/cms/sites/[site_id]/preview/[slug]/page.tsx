@@ -15,7 +15,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string,
 
   return (
     <SiteDashWrapper site_id={params?.site_id}>
-      <main className="flex min-w-screen flex-col items-center justify-between ">
+      <main className="flex min-w-screen flex-col items-center justify-between w-full">
         <div className='flex justify-between items-center w-full'>
           <div className="flex justify-start py-6 lg:py-10 w-full">
             <Link href={`/cms/sites/${params?.site_id}`}

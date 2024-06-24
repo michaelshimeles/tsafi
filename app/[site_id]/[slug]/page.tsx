@@ -89,31 +89,31 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
             {response?.[0]?.title}
           </h1>
           <div className="mt-4 flex items-center space-x-3">
-            <Image
+            {response?.[0]?.author?.author_profile_img && <Image
               src={response?.[0]?.author?.author_profile_img}
               alt={""}
               width={42}
               height={42}
               className="rounded-full bg-white"
-            />
+            />}
             <div className="flex flex-col text-left leading-tight">
               <p className="font-medium">
                 {response?.[0]?.author?.author_name}
               </p>
-              {/* <Link href={`https://www.instagram.com/${response?.[0]?.author?.author_instagram}`} target='_blank'>
-                <p className='text-xs text-gray-800 font-semibold hover:underline hover:cursor-pointer'>@{response?.[0]?.author?.author_instagram}</p>
-              </Link> */}
+              <Link href={`https://www.x.com/${response?.[0]?.author?.author_twitter}`} target='_blank'>
+                <p className='text-xs text-gray-800 dark:text-gray-300 font-semibold hover:underline hover:cursor-pointer'>@{response?.[0]?.author?.author_twitter}</p>
+              </Link>
             </div>
           </div>
         </div>
-        <Image
+        {response?.[0]?.image && <Image
           src={response?.[0]?.image}
           alt={""}
           width={720}
           height={405}
           className="my-8 rounded-md border bg-muted transition-colors"
           priority
-        />
+        />}
         {ReactHtmlParser(response?.[0]?.blog_html, {
           transform: transformNode
         })}

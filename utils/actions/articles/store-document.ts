@@ -7,7 +7,8 @@ import { cookies } from "next/headers";
 export const storeDocument = async (
   title: string,
   blog: string,
-  id: string
+  id: string,
+  site_id: string
 ) => {
   const { userId } = auth();
 
@@ -34,6 +35,7 @@ export const storeDocument = async (
       .from("documents")
       .update([{ title, document: blog }])
       .eq("document_id", id)
+      .eq("site_id", site_id)
       .eq("user_id", userId)
       .select();
 

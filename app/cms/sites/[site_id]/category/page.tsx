@@ -33,7 +33,7 @@ export default function Category({ params }: { params: { site_id: string } }) {
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
-      const response = await createCategory(data?.category)
+      const response = await createCategory(data?.category, params?.site_id)
       toast("Category has been created")
       form.reset()
       return response
@@ -62,7 +62,7 @@ export default function Category({ params }: { params: { site_id: string } }) {
                   <FormItem>
                     <FormLabel>Enter a category</FormLabel>
                     <FormControl>
-                      <Input  {...field} />
+                      <Input  {...field} placeholder="Use category to organize articles"/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>

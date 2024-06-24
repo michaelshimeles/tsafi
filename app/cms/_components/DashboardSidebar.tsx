@@ -3,20 +3,17 @@
 import { Separator } from '@/components/ui/separator'
 import clsx from 'clsx'
 import {
-  BookA,
-  BookCheck,
-  Globe,
+  Brain,
   Home,
   NetworkIcon,
-  Pen,
-  Settings,
-  Table
+  Settings
 } from "lucide-react"
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 const navItems = [
   { href: "/cms", label: "Home", icon: Home },
+  { href: "/cms/ai", label: "AI (beta)", icon: Brain },
   { href: "/cms/api", label: "API", icon: NetworkIcon },
   { href: "/cms/settings", label: "Settings", icon: Settings },
 ];
@@ -51,7 +48,7 @@ export default function DashboardNav() {
                   </div>
                   {label}
                 </Link>
-                {index === 2 && <Separator className="my-[0.75rem]" />}
+                {index === 1 && <Separator className="my-[0.75rem]" />}
               </div>
             ))}
           </nav>

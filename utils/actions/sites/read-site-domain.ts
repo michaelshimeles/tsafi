@@ -1,4 +1,5 @@
 "use server";
+import { auth } from "@clerk/nextjs/server";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
@@ -17,6 +18,7 @@ export const readSiteDomain = async (domain: string) => {
     }
   );
 
+  // middleware
   try {
     const { data, error } = await supabase
       .from("sites")

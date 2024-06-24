@@ -220,7 +220,7 @@ export default function DocumentEditor({ params }: { params: { id: string, site_
             <EditorContent editor={editor} className='min-h-[60vh]' />
           </div>
           <div className="mt-4 w-full">
-            <SubmitDocument html={html!} id={params?.id} title={data?.[0]?.title} />
+            <SubmitDocument html={html!} id={params?.id} site_id={params?.site_id} title={data?.[0]?.title} />
           </div>
         </div>
       </div>
