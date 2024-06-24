@@ -21,7 +21,6 @@ export default async function Article({ params }: { params: { id: string } }) {
 
   return (
     <div className="flex flex-col justify-center items-center pb-2">
-      <NavBar />
       <article className="container relative max-w-3xl py-6 lg:py-10">
         <div>
           <p
