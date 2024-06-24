@@ -68,7 +68,7 @@ export function PromptForm({ input, handleInputChange, handleSubmit, setInput }:
 }
 <form onSubmit={handleSubmit} className='w-full'>
   <div className="relative flex max-h-60 w-full grow flex-col  overflow-hidden bg-background px-8 sm:rounded-md sm:border sm:px-12">
-    <Dialog>
+    {/* <Dialog>
       <DialogTrigger asChild>
         <Button
           variant="outline"
@@ -104,7 +104,7 @@ export function PromptForm({ input, handleInputChange, handleSubmit, setInput }:
           <Button type="submit">Save changes</Button>
         </DialogFooter>
       </DialogContent>
-    </Dialog>
+    </Dialog> */}
     <Textarea
       placeholder="Send a message."
       className="min-h-[60px] w-full resize-none bg-transparent px-4 py-[1.3rem] focus-within:outline-none sm:text-sm"
