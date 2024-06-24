@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
-export function SubmitDocument({ html, id, title }: { html: string, id: string, title: string }) {
+export function SubmitDocument({ html, id, title, site_id }: { html: string, id: string, title: string, site_id: string }) {
   const [loading, setLoading] = useState<boolean>(false);
   const { refetch } = useGetDocumentById(id)
   const [open, setOpen] = useState<boolean>(false);
@@ -32,7 +32,7 @@ export function SubmitDocument({ html, id, title }: { html: string, id: string, 
   const onSubmit = async (data: any) => {
     setLoading(true)
     try {
-      const result = await storeDocument(data?.title, html, id)
+      const result = await storeDocument(data?.title, html, id, site_id)
 
       setLoading(false)
       toast("Article has been submitted, you can publish the article by going to 'Publish Article' tab", {

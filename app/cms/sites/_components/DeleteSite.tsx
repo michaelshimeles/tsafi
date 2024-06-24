@@ -38,7 +38,7 @@ export default function DeleteSite({ site_id }: { site_id: string }) {
             try {
               const response = await deleteSite(site_id)
               toast(`Site has been deleted`)
-              router.push("/cms/sites")
+              router.push("/cms")
               return response
             } catch (error) {
               console.log('e', error)

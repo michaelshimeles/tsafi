@@ -28,7 +28,7 @@ export const createDocument = async (title: string, site_id: string) => {
   try {
     const { data, error } = await supabase
       .from("documents")
-      .insert([{ title, user_id: userId, site_id }])
+      .insert([{ title: title, user_id: userId, site_id: site_id }])
       .select();
 
     if (error?.code) return error;

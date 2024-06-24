@@ -5,13 +5,12 @@ import { Article } from "@/utils/types"
 import Image from "next/image"
 import Link from "next/link"
 
-export default async function page({ params }: { params: { site_id: string }}) {
+export default async function page({ params }: { params: { site_id: string } }) {
 
   const result = await readSiteById(params?.site_id);
 
   const response = await readAllArticles(params?.site_id) as Article[]
 
-  console.log('resp', response)
   return (
     <div className="flex flex-col mt-[1rem] justify-center items-center w-[90%]">
       <div className='flex flex-col items-center p-3 w-full'>
@@ -33,25 +32,25 @@ export default async function page({ params }: { params: { site_id: string }}) {
           {response?.length > 0 && response?.map((article: Article) => (
             <Link key={article?.id} href={`/${article?.slug}`}>
               <article
-                className="flex flex-col space-y-2 p-4 rounded-md border"
+                className="flex flex-col space-y-2 p-4 rounded-md border w-[350px]"
               >
-                <Image
+                {article?.image && <Image
                   src={article?.image}
                   alt={""}
                   width={804}
                   height={452}
                   className="rounded-md border bg-muted transition-colors"
-                />
-                <div className='flex lg:flex-row w-full justify-between items-center'>
-                  <h2 className="text-lg lg:text-2xl font-bold">{article?.title}</h2>
+                />}
+                <h2 className="text-xl font-bold">{article?.title}</h2>
+                <p className="text-sm text-muted-foreground">{article?.subtitle}</p>
+                <div className='flex lg:flex-row w-full justify-between items-center gap-1'>
+                  <p className="text-sm text-muted-foreground">
+                    {new Date(article?.created_at)?.toLocaleDateString()}
+                  </p>
                   <div>
                     <Badge>{article?.category?.category}</Badge>
                   </div>
                 </div>
-                <p className="text-muted-foreground">{article?.subtitle}</p>
-                <p className="text-sm text-muted-foreground">
-                  {new Date(article?.created_at)?.toLocaleDateString()}
-                </p>
               </article>
             </Link>
           ))}

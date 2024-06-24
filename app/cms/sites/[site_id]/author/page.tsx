@@ -42,7 +42,7 @@ export default function Author({ params }: { params: { site_id: string } }) {
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
-      const response = await createAuthor(data?.name, data?.instagram, data?.twitter, imageUploadUrl!)
+      const response = await createAuthor(data?.name, data?.instagram, data?.twitter, imageUploadUrl!, params?.site_id)
       if (response?.error) {
         toast("Author creation failed")
         return
@@ -75,20 +75,7 @@ export default function Author({ params }: { params: { site_id: string } }) {
                   <FormItem>
                     <FormLabel>Enter your name</FormLabel>
                     <FormControl>
-                      <Input  {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="instagram"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Enter your instagram username</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="heytorontofoodie" />
+                      <Input  {...field} placeholder="Author&apos;s name"/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -101,7 +88,7 @@ export default function Author({ params }: { params: { site_id: string } }) {
                   <FormItem>
                     <FormLabel>Enter your twitter username</FormLabel>
                     <FormControl>
-                      <Input {...field} placeholder="heytorontofoodie" />
+                      <Input {...field} placeholder="Twitter username" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

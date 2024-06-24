@@ -8,20 +8,20 @@ import { Button } from "@/components/ui/button";
 
 export default function ModeToggle() {
     const { theme, setTheme } = useTheme();
-    const [mounted, setMounted] = useState(false);
+    // const [mounted, setMounted] = useState(false);
 
-    // After mounting, we have access to the theme
-    useEffect(() => setMounted(true), []);
+    // // After mounting, we have access to the theme
+    // useEffect(() => setMounted(true), []);
 
-    if (!mounted) {
-        // Render nothing on the server and until the theme is mounted
-        return null;
-    }
+    // if (!mounted) {
+    //     // Render nothing on the server and until the theme is mounted
+    //     return null;
+    // }
 
     return (
         <div>
             {theme === "dark" ? (
-                <Button variant="ghost" className="hover:bg-inherit border-zinc-900 bg-black" size="icon" onClick={() => setTheme("light")}>
+                <Button variant="ghost" className="hover:bg-inherit border-zinc-900 bg-[#0c0c0d]" size="icon" onClick={() => setTheme("light")}>
                     <Sun className="w-5 h-5" />
                     <span className="sr-only">Toggle theme</span>
                 </Button>
