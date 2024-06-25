@@ -1,7 +1,7 @@
-## NextJS 14 Starter Template 
+## NextJS 14 Starter Template
 
 ## Tech Stack
-NextJS 14 - Full Stack framework 
+NextJS 14 - Full Stack framework
 
 TailwindCSS - CSS framework
 
@@ -37,9 +37,9 @@ NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
 
 WEBHOOK_SECRET=
 
-NEXT_PUBLIC_SUPABASE_URL=
+SUPABASE_URL=
 
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_SECRET_KEY=
 
 DATABASE_URL=
 
