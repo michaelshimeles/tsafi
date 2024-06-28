@@ -4,12 +4,10 @@ import { openai } from "@ai-sdk/openai";
 import { currentUser } from "@clerk/nextjs/server";
 import { convertToCoreMessages, streamText, tool } from "ai";
 import { z } from "zod";
-import { useTheme } from "next-themes";
 
 export async function POST(req: Request) {
   const { messages } = await req.json();
   const user = await currentUser();
-  const { setTheme } = useTheme();
 
   const system = `
   You are tsafi ai, an ai assistant helping users of tsafi create and manager their blog sites and content.
@@ -62,23 +60,6 @@ export async function POST(req: Request) {
           };
         },
       }),
-      toggleMode: {
-        description: `
-            Toggle between light, dark and system mode. Always call this tool when
-             the user asks to set the light, dark or system mode. Call this tool if
-             the user simply prompts "dark mode", "light mode" or "system mode". If
-             the user asks you to do anything else regarding this task, explain why
-             you can't do that.`,
-        parameters: z.object({
-          mode: z.enum(["light", "dark", "system"]),
-        }),
-        // execute: async (mode: any) => {
-        //   setTheme(mode)
-        //   return {
-        //     message: "Mode changed"
-        //   }
-        // },
-      },
     },
     onFinish: async ({ text, toolCalls, toolResults, finishReason, usage }) => {
       console.log("toolResults", toolResults);
