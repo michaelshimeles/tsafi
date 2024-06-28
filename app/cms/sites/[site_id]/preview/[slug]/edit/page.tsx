@@ -10,6 +10,8 @@ import { useCallback, useEffect } from 'react';
 import SiteDashWrapper from '../../../_components/SiteDashWrapper';
 import { UpdateArticle } from '../../_components/UpdateArticle';
 import "./styles.scss";
+import { useRouter } from 'next/navigation';
+import { useCheckAuthorization } from '@/utils/hooks/useCheckAuthorization';
 
 const MenuBar = ({ editor }: any) => {
 
@@ -166,6 +168,14 @@ const MenuBar = ({ editor }: any) => {
 }
 
 export default function ArticleEditor({ params }: { params: { slug: string, site_id: string } }) {
+
+  const router = useRouter()
+
+  const { data: authCheck, error } = useCheckAuthorization(params?.site_id)
+
+  if (error || authCheck?.length === 0) {
+    router.push("/cms")
+  }
 
   const { data } = useGetArticleBySlug(params?.slug)
 

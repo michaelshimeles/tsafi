@@ -1,3 +1,4 @@
+"use client"
 import {
     Avatar,
     AvatarFallback,
@@ -10,12 +11,10 @@ import {
     DropdownMenuItem,
     DropdownMenuLabel,
     DropdownMenuSeparator,
-    DropdownMenuShortcut,
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
 import { SignOutButton, useUser } from "@clerk/nextjs"
 import {
-    CreditCard,
     LogOut,
     Settings,
     User

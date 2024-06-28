@@ -8,18 +8,24 @@ import {
 } from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Authorization } from "@/utils/actions/authorization"
+import { readSiteId } from "@/utils/functions/sites/read-site-id"
 import { ExternalLinkIcon } from 'lucide-react'
 import Link from 'next/link'
-import { readSiteId } from "@/utils/functions/sites/read-site-id"
-import SiteDashWrapper from "../_components/SiteDashWrapper"
-import DeleteSite from "../../_components/DeleteSite"
-import ChangeSiteName from "../../_components/ChangeSiteName"
+import { redirect } from "next/navigation"
 import ChangeSiteDescription from "../../_components/ChangeSiteDescription"
+import ChangeSiteName from "../../_components/ChangeSiteName"
 import ChangeSiteSubdomain from "../../_components/ChangeSiteSubdomain"
-import SetupCustomDomain from "../../_components/SetupCustomDomain"
+import DeleteSite from "../../_components/DeleteSite"
+import SiteDashWrapper from "../_components/SiteDashWrapper"
 
 
 export default async function SettingsPage({ params }: { params: { site_id: string } }) {
+  const authCheck: any = await Authorization(params?.site_id)
+
+  if (authCheck?.error || authCheck?.length === 0) {
+    redirect("/cms")
+  }
   const response = await readSiteId(params?.site_id)
 
   return (

@@ -17,7 +17,7 @@ import { BubbleMenu, EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { Code, ImageIcon, ListOrdered, Quote, Redo, Strikethrough, Undo, Unlink } from 'lucide-react';
 import { useCallback, useEffect } from 'react';
-import { SubmitDocument } from './(components)/SubmitDocument';
+import { SubmitDocument } from './_components/SubmitDocument';
 import "./styles.scss";
 
 import {
@@ -26,6 +26,8 @@ import {
 } from "@/components/ui/toggle-group";
 import SiteDashWrapper from '../../_components/SiteDashWrapper';
 import DeleteDocument from '@/app/cms/_components/DeleteDocument';
+import { useRouter } from 'next/navigation';
+import { useCheckAuthorization } from '@/utils/hooks/useCheckAuthorization';
 
 const MenuBar = ({ editor }: any) => {
 
@@ -101,6 +103,14 @@ const MenuBar = ({ editor }: any) => {
 }
 
 export default function DocumentEditor({ params }: { params: { id: string, site_id: string } }) {
+
+  const router = useRouter()
+
+  const { data: authCheck, error } = useCheckAuthorization(params?.site_id)
+
+  if (error || authCheck?.length === 0) {
+    router.push("/cms")
+  }
 
   const { data } = useGetDocumentById(params?.id)
 

@@ -48,7 +48,6 @@ export default function HeroSection() {
                             </div>
                         </div>
                     </motion.div>
-                    {/* <div className="from-1% absolute inset-0 bg-gradient-to-t from-white to-35%" /> */}
                 </div>
             </div>
 

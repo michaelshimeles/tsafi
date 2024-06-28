@@ -33,6 +33,9 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import SiteDashWrapper from "../_components/SiteDashWrapper";
+import { useCheckAuthorization } from "@/utils/hooks/useCheckAuthorization";
+import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const FormSchema = z.object({
   title: z.string(),
@@ -47,6 +50,15 @@ const FormSchema = z.object({
 
 
 export default function Publish({ params }: { params: { site_id: string } }) {
+
+  const router = useRouter()
+
+  const { data: authCheck, error } = useCheckAuthorization(params?.site_id)
+
+  if (error || authCheck?.length === 0) {
+    router.push("/cms")
+  }
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {

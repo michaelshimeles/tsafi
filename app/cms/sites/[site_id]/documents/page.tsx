@@ -1,9 +1,17 @@
 import { getAllDocuments } from '@/utils/functions/article/get-all-documents'
-import Documents from './(components)/Documents'
+import Documents from './_components/Documents'
 import CreateDocument from '@/app/cms/_components/CreateDocument'
 import SiteDashWrapper from '../_components/SiteDashWrapper'
+import { Authorization } from '@/utils/actions/authorization'
+import { redirect } from 'next/navigation'
 
 export default async function DocumentsPage({ params }: { params: { site_id: string } }) {
+
+  const authCheck: any = await Authorization(params?.site_id)
+
+  if (authCheck?.error || authCheck?.length === 0) {
+    redirect("/cms")
+  }
 
   const response = await getAllDocuments(params?.site_id)
 
