@@ -8,8 +8,16 @@ import ManageArticle from '../_components/ManageArticle'
 import { transformNode } from '@/utils/transform-node'
 import { getAllArticleBySlug } from '@/utils/functions/article/get-all-article-slug'
 import SiteDashWrapper from '../../_components/SiteDashWrapper'
+import { Authorization } from '@/utils/actions/authorization'
+import { redirect } from 'next/navigation'
 
 export default async function BlogPostPage({ params }: { params: { slug: string, site_id: string } }) {
+
+  const authCheck: any = await Authorization(params?.site_id)
+
+  if (authCheck?.error || authCheck?.length === 0) {
+    redirect("/cms")
+  }
 
   const response = await getAllArticleBySlug(params?.slug)
 

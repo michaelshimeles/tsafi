@@ -6,8 +6,17 @@ import { StopCircle, VerifiedIcon } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import SiteDashWrapper from "./_components/SiteDashWrapper"
+import { Authorization } from "@/utils/actions/authorization"
+import { redirect } from "next/navigation"
 
 export default async function CMS({ params }: { params: { site_id: string } }) {
+
+  const authCheck: any = await Authorization(params?.site_id)
+
+  if (authCheck?.error || authCheck?.length === 0) {
+    redirect("/cms")
+  }
+
   const response = await getAllArticlsBySite(params?.site_id)
 
   return (
