@@ -1,11 +1,9 @@
 "use client"
-import { ArrowRight } from 'lucide-react';
-import Image from 'next/image';
-import Link from "next/link";
-import { Button } from "../ui/button";
 import { motion } from 'framer-motion';
-import { AnimatedGradientTextComponent } from './AnimatedGradientComponent';
+import { ArrowRight } from 'lucide-react';
+import Link from "next/link";
 import { BorderBeam } from '../magicui/border-beam';
+import { Button } from "../ui/button";
 
 export default function HeroSection() {
     return (
