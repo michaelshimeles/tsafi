@@ -15,21 +15,20 @@ export async function POST(req: Request) {
 
   const user = await currentUser();
 
-  const messageResult = await storeMessages(user?.id!, messages);
+  // const messageResult = await storeMessages(user?.id!, messages);
 
   const system = `
   You are tsafi ai, an ai assistant helping users of tsafi create and manage their blog sites and content.
   The user's first name is ${user?.firstName}, their email ${user?.emailAddresses?.[0]?.emailAddress}.
 
-  Be friendly and crack jokes when you can. Be very human-like and not robotic.
-`;
+  Be friendly and crack jokes when you can. Be very human-like and not robotic.`;
 
-console.log('messageResult', messageResult)
+  // console.log("messageResult", messageResult);
 
   const result = await streamText({
     model: openai("gpt-4o"),
     system,
-    messages: convertToCoreMessages(messageResult?.[0]?.messages),
+    messages: convertToCoreMessages(messages),
     tools: {
       create_site: tool({
         description: "Create a new blog site",
@@ -74,10 +73,7 @@ console.log('messageResult', messageResult)
           }));
 
           const displaySites = sites
-            .map(
-              (site: any) =>
-                `${site.name}, ${site.subdomain}.tsafi.xyz`
-            )
+            .map((site: any) => `${site.name}, ${site.subdomain}.tsafi.xyz`)
             .join("\n");
 
           return {
