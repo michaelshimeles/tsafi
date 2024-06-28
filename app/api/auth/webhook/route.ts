@@ -5,9 +5,12 @@ import { headers } from "next/headers";
 import { Webhook } from "svix";
 
 export async function POST(req: Request) {
+  console.log("FIRED")
   const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET;
 
   if (!WEBHOOK_SECRET) {
+    console.log("WEBHOOK FAILED")
+
     throw new Error(
       "Please add WEBHOOK_SECRET from Clerk Dashboard to .env or .env.local"
     );
@@ -21,10 +24,14 @@ export async function POST(req: Request) {
 
   // If there are no headers, error out
   if (!svix_id || !svix_timestamp || !svix_signature) {
+    console.log("WEBHOOK FAILED 2")
+
     return new Response("Error occured -- no svix headers", {
       status: 400,
     });
   }
+
+  console.log("WE GOOD SO FAR")
 
   // Get the body
   const payload = await req.json();
@@ -43,11 +50,16 @@ export async function POST(req: Request) {
       "svix-signature": svix_signature,
     }) as WebhookEvent;
   } catch (err) {
+    console.log("WEBHOOK FAILED 3")
+
     console.error("Error verifying webhook:", err);
     return new Response("Error occured", {
       status: 400,
     });
   }
+
+  console.log("KEEP GOING")
+
 
   // Get the ID and type
   const { id } = evt.data;
@@ -55,13 +67,15 @@ export async function POST(req: Request) {
 
   if (eventType === "user.created") {
     try {
-      await userCreate({
+      const response = await userCreate({
         email: payload?.data?.email_addresses?.[0]?.email_address,
         first_name: payload?.data?.first_name,
         last_name: payload?.data?.last_name,
         profile_image_url: payload?.data?.profile_image_url,
         user_id: payload?.data?.id,
       });
+
+      console.log('response', response)
     } catch (error: any) {
       throw new Error(error.message);
     }
