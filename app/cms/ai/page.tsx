@@ -6,13 +6,22 @@ import { ExternalLink } from 'lucide-react';
 import { useChat } from '@ai-sdk/react';
 import DashWrapper from "../_components/DashWrapper";
 import { PromptForm } from "./_components/prompt_form";
+import { useAIMessages } from '@/utils/hooks/useAIMessages';
+import { useUser } from '@clerk/nextjs';
 
 export default function Ai() {
-  const { messages, input, handleInputChange, handleSubmit, setInput } = useChat();
+  const { user } = useUser()
+  const { data } = useAIMessages(user?.id!)
+
+  const { messages, input, handleInputChange, handleSubmit, setInput } = useChat({
+    initialMessages: data?.[0]?.messages
+  });
   const messagesEndRef = useRef<any>(null);
 
+  console.log('messages', messages)
+
   const scrollToBottom = () => {
-    messagesEndRef?.current?.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef?.current?.scrollIntoView();
   };
 
   useEffect(() => {
@@ -45,7 +54,7 @@ export default function Ai() {
                                 </Button>
                               </Link>
                               <Link href={`/cms`} target="_blank">
-                                <Button size="sm">
+                                <Button variant="outline" size="sm">
                                   <ExternalLink className="mr-1 w-4 h-4" />
                                   Dashboard
                                 </Button>
@@ -59,8 +68,34 @@ export default function Ai() {
                   if (toolInvocation.toolName === 'read_sites') {
                     return (
                       <div key={toolCallId} className='bg-blue-700 bg-opacity-10 text-sm whitespace-pre-wrap px-3 py-2 rounded-lg'>
-                        {toolInvocation?.result?.message && JSON?.parse(toolInvocation?.result?.message).map((info: any) => (
+                        {toolInvocation?.result?.message && JSON?.parse(toolInvocation?.result?.result).map((info: any) => (
                           <div key={info?.site_name}>
+                            {toolInvocation?.result?.message + " "}
+                          </div>
+                        ))}
+                      </div>
+                    );
+                  }
+                  if (toolInvocation.toolName === 'update_site_name') {
+                    console.log('toolInvocation', toolInvocation)
+                    return (
+                      <div key={toolCallId} className='bg-blue-700 bg-opacity-10 text-sm whitespace-pre-wrap px-3 py-2 rounded-lg'>
+                        {toolInvocation?.result?.message && JSON?.parse(toolInvocation?.result?.result).map((info: any) => (
+                          <div key={info?.site_name}>
+                            {toolInvocation?.result?.message + " "}
+                            {info?.site_name}: <Link href={`https://${info?.site_subdomain}.tsafi.xyz`} className="underline" target="_blank">{info?.site_subdomain + "." + "tsafi.xyz"}</Link>
+                          </div>
+                        ))}
+                      </div>
+                    );
+                  }
+                  if (toolInvocation.toolName === 'update_sub_domain') {
+                    console.log('toolInvocation', toolInvocation)
+                    return (
+                      <div key={toolCallId} className='bg-blue-700 bg-opacity-10 text-sm whitespace-pre-wrap px-3 py-2 rounded-lg'>
+                        {toolInvocation?.result?.message && JSON?.parse(toolInvocation?.result?.result).map((info: any) => (
+                          <div key={info?.site_name}>
+                            {toolInvocation?.result?.message + " "}
                             {info?.site_name}: <Link href={`https://${info?.site_subdomain}.tsafi.xyz`} className="underline" target="_blank">{info?.site_subdomain + "." + "tsafi.xyz"}</Link>
                           </div>
                         ))}
@@ -76,6 +111,7 @@ export default function Ai() {
               </div>
             </div>
           ))}
+          <div />
           <div ref={messagesEndRef} />
         </div>
         <div className="p-4">

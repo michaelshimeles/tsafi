@@ -13,7 +13,7 @@ import { usePathname } from 'next/navigation'
 
 const navItems = [
   { href: "/cms", label: "Home", icon: Home },
-  { href: "/cms/ai", label: "AI (beta)", icon: Brain },
+  { href: "/cms/ai", label: "AI (alpha)", icon: Brain },
   { href: "/cms/api", label: "API", icon: NetworkIcon },
   { href: "/cms/settings", label: "Settings", icon: Settings },
 ];
