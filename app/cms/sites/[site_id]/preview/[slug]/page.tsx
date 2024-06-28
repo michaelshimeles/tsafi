@@ -57,7 +57,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string,
                   {response?.[0]?.author?.author_name}
                 </p>
                 <Link href={`https://www.x.com/${response?.[0]?.author?.author_twitter}`} target='_blank'>
-                  <p className='text-xs text-gray-800 font-semibold hover:underline hover:cursor-pointer'>@{response?.[0]?.author?.author_twitter}</p>
+                  <p className='text-xs text-gray-800 dark:text-gray-300 font-semibold hover:underline hover:cursor-pointer'>@{response?.[0]?.author?.author_twitter}</p>
                 </Link>
               </div>
             </div>
