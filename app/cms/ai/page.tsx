@@ -18,8 +18,6 @@ export default function Ai() {
   });
   const messagesEndRef = useRef<any>(null);
 
-  console.log('messages', messages)
-
   const scrollToBottom = () => {
     messagesEndRef?.current?.scrollIntoView();
   };

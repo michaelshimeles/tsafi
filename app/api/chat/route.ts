@@ -13,11 +13,6 @@ import { z } from "zod";
 export async function POST(req: Request) {
   const { messages } = await req.json();
 
-  console.log('messages', messages)
-  if (!messages) {
-    throw new Error("Messages are undefined or null");
-  }
-
   const user = await currentUser();
 
   const messageResult = await storeMessages(user?.id!, messages);
@@ -129,25 +124,6 @@ console.log('messageResult', messageResult)
           };
         },
       }),
-      // update_description: tool({
-      //   description: "Change or update the description of a site",
-      //   parameters: z.object({
-      //     current_site_subdomain: z.string().describe("current site subdomain"),
-      //     new_site_subdomain: z.string().describe("new site subdomain"),
-      //   }),
-      //   execute: async ({ current_site_subdomain, new_site_subdomain }) => {
-      //     const getSiteInfo = await readSiteSubdmain(current_site_subdomain);
-
-      //     const result = await changeSiteSubdomain(
-      //       getSiteInfo?.[0]?.site_id,
-      //       new_site_subdomain
-      //     );
-      //     return {
-      //       result: JSON.stringify(result),
-      //       message: `Your blog site subdomain has been updated from ${current_site_subdomain} to ${result?.[0]?.site_subdomain} and you can check it out by clicking the button below.`,
-      //     };
-      //   },
-      // }),
     },
     onFinish: async ({ text, toolCalls, toolResults, finishReason, usage }) => {
       console.log("toolCalls", toolCalls);
