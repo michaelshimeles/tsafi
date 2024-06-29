@@ -1,0 +1,28 @@
+.markdown p {
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+  background-color: green;
+}
+
+.markdown h1,
+.markdown h2,
+.markdown h3,
+.markdown h4,
+.markdown h5,
+.markdown h6,
+.markdown ul,
+.markdown li,
+.markdown ol {
+  margin: 0;
+  padding: 0;
+}
+
+.markdown strong {
+  font-weight: bold;
+}
+
+.markdown {
+  line-height: 1.5; /* Adjust line height for better readability */
+}
+
+/* Add more styles as needed */

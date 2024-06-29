@@ -1,21 +1,25 @@
 "use client"
-import React, { useRef, useEffect } from 'react';
-import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { Message, useChat } from '@ai-sdk/react';
 import { ExternalLink } from 'lucide-react';
-import { useChat } from '@ai-sdk/react';
+import Link from 'next/link';
+import { useEffect, useRef } from 'react';
+import { toast } from 'sonner';
 import DashWrapper from "../../_components/DashWrapper";
 import { PromptForm } from "./prompt_form";
-import { useAIMessages } from '@/utils/hooks/useAIMessages';
-import { useUser } from '@clerk/nextjs';
 
-export default function AiComponent({ initialMessages }: any) {
-  const { user } = useUser()
+export default function Chat({ messages: initialMessages }: { messages: Message[] }) {
 
-  const { messages, input, handleInputChange, handleSubmit, setInput } = useChat({
-    id: user?.id,
-    // initialMessages
+  const { messages, input, handleInputChange, handleSubmit, setInput, isLoading, error } = useChat({
+    initialMessages
   });
+
+  useEffect(() => {
+    if (error) {
+      toast(error.message)
+    }
+  }, [error])
+
   const messagesEndRef = useRef<any>(null);
 
   const scrollToBottom = () => {
@@ -66,11 +70,11 @@ export default function AiComponent({ initialMessages }: any) {
                   if (toolInvocation.toolName === 'read_sites') {
                     return (
                       <div key={toolCallId} className='bg-blue-700 bg-opacity-10 text-sm whitespace-pre-wrap px-3 py-2 rounded-lg'>
-                        {toolInvocation?.result?.message && JSON?.parse(toolInvocation?.result?.result).map((info: any) => (
-                          <div key={info?.site_name}>
+                        {toolInvocation?.result?.message && (
+                          <div>
                             {toolInvocation?.result?.message + " "}
                           </div>
-                        ))}
+                        )}
                       </div>
                     );
                   }

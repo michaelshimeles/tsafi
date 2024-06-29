@@ -1,14 +1,14 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { useGetAllSites } from '@/utils/hooks/useGetAllSites'
 import { EnterIcon } from '@radix-ui/react-icons'
 import clsx from 'clsx'
 import { useState } from 'react'
 import Textarea from 'react-textarea-autosize'
 
-export function PromptForm({ input, handleInputChange, handleSubmit, setInput }: any) {
+export function PromptForm({ input, handleInputChange, handleSubmit, setInput, setMessages }: any) {
   const [showPopup, setShowPopup] = useState(false);
   const [selectedSite, setSelectedSite] = useState<any>(null);
   const [filteredSites, setFilteredSites] = useState([]);
@@ -20,29 +20,37 @@ export function PromptForm({ input, handleInputChange, handleSubmit, setInput }:
       setShowPopup(true);
       const searchQuery = value.split('@').pop().toLowerCase();
       setFilteredSites(
-        sites.filter((site: any) => site.site_name.toLowerCase().includes(searchQuery))
+        sites?.filter((site: any) => site.site_name.toLowerCase().includes(searchQuery))
       );
     } else {
       setShowPopup(false);
     }
   };
 
-  console.log("selectedSite", selectedSite)
-
   return (
     <div>
       {showPopup && !selectedSite ? (
         <div>
           {
-            filteredSites.length > 0 ? (
-              <div className='flex flex-col gap-2 mb-2 w-full'>
+            filteredSites?.length > 0 ? (
+              <div className='flex flex-col gap-1 mb-2 w-full'>
                 {filteredSites.map((site: any) => (
-                  <Card key={site.site_id} className={clsx(`bg-white dark:bg-black border hover:cursor-pointer rounded p-2 w-[260px] text-sm`,
+                  <Card key={site.site_id} className={clsx(`bg-white dark:bg-black border hover:cursor-pointer hover:bg-gray-100 hover:dark:bg-zinc-900 rounded w-full text-sm`,
                     {
-                      "bg-white border hover:cursor-pointer rounded p-2 w-[260px] text-sm": filteredSites?.length === 1
+                      "bg-white border hover:cursor-pointer rounded w-full text-sm": filteredSites?.length === 1
                     }
                   )} onClick={() => setSelectedSite(site)}>
-                    {site.site_name}
+                    <CardHeader>
+                      {site.site_name}
+                    </CardHeader>
+                    <CardContent className='flex flex-col gap-2'>
+                      <p>
+                        {site.site_subdomain}.tsafi.xyz
+                      </p>
+                      <p>
+                        {site.site_description}
+                      </p>
+                    </CardContent>
                   </Card>
                 ))}
               </div>
@@ -51,19 +59,21 @@ export function PromptForm({ input, handleInputChange, handleSubmit, setInput }:
             )
           }
         </div>
-      ) : selectedSite ? <div className='flex gap-3 mb-[1rem]'>
-        <div className='py-2 px-3 border text-sm rounded hover:cursor-pointer hover:border-gray-200 border-gray-100 dark:hover:border-zinc-800 dark:border-zinc-900 dark:bg-black' onClick={() => setInput(`Change site name for ${selectedSite?.site_name}`)}>Change site name for {selectedSite?.site_name}</div>
-        {/* <div className='py-2 px-3 border text-sm rounded hover:cursor-pointer hover:border-gray-200 border-gray-100 dark:hover:border-zinc-800 dark:border-zinc-900 dark:bg-black' onClick={() => setInput(`Change site description for ${selectedSite?.site_name}`)}>Change site description for {selectedSite?.site_name}</div> */}
-        <div className='py-2 px-3 border text-sm rounded hover:cursor-pointer hover:border-gray-200 border-gray-100 dark:hover:border-zinc-800 dark:border-zinc-900 dark:bg-black' onClick={() => setInput(`Change site subdomain for ${selectedSite?.site_name}`)}>Change site subdomain for {selectedSite?.site_name}</div>
-      </div> : <div className='flex gap-3 mb-[1rem]'>
-        <div className='py-2 px-3 border text-sm rounded hover:cursor-pointer hover:border-gray-200 border-gray-100 dark:hover:border-zinc-800 dark:border-zinc-900 dark:bg-black' onClick={() => setInput("Create a blog site for me")}>Create a blog site for me</div>
-        <div className='py-2 px-3 border text-sm rounded hover:cursor-pointer hover:border-gray-200 border-gray-100 dark:hover:border-zinc-800 dark:border-zinc-900 dark:bg-black' onClick={() => setInput("List all my blog sites")}>List all my blog sites</div>
-      </div>
+      ) : selectedSite ?
+        <div className='flex gap-3 mb-[1rem]'>
+          <div className='py-2 px-3 border text-sm rounded hover:cursor-pointer hover:border-gray-200 border-gray-100 dark:hover:border-zinc-800 dark:border-zinc-900 dark:bg-black' onClick={() => setInput(`Change site name for ${selectedSite?.site_name}`)}>Change site name for {selectedSite?.site_name}</div>
+          <div className='py-2 px-3 border text-sm rounded hover:cursor-pointer hover:border-gray-200 border-gray-100 dark:hover:border-zinc-800 dark:border-zinc-900 dark:bg-black' onClick={() => setInput(`Change site subdomain for ${selectedSite?.site_name}`)}>Change site subdomain for {selectedSite?.site_name}</div>
+        </div>
+        :
+        <div className='flex gap-3 mb-[1rem]'>
+          <div className='py-2 px-3 border text-sm rounded hover:cursor-pointer hover:border-gray-200 border-gray-100 dark:hover:border-zinc-800 dark:border-zinc-900 dark:bg-black' onClick={() => setInput("Create a blog site for me")}>Create a blog site for me</div>
+          <div className='py-2 px-3 border text-sm rounded hover:cursor-pointer hover:border-gray-200 border-gray-100 dark:hover:border-zinc-800 dark:border-zinc-900 dark:bg-black' onClick={() => setInput("List all my blog sites")}>List all my blog sites</div>
+        </div>
       }
       <form onSubmit={handleSubmit} className='w-full'>
-        <div className="flex justify-center items-center max-h-60 w-full grow  overflow-hidden bg-background pr-8 pl-2 rounded-md border">
+        <div className="flex justify-center items-center max-h-60 w-full grow  overflow-hidden bg-background pr-4 pl-2 rounded-md border">
           <div className={selectedSite ? `border p-3 rounded` : `border p-3 rounded invisible`} onClick={() => setSelectedSite(null)}>
-            <p>{selectedSite?.site_name.match(/^(\w)\w*\s+(\w{1,2})/).slice(1).join('')}</p>
+            <p>{selectedSite?.site_name.match(/^(\w)\w*\s+(\w{1,2})/)?.slice(1)?.join('') ? selectedSite?.site_name.match(/^(\w)\w*\s+(\w{1,2})/)?.slice(1)?.join('') : selectedSite?.site_name}</p>
           </div>
           <Textarea
             placeholder="Send a message."

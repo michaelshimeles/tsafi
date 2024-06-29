@@ -4,7 +4,6 @@ import { changeSiteName } from "@/utils/actions/sites/settings/change-site-name"
 import { changeSiteSubdomain } from "@/utils/actions/sites/settings/change-site-subdomain";
 import { storeMessages } from "@/utils/functions/ai/store-messages";
 import { readSiteName } from "@/utils/functions/sites/read-site-name";
-import { readSiteSubdmain } from "@/utils/functions/sites/read-site-subdomain";
 import { openai } from "@ai-sdk/openai";
 import { currentUser } from "@clerk/nextjs/server";
 import { convertToCoreMessages, streamText, tool } from "ai";
@@ -15,15 +14,12 @@ export async function POST(req: Request) {
 
   const user = await currentUser();
 
-  // const messageResult = await storeMessages(user?.id!, messages);
-
   const system = `
   You are tsafi ai, an ai assistant helping users of tsafi create and manage their blog sites and content.
   The user's first name is ${user?.firstName}, their email ${user?.emailAddresses?.[0]?.emailAddress}.
 
   Be friendly and crack jokes when you can. Be very human-like and not robotic.`;
 
-  // console.log("messageResult", messageResult);
 
   const result = await streamText({
     model: openai("gpt-4o"),
@@ -77,7 +73,6 @@ export async function POST(req: Request) {
             .join("\n");
 
           return {
-            result: JSON.stringify(result),
             message: `${displaySites}`,
           };
         },
@@ -104,11 +99,11 @@ export async function POST(req: Request) {
       update_sub_domain: tool({
         description: "Change or update the subdomain of a site",
         parameters: z.object({
-          current_site_subdomain: z.string().describe("current site subdomain"),
+          current_site_name: z.string().describe("new site name"),
           new_site_subdomain: z.string().describe("new site subdomain"),
         }),
-        execute: async ({ current_site_subdomain, new_site_subdomain }) => {
-          const getSiteInfo = await readSiteSubdmain(current_site_subdomain);
+        execute: async ({ current_site_name, new_site_subdomain }) => {
+          const getSiteInfo = await readSiteName(current_site_name);
 
           const result = await changeSiteSubdomain(
             getSiteInfo?.[0]?.site_id,
@@ -116,21 +111,24 @@ export async function POST(req: Request) {
           );
           return {
             result: JSON.stringify(result),
-            message: `Your blog site subdomain has been updated from ${current_site_subdomain} to ${result?.[0]?.site_subdomain} and you can check it out by clicking the button below.`,
+            message: `Your blog site ${current_site_name} subdomain has been updated to ${result?.[0]?.site_subdomain} and you can check it out by clicking the button below.`,
           };
         },
       }),
     },
     onFinish: async ({ text, toolCalls, toolResults, finishReason, usage }) => {
+      console.log("text", text);
       console.log("toolCalls", toolCalls);
       console.log("toolResults", toolResults);
 
-      storeMessages(user?.id!, [
-        {
-          role: "assistant",
-          content: toolResults?.[0]?.result?.message,
-        },
-      ]);
+      if (text) {
+        await storeMessages(user?.id!, [
+          ...messages,
+          { role: "assistant", content: text },
+        ]);
+
+        return;
+      }
     },
   });
 
