@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "@agentic/stdlib": "^6.2.3",
-    "@ai-sdk/openai": "^0.0.32",
+    "@ai-sdk/anthropic": "^0.0.27",
+    "@ai-sdk/openai": "^0.0.34",
     "@ai-sdk/react": "^0.0.4",
     "@blocknote/core": "^0.12.4",
     "@blocknote/react": "^0.12.4",
@@ -76,6 +77,7 @@
     "next": "latest",
     "next-themes": "^0.3.0",
     "next-view-transitions": "^0.1.0",
+    "ollama-ai-provider": "^0.9.1",
     "openai": "^4.33.1",
     "prisma": "^5.13.0",
     "react": "^18",

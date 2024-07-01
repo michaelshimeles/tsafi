@@ -26,13 +26,21 @@
     zod "^3.23.3"
     zod-to-json-schema "^3.23.0"
 
-"@ai-sdk/openai@^0.0.32":
-  version "0.0.32"
-  resolved "https://registry.yarnpkg.com/@ai-sdk/openai/-/openai-0.0.32.tgz#8627f44940b1e03da7b7dc410dca93cc80c18bae"
-  integrity sha512-ySwtOoGTwmK+CiXreJO9iJkV7SBhetdgrmoP0gOKbz1uWQ9B1FMQ6Zdq6V5koWFXeN91Sz9n4jRIZ09GjxjY2g==
+"@ai-sdk/anthropic@^0.0.27":
+  version "0.0.27"
+  resolved "https://registry.yarnpkg.com/@ai-sdk/anthropic/-/anthropic-0.0.27.tgz#734ea8928a40bbb26bee69f348f394ad4173cdcc"
+  integrity sha512-SmWf4YnyAmPag6XMXK8rhvmwvzuD6+KW9jeyvvIHAQDDu3HqOKTuAEQ19UOSLkThyEqV6PyO4GAwbrTeOKpecA==
   dependencies:
-    "@ai-sdk/provider" "0.0.10"
-    "@ai-sdk/provider-utils" "0.0.15"
+    "@ai-sdk/provider" "0.0.11"
+    "@ai-sdk/provider-utils" "1.0.0"
+
+"@ai-sdk/openai@^0.0.34":
+  version "0.0.34"
+  resolved "https://registry.yarnpkg.com/@ai-sdk/openai/-/openai-0.0.34.tgz#05e9438f7ddf9b2358f6a7ed229a18a03ffc3c3a"
+  integrity sha512-ArVGvhfp66zYqFBWS/rRL/3ushcjsDXQJ5HdcJaCbv9YCrFJzgSZwFj2tWMdBMeQn3O7SGgGsIT75zFgXJDIqQ==
+  dependencies:
+    "@ai-sdk/provider" "0.0.11"
+    "@ai-sdk/provider-utils" "1.0.0"
 
 "@ai-sdk/provider-utils@0.0.15":
   version "0.0.15"
@@ -44,10 +52,27 @@
     nanoid "3.3.6"
     secure-json-parse "2.7.0"
 
+"@ai-sdk/provider-utils@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@ai-sdk/provider-utils/-/provider-utils-1.0.0.tgz#52b4b7a05a1787f4bff17b8fb85979b92eb1b369"
+  integrity sha512-Akq7MmGQII8xAuoVjJns/n/2BTUrF6qaXIj/3nEuXk/hPSdETlLWRSrjrTmLpte1VIPE5ecNzTALST+6nz47UQ==
+  dependencies:
+    "@ai-sdk/provider" "0.0.11"
+    eventsource-parser "1.1.2"
+    nanoid "3.3.6"
+    secure-json-parse "2.7.0"
+
 "@ai-sdk/provider@0.0.10":
   version "0.0.10"
   resolved "https://registry.yarnpkg.com/@ai-sdk/provider/-/provider-0.0.10.tgz#be84af0b4cb2dad0ebc85b1070b4f47404cfb1f1"
   integrity sha512-NzkrtREQpHID1cTqY/C4CI30PVOaXWKYytDR2EcytmFgnP7Z6+CrGIA/YCnNhYAuUm6Nx+nGpRL/Hmyrv7NYzg==
+  dependencies:
+    json-schema "0.4.0"
+
+"@ai-sdk/provider@0.0.11":
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/@ai-sdk/provider/-/provider-0.0.11.tgz#ec2631e2c9f7ac166d75081fb578a0f4b78a7d51"
+  integrity sha512-VTipPQ92Moa5Ovg/nZIc8yNoIFfukZjUHZcQMduJbiUh3CLQyrBAKTEV9AwjPy8wgVxj3+GZjon0yyOJKhfp5g==
   dependencies:
     json-schema "0.4.0"
 
@@ -5375,6 +5400,15 @@ object.values@^1.1.6, object.values@^1.1.7:
     define-properties "^1.2.0"
     es-abstract "^1.22.1"
 
+ollama-ai-provider@^0.9.1:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/ollama-ai-provider/-/ollama-ai-provider-0.9.1.tgz#d85c1cea160f78df19a6ab707992eda87b0adf4e"
+  integrity sha512-aIiuRiXAI0XFWIyqL5Zo2Mok2aFzEpr7NbtNucGew6Jhmsfzg9NPhVWQy+5MhnaTtgp+X+2zlOqjI5Yfn5/dDg==
+  dependencies:
+    "@ai-sdk/provider" "0.0.11"
+    "@ai-sdk/provider-utils" "1.0.0"
+    partial-json "^0.1.7"
+
 once@^1.3.0, once@^1.3.1, once@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/once/-/once-1.4.0.tgz#583b1aa775961d4b113ac17d9c50baef9dd76bd1"
@@ -5531,6 +5565,11 @@ parse5@^6.0.0:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/parse5/-/parse5-6.0.1.tgz#e1a1c085c569b3dc08321184f19a39cc27f7c30b"
   integrity sha512-Ofn/CTFzRGTTxwpNEs9PP93gXShHcTq255nzRYSKe8AkVpZY7e1fpmTfOyoIvjP5HG7Z2ZM7VS9PPhQGW2pOpw==
+
+partial-json@^0.1.7:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/partial-json/-/partial-json-0.1.7.tgz#b735a89edb3e25f231a3c4caeaae71dc9f578605"
+  integrity sha512-Njv/59hHaokb/hRUjce3Hdv12wd60MtM9Z5Olmn+nehe0QDAsRtRbJPvJ0Z91TusF0SuZRIvnM+S4l6EIP8leA==
 
 path-exists@^4.0.0:
   version "4.0.0"

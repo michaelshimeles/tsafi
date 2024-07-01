@@ -1,16 +1,16 @@
-import { getArticleBySlugApi } from "@/utils/actions/api/get-article-slug-api";
+import { getArticleBySlugSiteId } from "@/utils/actions/api/get-article-by-slug-siteid";
 import { clerkClient } from "@clerk/nextjs/server";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: { site_id: string; slug: string } }
 ) {
   const authorization = headers().get("X-Auth-Key");
   try {
     const result = await clerkClient.users.getUser(authorization!);
-    const response = await getArticleBySlugApi(params?.slug!, result?.id!);
+    const response = await getArticleBySlugSiteId(params?.site_id!, params?.slug!, result?.id);
 
     if (response?.error) {
       return NextResponse.json({
