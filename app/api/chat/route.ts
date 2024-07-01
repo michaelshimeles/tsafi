@@ -128,7 +128,7 @@ export async function POST(req: Request) {
         return;
       }
 
-      if (toolResults?.[0]?.toolName === "read_site") {
+      if (toolResults?.[0]?.toolName === "read_sites") {
         await storeMessages(user?.id!, [
           ...messages,
           {
