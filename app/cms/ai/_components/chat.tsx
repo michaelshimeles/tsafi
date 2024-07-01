@@ -66,7 +66,7 @@ export default function Chat({ messages: initialMessages }: { messages: Message[
             <div key={toolCallId} className='flex gap-2 flex-col bg-blue-700 bg-opacity-10 text-sm whitespace-pre-wrap px-3 py-2 rounded-lg w-fit'>
               <p>{message}</p>
             </div>
-            <div className='flex gap-2 flex-wrap'>
+            <div className='flex gap-2 flex-wrap mt-[1rem]'>
               {result?.length > 0 && result.map((site: any) => (
                 <Link key={site.site_id} href={`/cms/sites/${site.site_subdomain}`} prefetch={true} className="flex flex-col rounded-md w-[350px] hover:cursor-pointer transition-shadow duration-300" target='_blank'>
                   <Card className="flex flex-col px-[1rem] justify-between h-full py-[1rem]">
