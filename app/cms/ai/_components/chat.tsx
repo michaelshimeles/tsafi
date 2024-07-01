@@ -32,7 +32,6 @@ export default function Chat({ messages: initialMessages }: { messages: Message[
     const message = toolInvocation?.result?.message;
     const result = toolInvocation?.result?.result;
 
-    console.log('toolInvocation', toolInvocation)
     switch (toolInvocation.toolName) {
       case 'create_site':
         return (
