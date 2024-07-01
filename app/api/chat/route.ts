@@ -20,9 +20,8 @@ export async function POST(req: Request) {
 
   Be friendly and crack jokes when you can. Be very human-like and not robotic.`;
 
-
   const result = await streamText({
-    model: openai("gpt-4o"),
+    model: openai("gpt-4o") as any, // Ensure correct type casting
     system,
     messages: convertToCoreMessages(messages),
     tools: {
@@ -63,24 +62,23 @@ export async function POST(req: Request) {
         execute: async () => {
           const result = await readSites();
 
-          const sites = result.map((site: any) => ({
-            name: site.site_name,
-            subdomain: site.site_subdomain,
-          }));
-
-          const displaySites = sites
-            .map((site: any) => `${site.name}, ${site.subdomain}.tsafi.xyz`)
-            .join("\n");
+          if (result?.length === 1) {
+            return {
+              message: "Here's your blog site",
+              result: result,
+            };
+          }
 
           return {
-            message: `${displaySites}`,
+            message: "Here are your blog sites",
+            result: result,
           };
         },
       }),
       update_site_name: tool({
         description: "Change or update the name of a site",
         parameters: z.object({
-          current_site_name: z.string().describe("new site name"),
+          current_site_name: z.string().describe("current site name"),
           new_site_name: z.string().describe("new site name"),
         }),
         execute: async ({ current_site_name, new_site_name }) => {
@@ -99,7 +97,7 @@ export async function POST(req: Request) {
       update_sub_domain: tool({
         description: "Change or update the subdomain of a site",
         parameters: z.object({
-          current_site_name: z.string().describe("new site name"),
+          current_site_name: z.string().describe("current site name"),
           new_site_subdomain: z.string().describe("new site subdomain"),
         }),
         execute: async ({ current_site_name, new_site_subdomain }) => {
@@ -116,7 +114,7 @@ export async function POST(req: Request) {
         },
       }),
     },
-    onFinish: async ({ text, toolCalls, toolResults, finishReason, usage }) => {
+    onFinish: async ({ text, toolCalls, toolResults, finishReason, usage }: any) => {
       console.log("text", text);
       console.log("toolCalls", toolCalls);
       console.log("toolResults", toolResults);
@@ -129,6 +127,33 @@ export async function POST(req: Request) {
 
         return;
       }
+
+      if (toolResults?.[0]?.toolName === "read_site") {
+        await storeMessages(user?.id!, [
+          ...messages,
+          {
+            role: "assistant",
+            type: `${toolResults?.[0]?.type}_read-site`,
+            content: toolResults?.[0]?.result?.message,
+            result: toolResults?.[0]?.result?.result,
+          },
+        ]);
+      }
+
+      if (toolResults?.[0]?.toolName === "create_site") {
+        await storeMessages(user?.id!, [
+          ...messages,
+          {
+            role: "assistant",
+            type: `${toolResults?.[0]?.type}_create-site`,
+            content: toolResults?.[0]?.result?.message,
+            result: toolResults?.[0]?.result,
+          },
+        ]);
+      }
+
+
+      return;
     },
   });
 
