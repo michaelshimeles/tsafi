@@ -33,24 +33,21 @@ export function PromptForm({ input, handleInputChange, handleSubmit, setInput, s
         <div>
           {
             filteredSites?.length > 0 ? (
-              <div className='flex flex-col gap-1 mb-2 w-full'>
+              <div className='flex gap-1 mb-2 w-full flex-wrap'>
                 {filteredSites.map((site: any) => (
-                  <Card key={site.site_id} className={clsx(`bg-white dark:bg-black border hover:cursor-pointer hover:bg-gray-100 hover:dark:bg-zinc-900 rounded w-full text-sm`,
-                    {
-                      "bg-white border hover:cursor-pointer rounded w-full text-sm": filteredSites?.length === 1
-                    }
-                  )} onClick={() => setSelectedSite(site)}>
-                    <CardHeader>
-                      {site.site_name}
-                    </CardHeader>
-                    <CardContent className='flex flex-col gap-2'>
-                      <p>
+                  <Card key={site.id} className="flex flex-col px-[1rem] max-w-[350px] min-h-[150px] w-full justify-between h-full py-[1rem]">
+                    <div className='flex flex-col w-full justify-center items-start'>
+                      <h2 className="text-lg font-bold">{site.site_name}</h2>
+                      <p className="text-gray-400 pt-1 text-sm">{site.site_description}</p>
+                    </div>
+                    <div className="flex justify-between mt-2 items-center w-full">
+                      <p className='text-xs px-2 py-1 rounded-full border bg-zinc-900 text-gray-300'>
                         {site.site_subdomain}.tsafi.xyz
                       </p>
-                      <p>
-                        {site.site_description}
+                      <p className="text-xs text-muted-foreground">
+                        {new Date(site.created_at).toLocaleDateString()}
                       </p>
-                    </CardContent>
+                    </div>
                   </Card>
                 ))}
               </div>

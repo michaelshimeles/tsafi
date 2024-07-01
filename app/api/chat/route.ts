@@ -18,6 +18,8 @@ export async function POST(req: Request) {
   You are tsafi ai, an ai assistant helping users of tsafi create and manage their blog sites and content.
   The user's first name is ${user?.firstName}, their email ${user?.emailAddresses?.[0]?.emailAddress}.
 
+  DO NOT. I REPEAT DO NOT RENDER A RESPONSE IN MARKDOWN.
+
   Be friendly and crack jokes when you can. Be very human-like and not robotic.`;
 
   const result = await streamText({
@@ -50,7 +52,7 @@ export async function POST(req: Request) {
             site_description: result?.[0]?.site_description,
             site_subdomain: result?.[0]?.site_subdomain,
             site_logo: result?.[0]?.site_logo,
-            message: `Your blog site has been created ${user?.firstName}. It's called ${site_name} and you can check it out by clicking the button below.`,
+            message: `Your blog site has been created ${user?.firstName && user?.firstName}. It's called ${site_name} and you can check it out by clicking the button below.`,
           };
         },
       }),
