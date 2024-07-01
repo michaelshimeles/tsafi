@@ -52,7 +52,7 @@ export async function POST(req: Request) {
             site_description: result?.[0]?.site_description,
             site_subdomain: result?.[0]?.site_subdomain,
             site_logo: result?.[0]?.site_logo,
-            message: `Your blog site has been created ${user?.firstName && user?.firstName}. It's called ${site_name} and you can check it out by clicking the button below.`,
+            message: `Your blog site has been created. It's called ${site_name} and you can check it out by clicking the button below.`,
           };
         },
       }),
@@ -116,7 +116,13 @@ export async function POST(req: Request) {
         },
       }),
     },
-    onFinish: async ({ text, toolCalls, toolResults, finishReason, usage }: any) => {
+    onFinish: async ({
+      text,
+      toolCalls,
+      toolResults,
+      finishReason,
+      usage,
+    }: any) => {
       console.log("text", text);
       console.log("toolCalls", toolCalls);
       console.log("toolResults", toolResults);
@@ -153,7 +159,6 @@ export async function POST(req: Request) {
           },
         ]);
       }
-
 
       return;
     },

@@ -33,9 +33,9 @@ export function PromptForm({ input, handleInputChange, handleSubmit, setInput, s
         <div>
           {
             filteredSites?.length > 0 ? (
-              <div className='flex gap-1 mb-2 w-full flex-wrap'>
+              <div className='flex flex-wrap gap-1 mb-2 w-full'>
                 {filteredSites.map((site: any) => (
-                  <Card key={site.id} className="flex flex-col px-[1rem] max-w-[350px] min-h-[150px] w-full justify-between h-full py-[1rem]">
+                  <Card key={site.site_id} className="flex flex-col max-w-[350px] min-h-[150px] hover:dark:bg-zinc-900 hover:cursor-pointer w-full px-[1rem] justify-between h-full py-[1rem]" onClick={() => setSelectedSite(site)}>
                     <div className='flex flex-col w-full justify-center items-start'>
                       <h2 className="text-lg font-bold">{site.site_name}</h2>
                       <p className="text-gray-400 pt-1 text-sm">{site.site_description}</p>
@@ -49,6 +49,7 @@ export function PromptForm({ input, handleInputChange, handleSubmit, setInput, s
                       </p>
                     </div>
                   </Card>
+
                 ))}
               </div>
             ) : (
