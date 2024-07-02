@@ -10,7 +10,7 @@ datasource db {
 
 model user {
   id                Int      @id @default(autoincrement())
-  created_at        DateTime @default(now())
+  created_at        DateTime @default(now()) @db.Timestamptz(6)
   email             String   @unique
   first_name        String?
   last_name         String?
@@ -20,59 +20,72 @@ model user {
 
 model documents {
   id          Int      @id @default(autoincrement())
-  created_at  DateTime @default(now())
-  document_id String   @unique @default(uuid())
-  document    String
+  created_at  DateTime @default(now()) @db.Timestamptz(6)
+  document_id String   @unique @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  document    String?
   title       String
   user_id     String
-  site_id     String
+  site_id     String?
 }
 
 model category {
-  id       Int    @id @default(autoincrement())
+  id       Int     @id @default(autoincrement())
   user_id  String
   category String
+  site_id  String?
+  blog     blog[]
 }
 
 model author {
-  id                 Int    @id @default(autoincrement())
+  id                 Int     @id @default(autoincrement())
   user_id            String
-  author_id          String @unique @default(uuid())
+  author_id          String  @unique @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   author_name        String
   author_profile_img String
-  author_instagram   String
-  author_twitter     String
+  author_instagram   String?
+  author_twitter     String?
+  site_id            String?
+  blog               blog[]
 }
 
 model blog {
-  id          Int       @id @default(autoincrement())
-  created_at  DateTime  @default(now())
+  id          Int      @id @default(autoincrement())
+  created_at  DateTime @default(now()) @db.Timestamptz(6)
   user_id     String
-  blog_html   String?
-  image       String?
-  image_alt   String?
+  blog_html   String
+  image       String
+  image_alt   String
   category_id Int
-  author_id   String
+  author_id   String   @db.Uuid
   title       String
   subtitle    String
-  slug        String    @unique
+  slug        String
   keywords    String[]
-  published   Boolean
-  shareable   Boolean
-  site_id     String
-  updated_at  DateTime? @updatedAt
+  published   Boolean? @default(true)
+  shareable   Boolean  @default(false)
+  site_id     String?
+  author      author   @relation(fields: [author_id], references: [author_id], onDelete: NoAction, onUpdate: NoAction)
+  category    category @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model sites {
-  id                 Int       @id @default(autoincrement())
-  created_at         DateTime  @default(now())
-  user_id            String
-  site_id            String    @unique
-  site_name          String
+  id                 BigInt    @id @default(autoincrement())
+  created_at         DateTime  @default(now()) @db.Timestamptz(6)
+  user_id            String?
+  site_id            String?   @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  site_name          String?
   site_description   String?
-  site_subdomain     String
+  site_subdomain     String?   @unique
   site_logo          String?
   site_cover_image   String?
   site_custom_domain String?
-  updated_at         DateTime? @updatedAt
+  updated_at         DateTime? @updatedAt @db.Timestamptz(6)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model chat {
+  id         BigInt   @id @default(autoincrement())
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  user_id    String?
+  messages   Json?
 }
