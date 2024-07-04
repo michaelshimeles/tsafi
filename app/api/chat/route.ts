@@ -2,6 +2,7 @@ import { createSites } from "@/utils/actions/sites/create-site";
 import { readSites } from "@/utils/actions/sites/read-sites";
 import { changeSiteName } from "@/utils/actions/sites/settings/change-site-name";
 import { changeSiteSubdomain } from "@/utils/actions/sites/settings/change-site-subdomain";
+import { generateBlogImage } from "@/utils/functions/ai/blog-image";
 import { storeMessages } from "@/utils/functions/ai/store-messages";
 import { readSiteName } from "@/utils/functions/sites/read-site-name";
 import { openai } from "@ai-sdk/openai";
@@ -58,9 +59,7 @@ export async function POST(req: Request) {
       }),
       read_sites: tool({
         description: "List of all the blog websites",
-        parameters: z.object({
-          user_id: z.string().describe("user id"),
-        }),
+        parameters: z.object({}),
         execute: async () => {
           const result = await readSites();
 
@@ -115,6 +114,18 @@ export async function POST(req: Request) {
           };
         },
       }),
+      generate_blog_image: tool({
+        description: "Generate a blog image",
+        parameters: z.object({
+          prompt: z.string().describe("description of the blog image user wants generated")
+        }),
+        execute: async ({prompt}) => {
+          const generate = await generateBlogImage(prompt);
+
+          console.log("generate", generate);
+          return generate;
+        },
+      }),
     },
     onFinish: async ({
       text,
@@ -160,6 +171,17 @@ export async function POST(req: Request) {
         ]);
       }
 
+      if (toolResults?.[0]?.toolName === "generate_blog_image") {
+        await storeMessages(user?.id!, [
+          ...messages,
+          {
+            role: "assistant",
+            content: toolResults?.[0]?.result?.prompt,
+            type: `${toolResults?.[0]?.type}_generate_blog_image`,
+            result: toolResults?.[0]?.result?.images?.[0],
+          },
+        ]);
+      }
       return;
     },
   });
