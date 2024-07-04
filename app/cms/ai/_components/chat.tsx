@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { toast } from 'sonner';
 import DashWrapper from "../../_components/DashWrapper";
 import { PromptForm } from "./prompt_form";
+import Image from 'next/image';
 
 export default function Chat({ messages: initialMessages }: { messages: Message[] }) {
   const { messages, input, handleInputChange, handleSubmit, setInput, isLoading, error } = useChat({
@@ -32,6 +33,7 @@ export default function Chat({ messages: initialMessages }: { messages: Message[
     const message = toolInvocation?.result?.message;
     const result = toolInvocation?.result?.result;
 
+    console.log('toolInvocation', toolInvocation)
     switch (toolInvocation.toolName) {
       case 'create_site':
         return (
@@ -99,11 +101,21 @@ export default function Chat({ messages: initialMessages }: { messages: Message[
             ))}
           </div>
         );
+      case 'generate_blog_image':
+        return (
+          <div key={toolCallId} className='bg-blue-700 bg-opacity-10 text-sm whitespace-pre-wrap p-2 rounded-lg w-fit'>
+            <div>
+              <Image className='rounded' src={toolInvocation?.result?.images?.[0]?.url} width={500} height={500} alt="" />
+            </div>
+          </div>
+        );
+
       default:
         return null;
     }
   };
 
+  console.log('messages', messages)
   return (
     <DashWrapper>
       <div className="flex flex-col h-[calc(100vh-100px)] w-full">
@@ -139,20 +151,11 @@ export default function Chat({ messages: initialMessages }: { messages: Message[
                           </Card>
                         </Link>
                       ))}
-                      {m?.type === "tool-result_create-site" && ((
-                        <div className='flex gap-1 mt-1 '>
-                          <Link href={`https://${m?.result?.site_subdomain}.tsafi.xyz`} target="_blank">
-                            <Button variant="outline" size="sm">
-                              <ExternalLink className="mr-1 w-4 h-4" />
-                              Website
-                            </Button>
-                          </Link>
-                          <Link href={`/cms/sites/${m?.result?.site_id}`} target="_blank">
-                            <Button variant="outline" size="sm">
-                              <ExternalLink className="mr-1 w-4 h-4" />
-                              Dashboard
-                            </Button>
-                          </Link>
+                    </div>
+                    <div className='flex flex-col'>
+                      {m?.type === "tool-result_generate_blog_image" && ((
+                        <div>
+                          <Image className='rounded' src={m?.result?.url} width={1000} height={500} alt="" />
                         </div>
                       ))}
                     </div>

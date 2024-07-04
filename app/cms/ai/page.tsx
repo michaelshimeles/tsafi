@@ -1,9 +1,8 @@
-import React from 'react'
-import { readMessages } from '@/utils/actions/ai/read-messages'
-import { auth } from '@clerk/nextjs/server';
-import Chat from './_components/chat';
-import { Message } from "ai";
+import { readMessages } from '@/utils/actions/ai/read-messages';
 import { storeMessages } from '@/utils/functions/ai/store-messages';
+import { auth } from '@clerk/nextjs/server';
+import { Message } from "ai";
+import Chat from './_components/chat';
 
 export default async function Ai() {
   const { userId } = auth();
