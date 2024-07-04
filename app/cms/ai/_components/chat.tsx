@@ -34,7 +34,7 @@ export default function Chat({ messages: initialMessages }: { messages: Message[
     const message = toolInvocation?.result?.message;
     const result = toolInvocation?.result?.result;
 
-    console.log('toolInvocation', toolInvocation)
+    // console.log('toolInvocation', toolInvocation)
     switch (toolInvocation.toolName) {
       case 'create_site':
         return (
@@ -95,7 +95,7 @@ export default function Chat({ messages: initialMessages }: { messages: Message[
         return (
           <div key={toolCallId} className='bg-blue-700 bg-opacity-10 text-sm whitespace-pre-wrap px-3 py-2 rounded-lg w-fit'>
             {message && JSON.parse(result).map((info: any) => (
-              <div key={info?.site_name}>
+              <div key={info?.site_id}>
                 {message + " "}
                 {info?.site_name}: <Link href={`https://${info?.site_subdomain}.tsafi.xyz`} className="underline" target="_blank">{info?.site_subdomain + ".tsafi.xyz"}</Link>
               </div>
@@ -110,19 +110,24 @@ export default function Chat({ messages: initialMessages }: { messages: Message[
             </div>
           </div>
         );
+      case 'generate_document_from_youtube':
+        return toolInvocation?.result ? (
+          <div key={toolCallId} className='bg-blue-700 bg-opacity-10 text-sm whitespace-pre-wrap p-2 rounded-lg w-fit'>
+            {(toolInvocation?.result)}
+          </div>
+        ) : <Skeleton className='w-full max-w-[700px] h-[180px]' />
 
       default:
         return null;
     }
   };
 
-  console.log('messages', messages)
   return (
     <DashWrapper>
       <div className="flex flex-col h-[calc(100vh-100px)] w-full">
         <div className="flex-grow overflow-y-auto p-4">
-          {messages.map((m: any) => (
-            <div key={m.id} className={m.role === "user" ? "flex flex-col justify-center items-end gap-1 mb-4" : "flex flex-col justify-center items-start gap-1 mb-4"}>
+          {messages.map((m: any, index: number) => (
+            <div key={index} className={m.role === "user" ? "flex flex-col justify-center items-end gap-1 mb-4" : "flex flex-col justify-center items-start gap-1 mb-4"}>
               <div className="flex flex-col gap-1 max-w-[80%]">
                 <p className="text-sm text-left">
                   {m.role.charAt(0).toUpperCase() + m.role.slice(1)}
@@ -134,8 +139,8 @@ export default function Chat({ messages: initialMessages }: { messages: Message[
                       {m?.content}
                     </div>
                     <div className='flex gap-2 flex-wrap w-full mt-2'>
-                      {m?.type === "tool-result_read-site" && m?.result?.map((info: any) => (
-                        <Link key={info.id} href={`/cms/sites/${info.site_subdomain}`} prefetch={true} className="flex flex-col rounded-md max-w-[350px] w-full min-h-[150px] hover:cursor-pointer transition-shadow duration-300" target='_blank'>
+                      {m?.type === "tool-result_read-site" && m?.result?.map((info: any, index: number) => (
+                        <Link key={index} href={`/cms/sites/${info.site_subdomain}`} prefetch={true} className="flex flex-col rounded-md max-w-[350px] w-full min-h-[150px] hover:cursor-pointer transition-shadow duration-300" target='_blank'>
                           <Card className="flex flex-col px-[1rem] justify-between h-full py-[1rem]">
                             <div className='flex flex-col w-full justify-center items-start'>
                               <h2 className="text-lg font-bold">{info.site_name}</h2>
@@ -157,6 +162,13 @@ export default function Chat({ messages: initialMessages }: { messages: Message[
                       {m?.type === "tool-result_generate_blog_image" && ((
                         <div>
                           {<Image className='rounded' src={m?.result?.url} width={1000} height={500} alt="" />}
+                        </div>
+                      ))}
+                    </div>
+                    <div className='flex flex-col'>
+                      {m?.type === "tool-result_generate_document_from_youtube" && ((
+                        <div className='bg-blue-700 whitespace-pre-wrap bg-opacity-10 text-sm px-3 py-2 rounded-lg w-fit'>
+                          {m?.result}
                         </div>
                       ))}
                     </div>

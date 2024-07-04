@@ -4,6 +4,7 @@ import { changeSiteName } from "@/utils/actions/sites/settings/change-site-name"
 import { changeSiteSubdomain } from "@/utils/actions/sites/settings/change-site-subdomain";
 import { generateBlogImage } from "@/utils/functions/ai/blog-image";
 import { storeMessages } from "@/utils/functions/ai/store-messages";
+import { youtubeToDocument } from "@/utils/functions/ai/youtube-to-document";
 import { readSiteName } from "@/utils/functions/sites/read-site-name";
 import { openai } from "@ai-sdk/openai";
 import { currentUser } from "@clerk/nextjs/server";
@@ -117,13 +118,27 @@ export async function POST(req: Request) {
       generate_blog_image: tool({
         description: "Generate a blog image",
         parameters: z.object({
-          prompt: z.string().describe("description of the blog image user wants generated")
+          prompt: z
+            .string()
+            .describe("description of the blog image user wants generated"),
         }),
-        execute: async ({prompt}) => {
+        execute: async ({ prompt }) => {
           const generate = await generateBlogImage(prompt);
 
-          console.log("generate", generate);
           return generate;
+        },
+      }),
+      generate_document_from_youtube: tool({
+        description: "Generate a document from a youtube video",
+        parameters: z.object({
+          youtube_video_url: z
+            .string()
+            .describe("description of the blog image user wants generated"),
+        }),
+        execute: async ({ youtube_video_url }) => {
+          const result = await youtubeToDocument(youtube_video_url);
+
+          return result;
         },
       }),
     },
@@ -134,9 +149,9 @@ export async function POST(req: Request) {
       finishReason,
       usage,
     }: any) => {
-      console.log("text", text);
-      console.log("toolCalls", toolCalls);
-      console.log("toolResults", toolResults);
+      // console.log("text", text);
+      // console.log("toolCalls", toolCalls);
+      // console.log("toolResults", toolResults);
 
       if (text) {
         await storeMessages(user?.id!, [
@@ -147,41 +162,52 @@ export async function POST(req: Request) {
         return;
       }
 
-      if (toolResults?.[0]?.toolName === "read_sites") {
-        await storeMessages(user?.id!, [
-          ...messages,
-          {
-            role: "assistant",
-            type: `${toolResults?.[0]?.type}_read-site`,
-            content: toolResults?.[0]?.result?.message,
-            result: toolResults?.[0]?.result?.result,
-          },
-        ]);
+      // Handle tool results
+      for (const toolResult of toolResults) {
+        if (toolResult?.toolName === "read_sites") {
+          await storeMessages(user?.id!, [
+            ...messages,
+            {
+              role: "assistant",
+              type: `${toolResult?.type}_read-site`,
+              content: toolResult?.result?.message,
+              result: toolResult?.result?.result,
+            },
+          ]);
+        } else if (toolResult?.toolName === "create_site") {
+          await storeMessages(user?.id!, [
+            ...messages,
+            {
+              role: "assistant",
+              type: `${toolResult?.type}_create-site`,
+              content: toolResult?.result?.message,
+              result: toolResult?.result,
+            },
+          ]);
+        } else if (toolResult?.toolName === "generate_blog_image") {
+          await storeMessages(user?.id!, [
+            ...messages,
+            {
+              role: "assistant",
+              content: toolResult?.result?.prompt,
+              type: `${toolResult?.type}_generate_blog_image`,
+              result: toolResult?.result?.images?.[0],
+            },
+          ]);
+        } else if (toolResult?.toolName === "generate_document_from_youtube") {
+          await storeMessages(user?.id!, [
+            ...messages,
+            {
+              role: "assistant",
+              content:
+                "Here's the youtube transcriped and turned to the document",
+              type: `${toolResult?.type}_generate_document_from_youtube`,
+              result: toolResult?.result,
+            },
+          ]);
+        }
       }
 
-      if (toolResults?.[0]?.toolName === "create_site") {
-        await storeMessages(user?.id!, [
-          ...messages,
-          {
-            role: "assistant",
-            type: `${toolResults?.[0]?.type}_create-site`,
-            content: toolResults?.[0]?.result?.message,
-            result: toolResults?.[0]?.result,
-          },
-        ]);
-      }
-
-      if (toolResults?.[0]?.toolName === "generate_blog_image") {
-        await storeMessages(user?.id!, [
-          ...messages,
-          {
-            role: "assistant",
-            content: toolResults?.[0]?.result?.prompt,
-            type: `${toolResults?.[0]?.type}_generate_blog_image`,
-            result: toolResults?.[0]?.result?.images?.[0],
-          },
-        ]);
-      }
       return;
     },
   });

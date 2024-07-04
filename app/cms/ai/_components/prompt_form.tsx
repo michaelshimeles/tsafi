@@ -1,10 +1,9 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { Card } from '@/components/ui/card'
 import { useGetAllSites } from '@/utils/hooks/useGetAllSites'
 import { EnterIcon } from '@radix-ui/react-icons'
-import clsx from 'clsx'
 import { useState } from 'react'
 import Textarea from 'react-textarea-autosize'
 
@@ -63,9 +62,11 @@ export function PromptForm({ input, handleInputChange, handleSubmit, setInput, s
           <div className='py-2 px-3 border text-sm rounded hover:cursor-pointer hover:border-gray-200 border-gray-100 dark:hover:border-zinc-800 dark:border-zinc-900 dark:bg-black' onClick={() => setInput(`Change site subdomain for ${selectedSite?.site_name}`)}>Change site subdomain for {selectedSite?.site_name}</div>
         </div>
         :
-        <div className='flex gap-3 mb-[1rem]'>
+        <div className='flex flex-wrap gap-3 mb-[1rem]'>
           <div className='py-2 px-3 border text-sm rounded hover:cursor-pointer hover:border-gray-200 border-gray-100 dark:hover:border-zinc-800 dark:border-zinc-900 dark:bg-black' onClick={() => setInput("Create a blog site for me")}>Create a blog site for me</div>
           <div className='py-2 px-3 border text-sm rounded hover:cursor-pointer hover:border-gray-200 border-gray-100 dark:hover:border-zinc-800 dark:border-zinc-900 dark:bg-black' onClick={() => setInput("List all my blog sites")}>List all my blog sites</div>
+          <div className='py-2 px-3 border text-sm rounded hover:cursor-pointer hover:border-gray-200 border-gray-100 dark:hover:border-zinc-800 dark:border-zinc-900 dark:bg-black' onClick={() => setInput("Generate a blog image")}>Generate a blog image</div>
+          <div className='py-2 px-3 border text-sm rounded hover:cursor-pointer hover:border-gray-200 border-gray-100 dark:hover:border-zinc-800 dark:border-zinc-900 dark:bg-black' onClick={() => setInput("Generate a document from a YouTube video")}>Generate a document from a YouTube video</div>
         </div>
       }
       <form onSubmit={handleSubmit} className='w-full'>

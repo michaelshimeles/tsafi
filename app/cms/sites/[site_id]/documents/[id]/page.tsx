@@ -9,16 +9,22 @@ import {
   FontBoldIcon,
   FontItalicIcon,
   Link1Icon,
-  ListBulletIcon
+  ListBulletIcon,
+  ReloadIcon
 } from "@radix-ui/react-icons";
 import Image from '@tiptap/extension-image';
 import Link from '@tiptap/extension-link';
 import { BubbleMenu, EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { Code, ImageIcon, ListOrdered, Quote, Redo, Strikethrough, Undo, Unlink } from 'lucide-react';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { SubmitDocument } from './_components/SubmitDocument';
 import "./styles.scss";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 
 import {
   ToggleGroup,
@@ -28,6 +34,10 @@ import SiteDashWrapper from '../../_components/SiteDashWrapper';
 import DeleteDocument from '@/app/cms/_components/DeleteDocument';
 import { useRouter } from 'next/navigation';
 import { useCheckAuthorization } from '@/utils/hooks/useCheckAuthorization';
+import { useForm } from 'react-hook-form';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { youtubeToDocument } from '@/utils/functions/ai/youtube-to-document';
 
 const MenuBar = ({ editor }: any) => {
 
@@ -111,6 +121,33 @@ export default function DocumentEditor({ params }: { params: { id: string, site_
   if (error || authCheck?.length === 0) {
     router.push("/cms")
   }
+  const [open, setOpen] = useState<boolean>(false);
+  const [transciption, setTranscription] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm()
+
+  const onSubmit = async (data: any) => {
+    setLoading(true)
+    try {
+      const response = await youtubeToDocument(data?.youtube_url)
+      setOpen(false)
+      console.log('response', response)
+      setTranscription(response)
+      setLoading(false)
+      return response
+    } catch (error) {
+      console.log('error', error)
+      setLoading(false)
+      return error
+    }
+  }
+
 
   const { data } = useGetDocumentById(params?.id)
 
@@ -187,14 +224,45 @@ export default function DocumentEditor({ params }: { params: { id: string, site_
     }
   }, [editor])
 
+
   return (
     <SiteDashWrapper site_id={params?.site_id}>
       <div className='flex flex-col items-end w-full'>
         <div className='flex justify-between items-center gap-3 w-full'>
-          <div className='flex justify-center items-center pb-3 my-7'>
+          <div className='flex justify-center items-center pb-3 my-7 gap-4'>
             <h1 className="scroll-m-20 text-3xl font-semibold tracking-tight lg:text-3xl">
               {data?.[0]?.title}
             </h1>
+            <Popover>
+              <PopoverTrigger asChild>
+                {loading ? <Button disabled>
+                  <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                  Please wait
+                </Button>
+                  : <Button>YT → Document</Button>}
+              </PopoverTrigger>
+              <PopoverContent>
+                <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-3 w-full'>
+                  <div className="flex flex-col justify-center items-center w-full gap-3">
+                    <Label className="w-full">
+                      Enter YouTube Url
+                    </Label>
+                    <Input
+                      className="w-full"
+                      {...register("youtube_url", { required: true })}
+                    />
+                  </div>
+                  <div className='flex justify-end'>
+                    {loading ? <Button disabled>
+                      <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                      Please wait
+                    </Button>
+                      : <Button type="submit" size="sm">Generate</Button>
+                    }
+                  </div>
+                </form>
+              </PopoverContent>
+            </Popover>
           </div>
           <div className='flex gap-2'>
             <DeleteDocument id={params?.id} />
