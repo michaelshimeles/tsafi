@@ -10,6 +10,7 @@ import { toast } from 'sonner';
 import DashWrapper from "../../_components/DashWrapper";
 import { PromptForm } from "./prompt_form";
 import Image from 'next/image';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function Chat({ messages: initialMessages }: { messages: Message[] }) {
   const { messages, input, handleInputChange, handleSubmit, setInput, isLoading, error } = useChat({
@@ -105,7 +106,7 @@ export default function Chat({ messages: initialMessages }: { messages: Message[
         return (
           <div key={toolCallId} className='bg-blue-700 bg-opacity-10 text-sm whitespace-pre-wrap p-2 rounded-lg w-fit'>
             <div>
-              <Image className='rounded' src={toolInvocation?.result?.images?.[0]?.url} width={500} height={500} alt="" />
+              {toolInvocation?.result?.images?.[0]?.url ? <Image className='rounded' src={toolInvocation?.result?.images?.[0]?.url} width={1000} height={500} alt="" /> : <Skeleton className='w-[1000px] h-[500px]' />}
             </div>
           </div>
         );
@@ -155,7 +156,7 @@ export default function Chat({ messages: initialMessages }: { messages: Message[
                     <div className='flex flex-col'>
                       {m?.type === "tool-result_generate_blog_image" && ((
                         <div>
-                          <Image className='rounded' src={m?.result?.url} width={1000} height={500} alt="" />
+                          {<Image className='rounded' src={m?.result?.url} width={1000} height={500} alt="" />}
                         </div>
                       ))}
                     </div>
