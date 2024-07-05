@@ -1,7 +1,7 @@
 import * as fal from "@fal-ai/serverless-client";
 
 export const generateBlogImage = async (prompt: string) => {
-  const result = await fal.subscribe("fal-ai/stable-diffusion-v3-medium", {
+  const result = await fal.subscribe("fal-ai/fast-sdxl", {
     input: {
       prompt,
       image_size: "landscape_4_3"
