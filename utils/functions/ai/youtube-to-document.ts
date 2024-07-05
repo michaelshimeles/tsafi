@@ -1,8 +1,11 @@
-"use server"
-import { YoutubeTranscript } from "youtube-transcript";
+"use server";
 import OpenAI from "openai";
+import { YoutubeTranscript } from "youtube-transcript";
 
-export const youtubeToDocument = async (youtube_video_url: string) => {
+export const youtubeToDocument = async (
+  youtube_video_url: string,
+  render_method: string | null
+) => {
   const result = await YoutubeTranscript.fetchTranscript(youtube_video_url);
 
   const openai = new OpenAI();
@@ -10,7 +13,10 @@ export const youtubeToDocument = async (youtube_video_url: string) => {
   // Join all the text segments into a single string
   const transcriptText = result.map((segment) => segment.text).join(" ");
   // Generate a prompt for OpenAI with the result from the tool
-  const prompt = `Turn this transcript into a document for a blog post:\n\n${transcriptText}\n\n  DO NOT. I REPEAT DO NOT RENDER A RESPONSE IN MARKDOWN.`;
+  let prompt;
+  render_method === "html"
+    ? (prompt = `Turn this transcript into a document for a blog post:\n\n${transcriptText}\n\n  DO NOT. I REPEAT DO NOT RENDER A RESPONSE IN MARKDOWN. Please render in HTML.`)
+    : (prompt = `Turn this transcript into a document for a blog post:\n\n${transcriptText}\n\n  DO NOT. I REPEAT DO NOT RENDER A RESPONSE IN MARKDOWN.`);
   const completion = await openai.chat.completions.create({
     messages: [{ role: "user", content: prompt }],
     model: "gpt-4o",

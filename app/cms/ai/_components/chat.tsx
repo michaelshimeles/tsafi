@@ -13,28 +13,31 @@ import Image from 'next/image';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export default function Chat({ messages: initialMessages }: { messages: Message[] }) {
+  // Initialize the chat hook with initial messages
   const { messages, input, handleInputChange, handleSubmit, setInput, isLoading, error } = useChat({
     initialMessages
   });
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  // Show a toast message if there is an error
   useEffect(() => {
     if (error) {
       toast(error.message);
     }
   }, [error]);
 
+  // Scroll to the end of the messages whenever the messages array changes
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView();
   }, [messages]);
 
+  // Function to render different tool invocations based on tool names
   const renderToolInvocation = (toolInvocation: any) => {
     const toolCallId = toolInvocation.toolCallId;
     const message = toolInvocation?.result?.message;
     const result = toolInvocation?.result?.result;
 
-    // console.log('toolInvocation', toolInvocation)
     switch (toolInvocation.toolName) {
       case 'create_site':
         return (
@@ -106,7 +109,7 @@ export default function Chat({ messages: initialMessages }: { messages: Message[
         return (
           <div key={toolCallId} className='bg-blue-700 bg-opacity-10 text-sm whitespace-pre-wrap p-2 rounded-lg w-fit'>
             <div>
-              {toolInvocation?.result?.images?.[0]?.url ? <Image className='rounded' src={toolInvocation?.result?.images?.[0]?.url} width={1000} height={500} alt="" /> : <Skeleton className='w-[1000px] h-[500px]' />}
+              {toolInvocation?.result?.images?.[0]?.url ? <Image className='rounded' src={toolInvocation?.result?.images?.[0]?.url} width={500} height={300} alt="" /> : <Skeleton className='w-[500px] h-[300px]' />}
             </div>
           </div>
         );
@@ -161,7 +164,7 @@ export default function Chat({ messages: initialMessages }: { messages: Message[
                     <div className='flex flex-col'>
                       {m?.type === "tool-result_generate_blog_image" && ((
                         <div>
-                          {<Image className='rounded' src={m?.result?.url} width={1000} height={500} alt="" />}
+                          {<Image className='rounded' src={m?.result?.url} width={500} height={300} alt="" />}
                         </div>
                       ))}
                     </div>

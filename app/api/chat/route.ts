@@ -136,7 +136,7 @@ export async function POST(req: Request) {
             .describe("description of the blog image user wants generated"),
         }),
         execute: async ({ youtube_video_url }) => {
-          const result = await youtubeToDocument(youtube_video_url);
+          const result = await youtubeToDocument(youtube_video_url, null);
 
           return result;
         },

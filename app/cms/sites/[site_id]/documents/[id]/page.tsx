@@ -1,8 +1,6 @@
-"use client"
+"use client";
 import { Button } from '@/components/ui/button';
-import {
-  Card
-} from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { useGetDocumentById } from '@/utils/hooks/useGetDocumentById';
 import {
   CodeSandboxLogoIcon,
@@ -20,16 +18,8 @@ import { Code, ImageIcon, ListOrdered, Quote, Redo, Strikethrough, Undo, Unlink 
 import { useCallback, useEffect, useState } from 'react';
 import { SubmitDocument } from './_components/SubmitDocument';
 import "./styles.scss";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
-
-import {
-  ToggleGroup,
-  ToggleGroupItem,
-} from "@/components/ui/toggle-group";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import SiteDashWrapper from '../../_components/SiteDashWrapper';
 import DeleteDocument from '@/app/cms/_components/DeleteDocument';
 import { useRouter } from 'next/navigation';
@@ -40,17 +30,15 @@ import { Input } from '@/components/ui/input';
 import { youtubeToDocument } from '@/utils/functions/ai/youtube-to-document';
 
 const MenuBar = ({ editor }: any) => {
-
   const addImage = useCallback(() => {
-    const url = window.prompt('URL')
-
+    const url = window.prompt('URL');
     if (url) {
-      editor?.chain().focus().setImage({ src: url }).run()
+      editor?.chain().focus().setImage({ src: url }).run();
     }
-  }, [editor])
+  }, [editor]);
 
   if (!editor) {
-    return null
+    return null;
   }
 
   return (
@@ -74,12 +62,6 @@ const MenuBar = ({ editor }: any) => {
         <ToggleGroupItem value="code" aria-label="Toggle code" onClick={() => editor.chain().focus().toggleCode().run()}>
           <Code className="h-4 w-4" />
         </ToggleGroupItem>
-        {/* <ToggleGroupItem value="clear-marks" aria-label="Clear marks" onClick={() => editor.chain().focus().unsetAllMarks().run()}>
-          clear marks
-        </ToggleGroupItem>
-        <ToggleGroupItem value="clear-nodes" aria-label="Clear nodes" onClick={() => editor.chain().focus().clearNodes().run()}>
-          clear nodes
-        </ToggleGroupItem> */}
         <ToggleGroupItem value="h1" aria-label="Toggle heading level 1" onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}>
           h1
         </ToggleGroupItem>
@@ -109,20 +91,19 @@ const MenuBar = ({ editor }: any) => {
         </ToggleGroupItem>
       </ToggleGroup>
     </div>
-  )
+  );
 }
 
 export default function DocumentEditor({ params }: { params: { id: string, site_id: string } }) {
-
-  const router = useRouter()
-
-  const { data: authCheck, error } = useCheckAuthorization(params?.site_id)
+  const router = useRouter();
+  const { data: authCheck, error } = useCheckAuthorization(params?.site_id);
 
   if (error || authCheck?.length === 0) {
-    router.push("/cms")
+    router.push("/cms");
   }
+
   const [open, setOpen] = useState<boolean>(false);
-  const [transciption, setTranscription] = useState<any>(null);
+  const [transcription, setTranscription] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
   const {
@@ -130,40 +111,37 @@ export default function DocumentEditor({ params }: { params: { id: string, site_
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm()
+  } = useForm();
 
   const onSubmit = async (data: any) => {
-    setLoading(true)
+    setLoading(true);
     try {
-      const response = await youtubeToDocument(data?.youtube_url)
-      setOpen(false)
-      console.log('response', response)
-      setTranscription(response)
-      setLoading(false)
-      return response
+      const response = await youtubeToDocument(data?.youtube_url, "html");
+      setOpen(false);
+      console.log('response', response);
+      setTranscription(response); // Update transcription state
+      setLoading(false);
+      return response;
     } catch (error) {
-      console.log('error', error)
-      setLoading(false)
-      return error
+      console.log('error', error);
+      setLoading(false);
+      return error;
     }
   }
 
-
-  const { data } = useGetDocumentById(params?.id)
+  const { data } = useGetDocumentById(params?.id);
 
   const extensions: any = [
     StarterKit.configure({
       bulletList: {
         keepMarks: true,
-        keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
+        keepAttributes: false, // TODO: Making this as `false` because marks are not preserved when I try to preserve attrs, awaiting a bit of help
       },
       orderedList: {
         keepMarks: true,
-        keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
+        keepAttributes: false, // TODO: Making this as `false` because marks are not preserved when I try to preserve attrs, awaiting a bit of help
       },
-      paragraph: {
-
-      }
+      paragraph: {}
     }),
     Link.configure({
       HTMLAttributes: {
@@ -177,53 +155,52 @@ export default function DocumentEditor({ params }: { params: { id: string, site_
     })
     // Color.configure({ types: [TextStyle.name, ListItem.name] }),
     // TextStyle,
-
-  ]
+  ];
 
   const editor = useEditor({
     extensions,
     content: "",
-  })
+  });
 
   useEffect(() => {
     if (editor && data?.[0]?.document) {
-      editor.commands.setContent(data?.[0]?.document)
+      editor.commands.setContent(data?.[0]?.document);
     }
   }, [editor, data?.[0]?.document]);
 
+  useEffect(() => {
+    if (editor && transcription) {
+      editor.commands.setContent(transcription); // Set editor content to transcription
+    }
+  }, [editor, transcription]);
 
-  const html = editor?.getHTML()
+  const html = editor?.getHTML();
 
   const setLink = useCallback(() => {
-    const previousUrl = editor?.getAttributes('link').href
-    const url = window.prompt('URL', previousUrl)
+    const previousUrl = editor?.getAttributes('link').href;
+    const url = window.prompt('URL', previousUrl);
 
     // cancelled
     if (url === null) {
-      return
+      return;
     }
 
     // empty
     if (url === '') {
-      editor?.chain().focus().extendMarkRange('link').unsetLink()
-        .run()
-
-      return
+      editor?.chain().focus().extendMarkRange('link').unsetLink().run();
+      return;
     }
 
     // update link
-    editor?.chain().focus().extendMarkRange('link').setLink({ href: url })
-      .run()
-  }, [editor])
+    editor?.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
+  }, [editor]);
 
   const addImage = useCallback(() => {
-    const url = window.prompt('URL')
-
+    const url = window.prompt('URL');
     if (url) {
-      editor?.chain().focus().setImage({ src: url }).run()
+      editor?.chain().focus().setImage({ src: url }).run();
     }
-  }, [editor])
-
+  }, [editor]);
 
   return (
     <SiteDashWrapper site_id={params?.site_id}>
@@ -303,5 +280,5 @@ export default function DocumentEditor({ params }: { params: { id: string, site_
         </div>
       </div>
     </SiteDashWrapper>
-  )
+  );
 }
