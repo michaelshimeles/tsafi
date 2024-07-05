@@ -30,7 +30,7 @@ export default async function SiteLayout({
         <meta name="site_name" content={siteName} />
         <meta name="description" content={siteDescription} />
         {siteCover && <meta name="image" content={siteCover} />}
-        <meta name="url" content={siteDomain + "." + process.env.BASE_DOMAIN}></meta>
+        <meta name="url" content={siteDomain + "." + process.env.NEXT_PUBLIC_FRONTEND_URL}></meta>
         {siteLogo && <link rel="icon" href={siteLogo} />}
       </head>
       <body>

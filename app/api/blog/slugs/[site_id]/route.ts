@@ -11,8 +11,7 @@ export async function POST(req: NextRequest, { params }: { params: { site_id: st
   try {
     const result = await clerkClient.users.getUser(authorization!);
     const response = await getArticlesSlugId(result?.id!, params?.site_id);
-
-    console.log('response', response);
+    console.log('response', response)
 
     if (response?.error) {
       return NextResponse.json({

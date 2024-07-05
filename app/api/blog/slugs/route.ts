@@ -10,6 +10,8 @@ export async function GET() {
     const result = await clerkClient.users.getUser(authorization!);
     const response = await getArticlesSlugApi(result?.id!);
 
+    console.log('result', result)
+
     if (response?.error) {
       return NextResponse.json({
         status: 400,
