@@ -13,31 +13,29 @@ import Image from 'next/image';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export default function Chat({ messages: initialMessages }: { messages: Message[] }) {
-  // Initialize the chat hook with initial messages
-  const { messages, input, handleInputChange, handleSubmit, setInput, isLoading, error } = useChat({
-    initialMessages
+  const { messages, input, handleInputChange, handleSubmit, setInput, error } = useChat({
+    initialMessages,
+    sendExtraMessageFields: true
   });
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Show a toast message if there is an error
   useEffect(() => {
     if (error) {
       toast(error.message);
     }
   }, [error]);
 
-  // Scroll to the end of the messages whenever the messages array changes
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView();
   }, [messages]);
 
-  // Function to render different tool invocations based on tool names
   const renderToolInvocation = (toolInvocation: any) => {
     const toolCallId = toolInvocation.toolCallId;
     const message = toolInvocation?.result?.message;
     const result = toolInvocation?.result?.result;
 
+    // console.log('toolInvocation', toolInvocation)
     switch (toolInvocation.toolName) {
       case 'create_site':
         return (
@@ -73,7 +71,7 @@ export default function Chat({ messages: initialMessages }: { messages: Message[
             </div>
             <div className='flex gap-2 flex-wrap mt-[1rem]'>
               {result?.length > 0 && result.map((site: any) => (
-                <Link key={site.site_id} href={`/cms/sites/${site.site_subdomain}`} prefetch={true} className="flex flex-col rounded-md w-[350px] hover:cursor-pointer transition-shadow duration-300" target='_blank'>
+                <Link key={site?.id} href={`/cms/sites/${site.site_subdomain}`} prefetch={true} className="flex flex-col rounded-md w-[350px] hover:cursor-pointer transition-shadow duration-300" target='_blank'>
                   <Card className="flex flex-col px-[1rem] justify-between h-full py-[1rem]">
                     <div className='flex flex-col w-full justify-center items-start'>
                       <h2 className="text-lg font-bold">{site.site_name}</h2>
@@ -91,8 +89,9 @@ export default function Chat({ messages: initialMessages }: { messages: Message[
                 </Link>
               ))}
             </div>
-          </div >
+          </div>
         );
+
       case 'update_site_name':
       case 'update_sub_domain':
         return (

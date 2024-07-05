@@ -1839,6 +1839,11 @@
     fast-check "^3.18.0"
     std-env "^3.7.0"
 
+"@upstash/vector@^1.1.3":
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@upstash/vector/-/vector-1.1.3.tgz#8accba86c4ee43f84cf14d0d671f1adc476f4edb"
+  integrity sha512-6eOL609Wr7eqAJNYyT9eEMCJrfATlq07W7A6eb6Y/8+Z9D9iJKwT8MIIh4/OJHbrMliKaEE0q0aE0GwJcOLeVg==
+
 "@vercel/analytics@^1.2.2":
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/@vercel/analytics/-/analytics-1.2.2.tgz#715d8f203a170c06ba36b363e03b048c03060d5d"
