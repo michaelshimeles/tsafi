@@ -1,7 +1,16 @@
 "use client";
+import DeleteDocument from '@/app/cms/_components/DeleteDocument';
 import { Button } from '@/components/ui/button';
 import { Card } from "@/components/ui/card";
+import { Dialog, DialogClose, DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { ToggleGroup } from "@/components/ui/toggle-group";
+import { youtubeToDocument } from '@/utils/functions/ai/youtube-to-document';
+import { useCheckAuthorization } from '@/utils/hooks/useCheckAuthorization';
 import { useGetDocumentById } from '@/utils/hooks/useGetDocumentById';
+import { UploadDropzone } from "@/utils/uploadthing";
 import {
   CodeSandboxLogoIcon,
   FontBoldIcon,
@@ -15,27 +24,24 @@ import Link from '@tiptap/extension-link';
 import { BubbleMenu, EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { Code, ImageIcon, ListOrdered, Quote, Redo, Strikethrough, Undo, Unlink } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import SiteDashWrapper from '../../_components/SiteDashWrapper';
 import { SubmitDocument } from './_components/SubmitDocument';
 import "./styles.scss";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import SiteDashWrapper from '../../_components/SiteDashWrapper';
-import DeleteDocument from '@/app/cms/_components/DeleteDocument';
-import { useRouter } from 'next/navigation';
-import { useCheckAuthorization } from '@/utils/hooks/useCheckAuthorization';
-import { useForm } from 'react-hook-form';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { youtubeToDocument } from '@/utils/functions/ai/youtube-to-document';
 
 const MenuBar = ({ editor }: any) => {
-  const addImage = useCallback(() => {
-    const url = window.prompt('URL');
-    if (url) {
-      editor?.chain().focus().setImage({ src: url }).run();
+  const [imageUploadUrl, setImageUploadUrl] = useState<string>("");
+
+  useEffect(() => {
+    editor?.chain().focus().setImage({ src: imageUploadUrl }).run();
+
+    return () => {
+      setImageUploadUrl("")
     }
-  }, [editor]);
+  }, [imageUploadUrl])
 
   if (!editor) {
     return null;
@@ -47,9 +53,34 @@ const MenuBar = ({ editor }: any) => {
         <Button variant="ghost" value="bold" aria-label="Toggle bold" onClick={() => editor?.chain()?.focus()?.toggleBold()?.run()}>
           <FontBoldIcon className="h-4 w-4" />
         </Button>
-        <Button variant="ghost" value="image" aria-label="Upload image" onClick={addImage}>
-          <ImageIcon className="h-4 w-4" />
-        </Button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant="ghost" value="image" aria-label="Upload image">
+              <ImageIcon className="h-4 w-4" />
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogTitle>
+              Upload Image
+            </DialogTitle>
+            <UploadDropzone
+              className="p-8"
+              endpoint="imageUploader"
+              onClientUploadComplete={(res) => {
+                setImageUploadUrl(res?.[0]?.url);
+                toast(`Image uploaded`);
+              }}
+              onUploadError={(error: Error) => {
+                toast(`ERROR! ${error.message}`);
+              }}
+            />
+            <DialogClose asChild>
+              <div className="flex justify-end">
+                <Button type="button" variant="outline">Close</Button>
+              </div>
+            </DialogClose>
+          </DialogContent>
+        </Dialog>
         <Button variant="ghost" value="italic" aria-label="Toggle italic" onClick={() => editor?.chain().focus().toggleItalic().run()}>
           <FontItalicIcon className="h-4 w-4" />
         </Button>
@@ -105,6 +136,7 @@ export default function DocumentEditor({ params }: { params: { id: string, site_
   const [open, setOpen] = useState<boolean>(false);
   const [transcription, setTranscription] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [imageUploadUrl, setImageUploadUrl] = useState<string>("");
 
   const {
     register,
@@ -195,12 +227,13 @@ export default function DocumentEditor({ params }: { params: { id: string, site_
     editor?.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
   }, [editor]);
 
-  const addImage = useCallback(() => {
-    const url = window.prompt('URL');
-    if (url) {
-      editor?.chain().focus().setImage({ src: url }).run();
+  useEffect(() => {
+    editor?.chain().focus().setImage({ src: imageUploadUrl }).run();
+
+    return () => {
+      setImageUploadUrl("")
     }
-  }, [editor]);
+  }, [imageUploadUrl])
 
   return (
     <SiteDashWrapper site_id={params?.site_id}>
@@ -259,9 +292,36 @@ export default function DocumentEditor({ params }: { params: { id: string, site_
                 <Button variant="ghost" value="italic" aria-label="Toggle italic" onClick={() => editor?.chain().focus().toggleItalic().run()}>
                   <FontItalicIcon className="h-4 w-4" />
                 </Button>
-                <Button variant="ghost" value="image" aria-label="Upload image" onClick={addImage}>
-                  <ImageIcon className="h-4 w-4" />
-                </Button>
+                <div>
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button variant="ghost" value="image" aria-label="Upload image">
+                        <ImageIcon className="h-4 w-4" />
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogTitle>
+                        Upload Image
+                      </DialogTitle>
+                      <UploadDropzone
+                        className="p-8"
+                        endpoint="imageUploader"
+                        onClientUploadComplete={(res) => {
+                          setImageUploadUrl(res?.[0]?.url);
+                          toast(`Image uploaded`);
+                        }}
+                        onUploadError={(error: Error) => {
+                          toast(`ERROR! ${error.message}`);
+                        }}
+                      />
+                      <DialogClose asChild>
+                        <div className="flex justify-end">
+                          <Button type="button" variant="outline">Close</Button>
+                        </div>
+                      </DialogClose>
+                    </DialogContent>
+                  </Dialog>
+                </div>
                 <Button variant="ghost" value="link" aria-label="Toggle strikethrough" onClick={setLink}>
                   <Link1Icon className="h-4 w-4" />
                 </Button>
