@@ -1,7 +1,7 @@
 import { readSiteById } from "@/utils/actions/sites/read-site-id";
 import { notFound } from "next/navigation";
 import { ReactNode } from "react";
-import { NavBar } from "./_components/navbar";
+import { NavBar } from "./_components/nav-bar";
 
 export default async function SiteLayout({
   params,
