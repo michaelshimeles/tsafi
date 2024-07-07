@@ -51,7 +51,7 @@ export function NavBar({
       <NavigationMenu>
         <NavigationMenuList className="max-[825px]:hidden ">
           <Link href="/" className="pl-2">
-            {logo ? <Image src={logo} width={40} height={40} alt="logo"/>: <p className="font-semibold">{title}</p>}
+            {logo ? <Image src={logo} width={40} height={40} alt="logo" /> : <p className="font-semibold">{title}</p>}
           </Link>
         </NavigationMenuList>
       </NavigationMenu>
