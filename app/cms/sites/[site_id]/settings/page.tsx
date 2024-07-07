@@ -18,7 +18,7 @@ import ChangeSiteName from "../../_components/ChangeSiteName"
 import ChangeSiteSubdomain from "../../_components/ChangeSiteSubdomain"
 import DeleteSite from "../../_components/DeleteSite"
 import SiteDashWrapper from "../_components/SiteDashWrapper"
-
+import SitePreview from "./_components/site_preview"
 
 export default async function SettingsPage({ params }: { params: { site_id: string } }) {
   const authCheck: any = await Authorization(params?.site_id)
@@ -55,12 +55,18 @@ export default async function SettingsPage({ params }: { params: { site_id: stri
         <Tabs defaultValue="general" className="w-full mt-[2rem]">
           <TabsList>
             <TabsTrigger value="general">General</TabsTrigger>
+            <TabsTrigger value="site-preview">Site Preview</TabsTrigger>
             <TabsTrigger value="domain">Domain</TabsTrigger>
           </TabsList>
           <TabsContent value="general">
             <div className="w-full">
               <ChangeSiteName response={response} site_id={params?.site_id} />
               <ChangeSiteDescription response={response} site_id={params?.site_id} />
+            </div>
+          </TabsContent>
+          <TabsContent value="site-preview">
+            <div className="w-full">
+              <SitePreview site_id={params?.site_id} />
             </div>
           </TabsContent>
           <TabsContent value="domain">
