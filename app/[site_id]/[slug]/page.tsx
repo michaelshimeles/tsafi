@@ -7,64 +7,64 @@ import Image from "next/image"
 import Link from 'next/link'
 import ReactHtmlParser from 'react-html-parser'
 
-export async function generateMetadata({ params }: { params: { slug: string, site_id: string } }) {
+// export async function generateMetadata({ params }: { params: { slug: string, site_id: string } }) {
 
-  try {
-    const { response } = await getAllArticleBySlug(params?.slug)
+//   try {
+//     const { response } = await getAllArticleBySlug(params?.slug)
 
-    if (response?.length === 0) {
-      return {
-        title: "Not Found",
-        description: "The page you are looking for does not exist"
-      }
-    }
+//     if (response?.length === 0) {
+//       return {
+//         title: "Not Found",
+//         description: "The page you are looking for does not exist"
+//       }
+//     }
 
-    return {
-      openGraph: {
-        title: response?.[0]?.title,
-        description: response?.[0]?.subtitle,
-        images: [response?.[0]?.image],
-      },
-      keywords: [...response?.[0]?.keywords]
-    }
-  } catch (error) {
-    console.error(error)
-    return {
-      title: "Not Found",
-      description: "The page you are looking for does not exist"
-    }
-  }
-}
+//     return {
+//       openGraph: {
+//         title: response?.[0]?.title,
+//         description: response?.[0]?.subtitle,
+//         images: [response?.[0]?.image],
+//       },
+//       keywords: [...response?.[0]?.keywords]
+//     }
+//   } catch (error) {
+//     console.error(error)
+//     return {
+//       title: "Not Found",
+//       description: "The page you are looking for does not exist"
+//     }
+//   }
+// }
 
-export async function generateStaticParams() {
+// export async function generateStaticParams() {
 
-  try {
-    const response: any = await fetch(
-      `${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/blog/slugs`,
-      {
-        headers: {
-          "X-Auth-Key": process.env.CMS_API_KEY!,
-        },
-      }
-    );
+//   try {
+//     const response: any = await fetch(
+//       `${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/blog/slugs`,
+//       {
+//         headers: {
+//           "X-Auth-Key": process.env.CMS_API_KEY!,
+//         },
+//       }
+//     );
 
-    const result = await response.json()
+//     const result = await response.json()
 
-    if (result?.error) {
-      throw new Error(`Failed to fetch articles: ${response.statusText}`);
-    }
+//     if (result?.error) {
+//       throw new Error(`Failed to fetch articles: ${response.statusText}`);
+//     }
 
-    if (result?.response?.length === 0) return [];
+//     if (result?.response?.length === 0) return [];
 
-    return result?.response?.map((post: any) => ({
-      slug: post?.slug,
-    }));
+//     return result?.response?.map((post: any) => ({
+//       slug: post?.slug,
+//     }));
 
-  } catch (error) {
-    console.error('Error fetching articles:', error);
-    return [];
-  }
-}
+//   } catch (error) {
+//     console.error('Error fetching articles:', error);
+//     return [];
+//   }
+// }
 
 export default async function BlogPostPage({ params }: { params: { slug: string } }) {
   const response = await readArticleSlug(params?.slug)
