@@ -1,7 +1,7 @@
 export const transformNode = (node: any) => {
   // Applying classes to paragraph tags
   if (node.type === "tag" && node.name === "p") {
-    let className = "leading-7 my-5";
+    let className = "leading-7 mt-6";
     if (node.attribs.class) {
       className = `${node.attribs.class} ${className}`;
     }
@@ -23,7 +23,7 @@ export const transformNode = (node: any) => {
 
   if (node.type === "tag" && node.name === "h2") {
     node.attribs.class =
-      "mt-10 scroll-m-20 border-b pb-2 text-lg font-semibold tracking-tight transition-colors first:mt-0";
+      "mt-10 scroll-m-20 border-b pb-2 text-xl font-semibold tracking-tight transition-colors first:mt-0";
   }
 
   if (node.type === "tag" && node.name === "h3") {
