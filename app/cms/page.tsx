@@ -4,6 +4,7 @@ import { readSites } from '@/utils/functions/sites/read-sites'
 import DashWrapper from './_components/DashWrapper'
 import CreateSite from './sites/_components/CreateSite'
 import { Card } from '@/components/ui/card'
+import { searchInternet } from '@/utils/functions/ai/search-internet'
 
 export default async function Sites() {
 

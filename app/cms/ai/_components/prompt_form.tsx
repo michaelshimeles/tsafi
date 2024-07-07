@@ -2,15 +2,26 @@
 
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import { deleteMessages } from '@/utils/actions/ai/delete-messages'
 import { useGetAllSites } from '@/utils/hooks/useGetAllSites'
-import { EnterIcon } from '@radix-ui/react-icons'
+import { EnterIcon, ReloadIcon } from '@radix-ui/react-icons'
+import { Settings, StopCircle } from 'lucide-react'
 import { useState } from 'react'
 import Textarea from 'react-textarea-autosize'
 
-export function PromptForm({ input, handleInputChange, handleSubmit, setInput, setMessages }: any) {
-  const [showPopup, setShowPopup] = useState(false);
+
+export function PromptForm({ input, handleInputChange, handleSubmit, setInput, append, isLoading, stop }: any) {
+  const [showPopup, setShowPopup] = useState<boolean>(false);
   const [selectedSite, setSelectedSite] = useState<any>(null);
   const [filteredSites, setFilteredSites] = useState([]);
+  const [clearHistoryLoading, setClearHistoryLoading] = useState<boolean>(false);
+  const [settingsOpen, setSettingsOpen] = useState<boolean>(false);
+
   const { data: sites } = useGetAllSites();
 
   const handleInput = (e: any) => {
@@ -71,9 +82,38 @@ export function PromptForm({ input, handleInputChange, handleSubmit, setInput, s
       }
       <form onSubmit={handleSubmit} className='w-full'>
         <div className="flex justify-center items-center max-h-60 w-full grow  overflow-hidden bg-background pr-4 pl-2 rounded-md border">
-          <div className={selectedSite ? `border p-3 rounded` : `border p-3 rounded invisible`} onClick={() => setSelectedSite(null)}>
+          {selectedSite ? <div className={`border p-3 rounded`} onClick={() => setSelectedSite(null)}>
             <p>{selectedSite?.site_name.match(/^(\w)\w*\s+(\w{1,2})/)?.slice(1)?.join('') ? selectedSite?.site_name.match(/^(\w)\w*\s+(\w{1,2})/)?.slice(1)?.join('') : selectedSite?.site_name}</p>
-          </div>
+          </div> :
+            <Popover open={settingsOpen} onOpenChange={setSettingsOpen}>
+              <PopoverTrigger asChild>
+                <Button size="icon">
+                  <Settings className='w-4' />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-80">
+                <div className="grid gap-4">
+                  <div className="space-y-2">
+                    <h4 className="font-medium leading-none">Settings</h4>
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    {clearHistoryLoading ? <Button disabled>
+                      <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                      Please wait
+                    </Button>
+                      : <Button onClick={async () => {
+                        setClearHistoryLoading(true)
+                        await deleteMessages()
+
+                        setClearHistoryLoading(false)
+                        setSettingsOpen(false)
+                      }}>Clear chat history</Button>}
+                  </div>
+                </div>
+              </PopoverContent>
+            </Popover>
+
+          }
           <Textarea
             placeholder="Send a message."
             className="min-h-[60px] w-full resize-none bg-transparent px-4 py-[1.3rem] focus-within:outline-none sm:text-sm"
@@ -90,10 +130,10 @@ export function PromptForm({ input, handleInputChange, handleSubmit, setInput, s
             rows={1}
           />
           <div className="">
-            <Button type="submit" size="icon">
+            {isLoading ? <Button onClick={stop} size="icon" disabled={!isLoading}><StopCircle /></Button> : <Button type="submit" size="icon">
               <EnterIcon />
               <span className="sr-only">Send message</span>
-            </Button>
+            </Button>}
           </div>
         </div>
       </form>

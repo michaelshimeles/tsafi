@@ -44,51 +44,51 @@ const MenuBar = ({ editor }: any) => {
   return (
     <div className='flex gap-3 flex-wrap justify-center items-center border rounded px-2 py-2 mb-6 w-full'>
       <ToggleGroup type="multiple" className='w-full flex justify-start items-center'>
-        <ToggleGroupItem value="bold" aria-label="Toggle bold" onClick={() => editor?.chain()?.focus()?.toggleBold()?.run()}>
+        <Button variant="ghost" value="bold" aria-label="Toggle bold" onClick={() => editor?.chain()?.focus()?.toggleBold()?.run()}>
           <FontBoldIcon className="h-4 w-4" />
-        </ToggleGroupItem>
-        <ToggleGroupItem value="image" aria-label="Upload image" onClick={addImage}>
+        </Button>
+        <Button variant="ghost" value="image" aria-label="Upload image" onClick={addImage}>
           <ImageIcon className="h-4 w-4" />
-        </ToggleGroupItem>
-        <ToggleGroupItem value="italic" aria-label="Toggle italic" onClick={() => editor?.chain().focus().toggleItalic().run()}>
+        </Button>
+        <Button variant="ghost" value="italic" aria-label="Toggle italic" onClick={() => editor?.chain().focus().toggleItalic().run()}>
           <FontItalicIcon className="h-4 w-4" />
-        </ToggleGroupItem>
-        <ToggleGroupItem value="paragraph" aria-label="Toggle paragraph" onClick={() => editor.chain().focus().setParagraph().run()}>
+        </Button>
+        <Button variant="ghost" value="paragraph" aria-label="Toggle paragraph" onClick={() => editor.chain().focus().setParagraph().run()}>
           <div className="h-4 w-4">P</div>
-        </ToggleGroupItem>
-        <ToggleGroupItem value="strike" aria-label="Toggle strikethrough" onClick={() => editor.chain().focus().toggleStrike().run()}>
+        </Button>
+        <Button variant="ghost" value="strike" aria-label="Toggle strikethrough" onClick={() => editor.chain().focus().toggleStrike().run()}>
           <Strikethrough className="h-4 w-4" />
-        </ToggleGroupItem>
-        <ToggleGroupItem value="code" aria-label="Toggle code" onClick={() => editor.chain().focus().toggleCode().run()}>
+        </Button>
+        <Button variant="ghost" value="code" aria-label="Toggle code" onClick={() => editor.chain().focus().toggleCode().run()}>
           <Code className="h-4 w-4" />
-        </ToggleGroupItem>
-        <ToggleGroupItem value="h1" aria-label="Toggle heading level 1" onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}>
+        </Button>
+        <Button variant="ghost" value="h1" aria-label="Toggle heading level 1" onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}>
           h1
-        </ToggleGroupItem>
-        <ToggleGroupItem value="h2" aria-label="Toggle heading level 2" onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}>
+        </Button>
+        <Button variant="ghost" value="h2" aria-label="Toggle heading level 2" onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}>
           h2
-        </ToggleGroupItem>
-        <ToggleGroupItem value="h3" aria-label="Toggle heading level 3" onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}>
+        </Button>
+        <Button variant="ghost" value="h3" aria-label="Toggle heading level 3" onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}>
           h3
-        </ToggleGroupItem>
-        <ToggleGroupItem value="bullet-list" aria-label="Toggle bullet list" onClick={() => editor.chain().focus().toggleBulletList().run()}>
+        </Button>
+        <Button variant="ghost" value="bullet-list" aria-label="Toggle bullet list" onClick={() => editor.chain().focus().toggleBulletList().run()}>
           <ListBulletIcon className="h-4 w-4" />
-        </ToggleGroupItem>
-        <ToggleGroupItem value="ordered-list" aria-label="Toggle ordered list" onClick={() => editor.chain().focus().toggleOrderedList().run()}>
+        </Button>
+        <Button variant="ghost" value="ordered-list" aria-label="Toggle ordered list" onClick={() => editor.chain().focus().toggleOrderedList().run()}>
           <ListOrdered className="h-4 w-4" />
-        </ToggleGroupItem>
-        <ToggleGroupItem value="code-block" aria-label="Toggle code block" onClick={() => editor.chain().focus().toggleCodeBlock().run()}>
+        </Button>
+        <Button variant="ghost" value="code-block" aria-label="Toggle code block" onClick={() => editor.chain().focus().toggleCodeBlock().run()}>
           <CodeSandboxLogoIcon className="h-4 w-4" />
-        </ToggleGroupItem>
-        <ToggleGroupItem value="blockquote" aria-label="Toggle blockquote" onClick={() => editor.chain().focus().toggleBlockquote().run()}>
+        </Button>
+        <Button variant="ghost" value="blockquote" aria-label="Toggle blockquote" onClick={() => editor.chain().focus().toggleBlockquote().run()}>
           <Quote className="h-4 w-4" />
-        </ToggleGroupItem>
-        <ToggleGroupItem value="undo" aria-label="Undo" onClick={() => editor.chain().focus().undo().run()} disabled={!editor.can().chain().focus().undo().run()}>
+        </Button>
+        <Button variant="ghost" value="undo" aria-label="Undo" onClick={() => editor.chain().focus().undo().run()} disabled={!editor.can().chain().focus().undo().run()}>
           <Undo className="h-4 w-4" />
-        </ToggleGroupItem>
-        <ToggleGroupItem value="redo" aria-label="Redo" onClick={() => editor.chain().focus().redo().run()} disabled={!editor.can().chain().focus().redo().run()}>
+        </Button>
+        <Button variant="ghost" value="redo" aria-label="Redo" onClick={() => editor.chain().focus().redo().run()} disabled={!editor.can().chain().focus().redo().run()}>
           <Redo className="h-4 w-4" />
-        </ToggleGroupItem>
+        </Button>
       </ToggleGroup>
     </div>
   );
@@ -253,21 +253,21 @@ export default function DocumentEditor({ params }: { params: { id: string, site_
           <BubbleMenu editor={editor!} tippyOptions={{ duration: 100 }}>
             <Card className="w-full p-2">
               <ToggleGroup type="multiple">
-                <ToggleGroupItem value="bold" aria-label="Toggle bold" onClick={() => editor?.chain()?.focus()?.toggleBold()?.run()}>
+                <Button variant="ghost" value="bold" aria-label="Toggle bold" onClick={() => editor?.chain()?.focus()?.toggleBold()?.run()}>
                   <FontBoldIcon className="h-4 w-4" />
-                </ToggleGroupItem>
-                <ToggleGroupItem value="italic" aria-label="Toggle italic" onClick={() => editor?.chain().focus().toggleItalic().run()}>
+                </Button>
+                <Button variant="ghost" value="italic" aria-label="Toggle italic" onClick={() => editor?.chain().focus().toggleItalic().run()}>
                   <FontItalicIcon className="h-4 w-4" />
-                </ToggleGroupItem>
-                <ToggleGroupItem value="image" aria-label="Upload image" onClick={addImage}>
+                </Button>
+                <Button variant="ghost" value="image" aria-label="Upload image" onClick={addImage}>
                   <ImageIcon className="h-4 w-4" />
-                </ToggleGroupItem>
-                <ToggleGroupItem value="link" aria-label="Toggle strikethrough" onClick={setLink}>
+                </Button>
+                <Button variant="ghost" value="link" aria-label="Toggle strikethrough" onClick={setLink}>
                   <Link1Icon className="h-4 w-4" />
-                </ToggleGroupItem>
-                <ToggleGroupItem value="link" aria-label="Toggle strikethrough" onClick={() => editor?.chain().focus().unsetLink().run()}>
+                </Button>
+                <Button variant="ghost" value="link" aria-label="Toggle strikethrough" onClick={() => editor?.chain().focus().unsetLink().run()}>
                   <Unlink className="h-4 w-4" />
-                </ToggleGroupItem>
+                </Button>
               </ToggleGroup>
             </Card>
           </BubbleMenu>

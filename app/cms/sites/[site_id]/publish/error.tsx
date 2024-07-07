@@ -1,6 +1,6 @@
-'use client' // Error components must be Client Components
+'use client'
 
-import PageWrapper from '@/components/Container/PageWrapper'
+import PageWrapper from '@/components/container/page-wrapper'
 import { Button } from '@/components/ui/button'
 import { useEffect } from 'react'
 
