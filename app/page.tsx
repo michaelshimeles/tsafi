@@ -1,5 +1,5 @@
-import PageWrapper from "@/components/Container/PageWrapper";
-import HeroSection from "@/components/LandingPage/HeroSection";
+import PageWrapper from "@/components/container/page-wrapper";
+import HeroSection from "@/components/homepage/hero";
 
 export default function Home() {
   return (

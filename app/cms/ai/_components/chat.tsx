@@ -13,7 +13,7 @@ import Image from 'next/image';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export default function Chat({ messages: initialMessages }: { messages: Message[] }) {
-  const { messages, input, handleInputChange, handleSubmit, setInput, error } = useChat({
+  const { messages, input, handleInputChange, handleSubmit, setInput, error, append, isLoading, stop } = useChat({
     initialMessages,
     sendExtraMessageFields: true
   });
@@ -182,7 +182,15 @@ export default function Chat({ messages: initialMessages }: { messages: Message[
           <div ref={messagesEndRef} />
         </div>
         <div className="px-4 pb-4">
-          <PromptForm input={input} handleInputChange={handleInputChange} handleSubmit={handleSubmit} setInput={setInput} />
+          <PromptForm
+            input={input}
+            handleInputChange={handleInputChange}
+            handleSubmit={handleSubmit}
+            setInput={setInput}
+            append={append}
+            isLoading={isLoading}
+            stop={stop}
+          />
         </div>
       </div>
     </DashWrapper >

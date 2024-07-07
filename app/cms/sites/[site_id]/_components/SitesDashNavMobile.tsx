@@ -1,12 +1,12 @@
 "use client"
 
-import { Profile } from "@/components/Profile"
+import { Profile } from "@/components/user-profile"
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { Dialog, DialogClose } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import Link from "next/link"
-import ModeToggle from "@/components/ModeToggle"
+import ModeToggle from "@/components/mode-toggle"
 
 export default function SitesDashNavMobile() {
   return (

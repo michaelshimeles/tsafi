@@ -1,21 +1,17 @@
 "use client"
 import {
     NavigationMenu,
-    NavigationMenuLink,
     NavigationMenuList
 } from "@/components/ui/navigation-menu"
-import { cn } from "@/lib/utils"
 import { useAuth } from "@clerk/nextjs"
 import { Dialog, DialogClose } from "@radix-ui/react-dialog"
 import { BookOpen } from 'lucide-react'
 import Link from "next/link"
-import * as React from "react"
 import { GiHamburgerMenu } from "react-icons/gi"
-import ModeToggle from "./ModeToggle"
-import { Profile } from "./Profile"
-import { Button } from "./ui/button"
-import { SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet"
-
+import { Button } from "../ui/button"
+import { SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "../ui/sheet"
+import { Profile } from "../user-profile"
+import ModeToggle from "../mode-toggle"
 
 export function NavBar() {
     const { userId } = useAuth();

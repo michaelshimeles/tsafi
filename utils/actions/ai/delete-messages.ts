@@ -1,9 +1,10 @@
-"use server"
+"use server";
 import { auth } from "@clerk/nextjs/server";
 import { createServerClient } from "@supabase/ssr";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
-export const readMessages = async () => {
+export const deleteMessages = async () => {
   const { userId } = auth();
 
   if (!userId) {
@@ -25,8 +26,11 @@ export const readMessages = async () => {
   try {
     const { data, error } = await supabase
       .from("chat")
-      .select("*")
-      .eq("user_id", userId);
+      .update({ messages: [] })
+      .eq("user_id", userId)
+      .select("*");
+
+    revalidateTag("ai-home-page");
 
     if (error?.code) return error;
 
