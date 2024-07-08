@@ -15,7 +15,7 @@ export default async function Sites() {
       <main className="flex min-w-screen p-4 flex-col items-center justify-between w-full">
         <div className="flex mb-[1.5rem] w-full justify-between items-center">
           <h1 className=" text-3xl font-semibold tracking-tight">
-            Site(s)
+            Your Blog Site(s)
           </h1>
           <CreateSite />
         </div>

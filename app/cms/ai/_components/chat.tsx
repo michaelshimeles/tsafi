@@ -181,7 +181,7 @@ export default function Chat({ messages: initialMessages }: { messages: Message[
           ))}
           <div ref={messagesEndRef} />
         </div>
-        <div className="px-4 pb-4">
+        <div className="flex w-full justify-center items-center px-4 pb-4">
           <PromptForm
             input={input}
             handleInputChange={handleInputChange}
