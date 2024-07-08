@@ -12,7 +12,7 @@ import { convertToCoreMessages, streamText, tool } from "ai";
 import { z } from "zod";
 
 export async function POST(req: Request) {
-  const { messages } = await req.json();
+  const { messages, selectedSite } = await req.json();
 
   const user = await currentUser();
 
@@ -64,6 +64,12 @@ export async function POST(req: Request) {
         execute: async () => {
           const result = await readSites();
 
+          if (!result?.[0]?.site_name) {
+            return {
+              message: "You have no blog sites, you should create one 😉",
+            };
+          }
+
           if (result?.length === 1) {
             return {
               message: "Here's your blog site",
@@ -80,11 +86,11 @@ export async function POST(req: Request) {
       update_site_name: tool({
         description: "Change or update the name of a site",
         parameters: z.object({
-          current_site_name: z.string().describe("current site name"),
+          // current_site_name: z.string().describe("current site name"),
           new_site_name: z.string().describe("new site name"),
         }),
-        execute: async ({ current_site_name, new_site_name }) => {
-          const getSiteInfo = await readSiteName(current_site_name);
+        execute: async ({ new_site_name }) => {
+          const getSiteInfo = await readSiteName(selectedSite?.site_name);
 
           const result = await changeSiteName(
             getSiteInfo?.[0]?.site_id,
@@ -92,18 +98,18 @@ export async function POST(req: Request) {
           );
           return {
             result: JSON.stringify(result),
-            message: `Your blog site name has been updated from ${current_site_name} to ${result?.[0]?.site_name} and you can check it out by clicking the button below.`,
+            message: `Your blog site name has been updated from ${selectedSite?.site_name} to ${result?.[0]?.site_name} and you can check it out by clicking the button below.`,
           };
         },
       }),
       update_sub_domain: tool({
         description: "Change or update the subdomain of a site",
         parameters: z.object({
-          current_site_name: z.string().describe("current site name"),
+          // current_site_name: z.string().describe("current site name"),
           new_site_subdomain: z.string().describe("new site subdomain"),
         }),
-        execute: async ({ current_site_name, new_site_subdomain }) => {
-          const getSiteInfo = await readSiteName(current_site_name);
+        execute: async ({ new_site_subdomain }) => {
+          const getSiteInfo = await readSiteName(selectedSite?.site_name);
 
           const result = await changeSiteSubdomain(
             getSiteInfo?.[0]?.site_id,
@@ -111,7 +117,7 @@ export async function POST(req: Request) {
           );
           return {
             result: JSON.stringify(result),
-            message: `Your blog site ${current_site_name} subdomain has been updated to ${result?.[0]?.site_subdomain} and you can check it out by clicking the button below.`,
+            message: `Your blog site ${selectedSite?.site_name} subdomain has been updated to ${result?.[0]?.site_subdomain} and you can check it out by clicking the button below.`,
           };
         },
       }),
