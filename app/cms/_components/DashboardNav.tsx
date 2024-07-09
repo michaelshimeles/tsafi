@@ -26,7 +26,12 @@ export default function DashboardNavMobile() {
             <div className="flex flex-col space-y-3 mt-[1rem]">
               <DialogClose asChild>
                 <Link href="/cms">
-                  <Button variant="outline" className="w-full">Dashboard</Button>
+                  <Button variant="outline" className="w-full">Site(s)</Button>
+                </Link>
+              </DialogClose>
+              <DialogClose asChild>
+                <Link href="/cms/ai">
+                  <Button variant="outline" className="w-full">AI (alpha)</Button>
                 </Link>
               </DialogClose>
               <DialogClose asChild>

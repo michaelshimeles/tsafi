@@ -4,7 +4,9 @@ import HeroSection from "@/components/homepage/hero";
 export default function Home() {
   return (
     <PageWrapper>
-      <HeroSection />
+      <div className="flex flex-col max-w-[60rem]">
+        <HeroSection />
+      </div>
     </PageWrapper>
   );
 }

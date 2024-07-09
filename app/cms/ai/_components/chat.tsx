@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Message, useChat } from '@ai-sdk/react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -17,6 +17,8 @@ export default function Chat({ messages: initialMessages }: { messages: Message[
     initialMessages,
     sendExtraMessageFields: true
   });
+
+  const [createDocumentShowPopup, setCreateDocumentShowPopup] = useState<boolean>(false)
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -127,7 +129,7 @@ export default function Chat({ messages: initialMessages }: { messages: Message[
   return (
     <DashWrapper>
       <div className="flex flex-col h-[calc(100vh-100px)] w-full">
-        <div className="flex-grow overflow-y-auto p-4">
+        <div className="flex-grow overflow-y-auto p-4 pb-[11rem]">
           {messages.map((m: any, index: number) => (
             <div key={index} className={m.role === "user" ? "flex flex-col justify-center items-end gap-1 mb-4" : "flex flex-col justify-center items-start gap-1 mb-4"}>
               <div className="flex flex-col gap-1 max-w-[80%]">
@@ -167,10 +169,19 @@ export default function Chat({ messages: initialMessages }: { messages: Message[
                         </div>
                       ))}
                     </div>
-                    <div className='flex flex-col'>
+                    <div>
                       {m?.type === "tool-result_generate_document_from_youtube" && ((
-                        <div className='bg-blue-700 whitespace-pre-wrap bg-opacity-10 text-sm px-3 py-2 rounded-lg w-fit'>
-                          {m?.result}
+                        <div className='flex flex-col gap-2'>
+                          <div className='bg-blue-700 whitespace-pre-wrap bg-opacity-10 text-sm px-3 py-2 rounded-lg w-fit'>
+                            {m?.result}
+                          </div>
+                          {/* <div className='flex gap-2'>
+                            <Button onClick={() => {
+                              setCreateDocumentShowPopup(!createDocumentShowPopup)
+                              setInput("Create document")
+                            }}>Create a Document</Button>
+                            <Button>Copy Text</Button>
+                          </div> */}
                         </div>
                       ))}
                     </div>
@@ -190,6 +201,7 @@ export default function Chat({ messages: initialMessages }: { messages: Message[
             append={append}
             isLoading={isLoading}
             stop={stop}
+            createDocumentShowPopup={createDocumentShowPopup}
           />
         </div>
       </div>
