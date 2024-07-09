@@ -1,4 +1,5 @@
-import { createDocument } from "@/utils/actions/articles/create-document";
+export const dynamic = "force-dynamic"; // static by default, unless reading the request
+
 import { createSites } from "@/utils/actions/sites/create-site";
 import { readSites } from "@/utils/actions/sites/read-sites";
 import { changeSiteName } from "@/utils/actions/sites/settings/change-site-name";
