@@ -1,3 +1,4 @@
+import { createDocument } from "@/utils/actions/articles/create-document";
 import { createSites } from "@/utils/actions/sites/create-site";
 import { readSites } from "@/utils/actions/sites/read-sites";
 import { changeSiteName } from "@/utils/actions/sites/settings/change-site-name";
@@ -143,7 +144,6 @@ export async function POST(req: Request) {
         }),
         execute: async ({ youtube_video_url }) => {
           const result = await youtubeToDocument(youtube_video_url, null);
-
           return result;
         },
       }),
