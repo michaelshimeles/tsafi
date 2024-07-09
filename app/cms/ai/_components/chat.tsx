@@ -93,7 +93,6 @@ export default function Chat({ messages: initialMessages }: { messages: Message[
             </div>
           </div>
         );
-
       case 'update_site_name':
       case 'update_sub_domain':
         return (
@@ -119,7 +118,7 @@ export default function Chat({ messages: initialMessages }: { messages: Message[
           <div key={toolCallId} className='bg-blue-700 bg-opacity-10 text-sm whitespace-pre-wrap p-2 rounded-lg w-fit'>
             {(toolInvocation?.result)}
           </div>
-        ) : <Skeleton className='w-full max-w-[700px] h-[180px]' />
+        ) : <Skeleton className='w-full min-w-[800px] h-[300px]' />
 
       default:
         return null;
@@ -175,13 +174,13 @@ export default function Chat({ messages: initialMessages }: { messages: Message[
                           <div className='bg-blue-700 whitespace-pre-wrap bg-opacity-10 text-sm px-3 py-2 rounded-lg w-fit'>
                             {m?.result}
                           </div>
-                          {/* <div className='flex gap-2'>
+                          <div className='flex gap-2'>
                             <Button onClick={() => {
                               setCreateDocumentShowPopup(!createDocumentShowPopup)
                               setInput("Create document")
                             }}>Create a Document</Button>
                             <Button>Copy Text</Button>
-                          </div> */}
+                          </div>
                         </div>
                       ))}
                     </div>

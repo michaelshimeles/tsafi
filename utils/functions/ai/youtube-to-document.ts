@@ -1,4 +1,5 @@
-"use server";
+export const dynamic = "force-dynamic"; // static by default, unless reading the request
+
 import OpenAI from "openai";
 import { YoutubeTranscript } from "youtube-transcript";
 
