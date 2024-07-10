@@ -1,1 +1,0 @@
-export declare type Join<S extends string[], D extends string = ","> = S extends [] ? "" : S extends [string] ? `${S[0]}` : S extends [string, ...infer T] ? T extends string[] ? `${S[0]}${D}${Join<T, D>}` : never : string;
