@@ -1,7 +1,7 @@
 var myHeaders = new Headers();
 
 export const searchInternet = async (query: string) => {
-  myHeaders.append("X-API-KEY", process.env.ELEVEN_LABS_API!);
+  myHeaders.append("X-API-KEY", process.env.SEARCH_API!);
   myHeaders.append("Content-Type", "application/json");
 
   const raw = JSON.stringify({
