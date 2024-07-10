@@ -30,7 +30,9 @@ export const deleteMessages = async () => {
       .eq("user_id", userId)
       .select("*");
 
-    revalidateTag("ai-home-page");
+    console.log("fired");
+
+    revalidatePath(`/cms/ai`);
 
     if (error?.code) return error;
 

@@ -13,7 +13,7 @@ import { EnterIcon, ReloadIcon } from '@radix-ui/react-icons'
 import { Settings, StopCircle } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import Textarea from 'react-textarea-autosize'
-
+import { useRouter } from 'next/navigation'
 
 export function PromptForm({ input, handleInputChange, handleSubmit, setInput, isLoading, stop, createDocumentShowPopup }: any) {
   const [showPopup, setShowPopup] = useState<boolean>(false);
@@ -21,6 +21,8 @@ export function PromptForm({ input, handleInputChange, handleSubmit, setInput, i
   const [filteredSites, setFilteredSites] = useState([]);
   const [clearHistoryLoading, setClearHistoryLoading] = useState<boolean>(false);
   const [settingsOpen, setSettingsOpen] = useState<boolean>(false);
+
+  const router = useRouter()
 
   const { data: sites } = useGetAllSites();
 
@@ -157,10 +159,22 @@ export function PromptForm({ input, handleInputChange, handleSubmit, setInput, i
                     </Button>
                       : <Button onClick={async () => {
                         setClearHistoryLoading(true)
-                        await deleteMessages()
+                        const result = await deleteMessages()
 
                         setClearHistoryLoading(false)
                         setSettingsOpen(false)
+
+
+                        if (result?.[0]?.messages?.length === 0) {
+                          console.log("Enter")
+                          router.refresh();
+
+                          return
+                        } else {
+                          console.error('Failed to clear history:', result);
+
+                          return
+                        }
                       }}>Clear chat history</Button>}
                   </div>
                 </div>
