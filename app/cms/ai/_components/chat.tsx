@@ -11,6 +11,7 @@ import DashWrapper from "../../_components/DashWrapper";
 import { PromptForm } from "./prompt_form";
 import Image from 'next/image';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Separator } from '@/components/ui/separator';
 
 export default function Chat({ messages: initialMessages }: { messages: Message[] }) {
   const { messages, input, handleInputChange, handleSubmit, setInput, error, append, isLoading, stop } = useChat({
@@ -18,9 +19,9 @@ export default function Chat({ messages: initialMessages }: { messages: Message[
     sendExtraMessageFields: true
   });
 
-  const [createDocumentShowPopup, setCreateDocumentShowPopup] = useState<boolean>(false)
-
+  const [createDocumentShowPopup, setCreateDocumentShowPopup] = useState<boolean>(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [streamingComplete, setStreamingComplete] = useState<boolean>(true);
 
   useEffect(() => {
     if (error) {
@@ -32,43 +33,46 @@ export default function Chat({ messages: initialMessages }: { messages: Message[
     messagesEndRef.current?.scrollIntoView();
   }, [messages]);
 
+  useEffect(() => {
+    setStreamingComplete(false);
+    const timeoutId = setTimeout(() => setStreamingComplete(true), 500);
+    return () => clearTimeout(timeoutId);
+  }, [messages]);
+
   const renderToolInvocation = (toolInvocation: any) => {
     const toolCallId = toolInvocation.toolCallId;
     const message = toolInvocation?.result?.message;
     const result = toolInvocation?.result?.result;
 
-    // console.log('toolInvocation', toolInvocation)
     switch (toolInvocation.toolName) {
       case 'create_site':
         return (
-          <div>
-            <div key={toolCallId} className='bg-blue-700 bg-opacity-10 text-sm whitespace-pre-wrap px-3 py-2 rounded-lg w-fit'>
+          <div key={toolCallId}>
+            <div className='bg-blue-700 bg-opacity-10 text-sm whitespace-pre-wrap px-3 py-2 rounded-lg w-fit'>
               {message}
             </div>
-            <div className="pt-[0.5rem]">
-              {toolInvocation?.result && (
-                <div className='flex gap-1'>
-                  <Link href={`https://${toolInvocation?.result?.site_subdomain}.tsafi.xyz`} target="_blank">
-                    <Button variant="outline" size="sm">
-                      <ExternalLink className="mr-1 w-4 h-4" />
-                      Website
-                    </Button>
-                  </Link>
-                  <Link href={`/cms/sites/${toolInvocation?.result?.site_id}`} target="_blank">
-                    <Button variant="outline" size="sm">
-                      <ExternalLink className="mr-1 w-4 h-4" />
-                      Dashboard
-                    </Button>
-                  </Link>
-                </div>
-              )}
-            </div>
+            {toolInvocation?.result && (
+              <div className="pt-[0.5rem] flex gap-1">
+                <Link href={`https://${toolInvocation?.result?.site_subdomain}.tsafi.xyz`} target="_blank">
+                  <Button variant="outline" size="sm">
+                    <ExternalLink className="mr-1 w-4 h-4" />
+                    Website
+                  </Button>
+                </Link>
+                <Link href={`/cms/sites/${toolInvocation?.result?.site_id}`} target="_blank">
+                  <Button variant="outline" size="sm">
+                    <ExternalLink className="mr-1 w-4 h-4" />
+                    Dashboard
+                  </Button>
+                </Link>
+              </div>
+            )}
           </div>
         );
       case 'read_sites':
         return (
-          <div>
-            <div key={toolCallId} className='flex gap-2 flex-col bg-blue-700 bg-opacity-10 text-sm whitespace-pre-wrap px-3 py-2 rounded-lg w-fit'>
+          <div key={toolCallId}>
+            <div className='flex gap-2 flex-col bg-blue-700 bg-opacity-10 text-sm whitespace-pre-wrap px-3 py-2 rounded-lg w-fit'>
               <p>{message}</p>
             </div>
             <div className='flex gap-2 flex-wrap mt-[1rem]'>
@@ -108,29 +112,109 @@ export default function Chat({ messages: initialMessages }: { messages: Message[
       case 'generate_blog_image':
         return (
           <div key={toolCallId} className='bg-blue-700 bg-opacity-10 text-sm whitespace-pre-wrap p-2 rounded-lg w-fit'>
-            <div>
-              {toolInvocation?.result?.images?.[0]?.url ? <Image className='rounded' src={toolInvocation?.result?.images?.[0]?.url} width={500} height={300} alt="" /> : <Skeleton className='w-[500px] h-[300px]' />}
-            </div>
+            {toolInvocation?.result?.images?.[0]?.url ?
+              <Image className='rounded' src={toolInvocation?.result?.images?.[0]?.url} width={500} height={300} alt="" /> :
+              <Skeleton className='w-[500px] h-[300px]' />
+            }
           </div>
         );
       case 'generate_document_from_youtube':
         return toolInvocation?.result ? (
           <div key={toolCallId} className='bg-blue-700 bg-opacity-10 text-sm whitespace-pre-wrap p-2 rounded-lg w-fit'>
-            {(toolInvocation?.result)}
+            {toolInvocation?.result}
           </div>
         ) : <Skeleton className='w-full min-w-[800px] h-[300px]' />
-
+      case 'search_internet':
+        return (
+          <div key={toolCallId} className='flex flex-col gap-2'>
+            {(toolInvocation?.result?.result?.snippet && toolInvocation?.result?.result?.link) && (
+              <div className='bg-blue-700 bg-opacity-10 text-sm whitespace-pre-wrap p-2 rounded-lg w-fit'>
+                <p className='font-semibold'>{toolInvocation?.result?.result?.title}</p>
+                <Separator className="w-full mt-1 mb-2" />
+                <p>{toolInvocation?.result?.result?.snippet}</p>
+                <Link href={toolInvocation?.result?.result?.link} target='_blank'>
+                  <Button className='mt-[0.5rem]'>Source</Button>
+                </Link>
+              </div>
+            )}
+            {(toolInvocation?.result?.result?.title && toolInvocation?.result?.result?.answer) && (
+              <div className='bg-blue-700 bg-opacity-10 text-sm whitespace-pre-wrap p-2 rounded-lg w-fit'>
+                <p>{toolInvocation?.result?.result?.title}</p>
+                <p>{toolInvocation?.result?.result?.answer}</p>
+              </div>
+            )}
+          </div>
+        )
       default:
         return null;
     }
   };
+
+  function renderMessageContent(m: any) {
+    switch (m?.type) {
+      case "tool-result_read-site":
+        return (
+          <div className='flex gap-2 flex-wrap w-full mt-2'>
+            {m?.result?.map((info: any, index: number) => (
+              <Link key={index} href={`/cms/sites/${info.site_subdomain}`} prefetch={true} className="flex flex-col rounded-md max-w-[350px] w-full min-h-[150px] hover:cursor-pointer transition-shadow duration-300" target='_blank'>
+                <Card className="flex flex-col px-[1rem] justify-between h-full py-[1rem]">
+                  <div className='flex flex-col w-full justify-center items-start'>
+                    <h2 className="text-lg font-bold">{info.site_name}</h2>
+                    <p className="text-gray-400 pt-1 text-sm">{info.site_description}</p>
+                  </div>
+                  <div className="flex justify-between mt-2 items-center w-full">
+                    <p className='text-xs px-2 py-1 rounded-full border bg-zinc-900 text-gray-300'>
+                      {info.site_subdomain}.tsafi.xyz
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      {new Date(info.created_at).toLocaleDateString()}
+                    </p>
+                  </div>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        );
+      case "tool-result_generate_blog_image":
+        return (
+          <div>
+            <Image className='rounded' src={m?.result?.url} width={500} height={300} alt="" />
+          </div>
+        );
+      case "tool-result_generate_document_from_youtube":
+        return (
+          <div className='flex flex-col gap-2'>
+            <div className='bg-blue-700 whitespace-pre-wrap bg-opacity-10 text-sm px-3 py-2 rounded-lg w-fit'>
+              {m?.result}
+            </div>
+            <div className='flex gap-2'>
+              <Button onClick={() => {
+                setCreateDocumentShowPopup(!createDocumentShowPopup)
+                setInput("Create document")
+              }}>Create a Document</Button>
+              <Button>Copy Text</Button>
+            </div>
+          </div>
+        );
+      case "tool-result_search_internet":
+        return (
+          <div className='flex flex-col gap-2'>
+            <div className='bg-blue-700 whitespace-pre-wrap bg-opacity-10 text-sm px-3 py-2 rounded-lg w-fit'>
+              {m?.result?.title}
+            </div>
+          </div>
+        );
+      default:
+        return null;
+    }
+  }
 
   return (
     <DashWrapper>
       <div className="flex flex-col h-[calc(100vh-100px)] w-full">
         <div className="flex-grow overflow-y-auto p-4 pb-[11rem]">
           {messages.map((m: any, index: number) => (
-            <div key={index} className={m.role === "user" ? "flex flex-col justify-center items-end gap-1 mb-4" : "flex flex-col justify-center items-start gap-1 mb-4"}>
+            <div key={index} className={`flex flex-col justify-center ${m.role === "user" ? "items-end" : "items-start"} gap-1 mb-4`}>
               <div className="flex flex-col gap-1 max-w-[80%]">
                 <p className="text-sm text-left">
                   {m.role.charAt(0).toUpperCase() + m.role.slice(1)}
@@ -141,49 +225,7 @@ export default function Chat({ messages: initialMessages }: { messages: Message[
                     <div className='bg-blue-700 whitespace-pre-wrap bg-opacity-10 text-sm px-3 py-2 rounded-lg w-fit'>
                       {m?.content}
                     </div>
-                    <div className='flex gap-2 flex-wrap w-full mt-2'>
-                      {m?.type === "tool-result_read-site" && m?.result?.map((info: any, index: number) => (
-                        <Link key={index} href={`/cms/sites/${info.site_subdomain}`} prefetch={true} className="flex flex-col rounded-md max-w-[350px] w-full min-h-[150px] hover:cursor-pointer transition-shadow duration-300" target='_blank'>
-                          <Card className="flex flex-col px-[1rem] justify-between h-full py-[1rem]">
-                            <div className='flex flex-col w-full justify-center items-start'>
-                              <h2 className="text-lg font-bold">{info.site_name}</h2>
-                              <p className="text-gray-400 pt-1 text-sm">{info.site_description}</p>
-                            </div>
-                            <div className="flex justify-between mt-2 items-center w-full">
-                              <p className='text-xs px-2 py-1 rounded-full border bg-zinc-900 text-gray-300'>
-                                {info.site_subdomain}.tsafi.xyz
-                              </p>
-                              <p className="text-xs text-muted-foreground">
-                                {new Date(info.created_at).toLocaleDateString()}
-                              </p>
-                            </div>
-                          </Card>
-                        </Link>
-                      ))}
-                    </div>
-                    <div className='flex flex-col'>
-                      {m?.type === "tool-result_generate_blog_image" && ((
-                        <div>
-                          {<Image className='rounded' src={m?.result?.url} width={500} height={300} alt="" />}
-                        </div>
-                      ))}
-                    </div>
-                    <div>
-                      {m?.type === "tool-result_generate_document_from_youtube" && ((
-                        <div className='flex flex-col gap-2'>
-                          <div className='bg-blue-700 whitespace-pre-wrap bg-opacity-10 text-sm px-3 py-2 rounded-lg w-fit'>
-                            {m?.result}
-                          </div>
-                          <div className='flex gap-2'>
-                            <Button onClick={() => {
-                              setCreateDocumentShowPopup(!createDocumentShowPopup)
-                              setInput("Create document")
-                            }}>Create a Document</Button>
-                            <Button>Copy Text</Button>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
+                    {renderMessageContent(m)}
                   </div>
                 )}
               </div>
@@ -204,6 +246,6 @@ export default function Chat({ messages: initialMessages }: { messages: Message[
           />
         </div>
       </div>
-    </DashWrapper >
+    </DashWrapper>
   );
 }
