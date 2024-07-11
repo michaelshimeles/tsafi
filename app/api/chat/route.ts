@@ -30,7 +30,7 @@ export async function POST(req: Request) {
     try {
       return convertToCoreMessages(msgs);
     } catch (error) {
-      console.error('Error in convertToCoreMessages:', error);
+      console.error("Error in convertToCoreMessages:", error);
       return [];
     }
   };
@@ -50,8 +50,18 @@ export async function POST(req: Request) {
           site_subdomain: z.string().describe("The website subdomain"),
           site_logo: z.string().describe("The website logo"),
         }),
-        execute: async ({ site_name, site_description, site_subdomain, site_logo }) => {
-          const result = await createSites(site_name, site_description, site_subdomain, site_logo);
+        execute: async ({
+          site_name,
+          site_description,
+          site_subdomain,
+          site_logo,
+        }) => {
+          const result = await createSites(
+            site_name,
+            site_description,
+            site_subdomain,
+            site_logo
+          );
           return {
             site_name: result?.[0]?.site_name,
             site_description: result?.[0]?.site_description,
@@ -67,10 +77,15 @@ export async function POST(req: Request) {
         execute: async () => {
           const result = await readSites();
           if (!result?.[0]?.site_name) {
-            return { message: "You have no blog sites, you should create one 😉" };
+            return {
+              message: "You have no blog sites, you should create one 😉",
+            };
           }
           return {
-            message: result.length === 1 ? "Here's your blog site" : "Here are your blog sites",
+            message:
+              result.length === 1
+                ? "Here's your blog site"
+                : "Here are your blog sites",
             result: result,
           };
         },
@@ -82,7 +97,10 @@ export async function POST(req: Request) {
         }),
         execute: async ({ new_site_name }) => {
           const getSiteInfo = await readSiteName(selectedSite?.site_name);
-          const result = await changeSiteName(getSiteInfo?.[0]?.site_id, new_site_name);
+          const result = await changeSiteName(
+            getSiteInfo?.[0]?.site_id,
+            new_site_name
+          );
           return {
             result: JSON.stringify(result),
             message: `Your blog site name has been updated from ${selectedSite?.site_name} to ${result?.[0]?.site_name} and you can check it out by clicking the button below.`,
@@ -96,7 +114,10 @@ export async function POST(req: Request) {
         }),
         execute: async ({ new_site_subdomain }) => {
           const getSiteInfo = await readSiteName(selectedSite?.site_name);
-          const result = await changeSiteSubdomain(getSiteInfo?.[0]?.site_id, new_site_subdomain);
+          const result = await changeSiteSubdomain(
+            getSiteInfo?.[0]?.site_id,
+            new_site_subdomain
+          );
           return {
             result: JSON.stringify(result),
             message: `Your blog site ${selectedSite?.site_name} subdomain has been updated to ${result?.[0]?.site_subdomain} and you can check it out by clicking the button below.`,
@@ -106,7 +127,9 @@ export async function POST(req: Request) {
       generate_blog_image: tool({
         description: "Generate a blog image",
         parameters: z.object({
-          prompt: z.string().describe("description of the blog image user wants generated"),
+          prompt: z
+            .string()
+            .describe("description of the blog image user wants generated"),
         }),
         execute: async ({ prompt }) => {
           return await generateBlogImage(prompt);
@@ -121,23 +144,27 @@ export async function POST(req: Request) {
           return await youtubeToDocument(youtube_video_url, null);
         },
       }),
-      search_internet: tool({
-        description: "Searching the internet",
-        parameters: z.object({
-          query: z.string().describe("Query for internet search"),
-        }),
-        execute: async ({ query }) => {
-          const response = await searchInternet(query);
-          return {
-            message: "Here's the search result",
-            result: response?.answerBox,
-          };
-        },
-      }),
+      // search_internet: tool({
+      //   description: "Searching the internet",
+      //   parameters: z.object({
+      //     query: z.string().describe("Query for internet search"),
+      //   }),
+      //   execute: async ({ query }) => {
+      //     const response = await searchInternet(query);
+      //     return {
+      //       message: "Here's the search result",
+      //       result: response?.answerBox,
+      //     };
+      //   },
+      // }),
     },
-    onFinish: async ({ text, toolResults }: any) => {
+    onFinish: async ({ text, toolResults, toolCalls }: any) => {
+      console.log("toolResults", toolResults);
       if (text) {
-        await storeMessages(user?.id!, [...messages, { role: "assistant", content: text }]);
+        await storeMessages(user?.id!, [
+          ...messages,
+          { role: "assistant", content: text },
+        ]);
         return;
       }
 

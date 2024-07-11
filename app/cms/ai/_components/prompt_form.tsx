@@ -157,7 +157,8 @@ export function PromptForm({ input, handleInputChange, handleSubmit, setInput, i
                       <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
                       Please wait
                     </Button>
-                      : <Button onClick={async () => {
+                      :
+                      <Button onClick={async () => {
                         setClearHistoryLoading(true)
                         const result = await deleteMessages()
 

@@ -23,9 +23,4 @@ export const searchInternet = async (query: string) => {
     console.log("error", error);
     return error;
   }
-
-  // fetch("https://google.serper.dev/search", options)
-  //   .then((response) => response.text())
-  //   .then((result) => console.log(result))
-  //   .catch((error) => console.log("error", error));
 };
