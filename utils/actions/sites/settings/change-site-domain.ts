@@ -33,7 +33,7 @@ export const changeSiteDomain = async (
     const { data, error } = await supabase
       .from("sites")
       .update({
-        site_custom_domain: site_custom_domain.toLocaleLowerCase(),
+        site_custom_domain: site_custom_domain.toLowerCase(),
       })
       .eq("user_id", userId)
       .eq("site_id", site_id)
@@ -46,15 +46,31 @@ export const changeSiteDomain = async (
     }
 
     const [domainAdding, wwwDomainAdding] = await Promise.all([
-      addDomainToVercel(site_custom_domain.toLocaleLowerCase()),
-      addDomainToVercel(`www.${site_custom_domain.toLocaleLowerCase()}`),
+      addDomainToVercel(site_custom_domain.toLowerCase()),
+      addDomainToVercel(`www.${site_custom_domain.toLowerCase()}`),
     ]);
 
     revalidatePath("/cms/sites");
 
+    // Fetch the verification records from Vercel
+    const vercelDomainResponse = await fetch(
+      `https://api.vercel.com/v9/projects/${
+        process.env.PROJECT_ID_VERCEL
+      }/domains/${site_custom_domain.toLowerCase()}`,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.PROJECT_ID_VERCEL}`,
+        },
+      }
+    );
+
+    const domainData = await vercelDomainResponse.json();
+    console.log("domainData", domainData);
+
     return {
       domainAdding,
       wwwDomainAdding,
+      verificationRecords: domainData.verification,
     };
   } catch (error: any) {
     return error;

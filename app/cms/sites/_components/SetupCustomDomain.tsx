@@ -17,7 +17,8 @@ export default function SetupCustomDomain({ response, site_id }: {
   response: any,
   site_id: string
 }) {
-  const [siteCustomDomain, setSiteCustomDomain] = useState(response?.[0]?.site_custom_domain || '')
+  const [siteCustomDomain, setSiteCustomDomain] = useState<any>(response?.[0]?.site_custom_domain || '')
+  const [verificationRecords, setVerificationRecords] = useState<any>(null)
 
   const handleChangeSiteDomain = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -35,6 +36,7 @@ export default function SetupCustomDomain({ response, site_id }: {
       }
 
       toast("Site custom domain has been updated")
+      setVerificationRecords(response.verificationRecords)
 
       return response
     } catch (error) {
@@ -45,6 +47,7 @@ export default function SetupCustomDomain({ response, site_id }: {
     }
   }
 
+  console.log('verificationRecords', verificationRecords)
   return (
     <div className="w-[80%] mt-[1rem]">
       <Card>
@@ -67,6 +70,35 @@ export default function SetupCustomDomain({ response, site_id }: {
           </CardFooter>
         </form>
       </Card>
+      {verificationRecords && (
+        <Card className="mt-4">
+          <CardHeader>
+            <CardTitle>Domain Verification</CardTitle>
+            <CardDescription>
+              Add these records to your DNS provider to verify your domain.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div>
+              <h3 className="font-bold">A Record:</h3>
+              <p>Name: @</p>
+              <p>Value: {verificationRecords?.domain}</p>
+            </div>
+            <div className="mt-2">
+              <h3 className="font-bold">CNAME Record:</h3>
+              <p>Name: www</p>
+              <p>Value: {verificationRecords?.cname}</p>
+            </div>
+            {verificationRecords?.txt && (
+              <div className="mt-2">
+                <h3 className="font-bold">TXT Record:</h3>
+                <p>Name: @</p>
+                <p>Value: {verificationRecords?.txt}</p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
     </div>
   )
 }

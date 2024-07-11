@@ -44,13 +44,22 @@ export default clerkMiddleware(async (auth, req) => {
   const site_id = response[0]?.site_id;
   const tenantSubdomain = response[0]?.site_subdomain;
   const mainDomain = response[0]?.site_custom_domain;
+  const newUrl = new URL(`https://${mainDomain}`);
 
+  // newUrl.pathname = `/${site_id}${pathname}`;
+
+  // console.log("newUrl.pathname", newUrl.pathname);
   if (mainDomain) {
     // If a main domain exists, rewrite to it
     const newUrl = new URL(`https://${mainDomain}`);
-    newUrl.pathname = pathname;
+
+    newUrl.pathname = `/${site_id}${pathname}`;
     return NextResponse.rewrite(newUrl);
-  } else if (tenantSubdomain) {
+  }
+
+  console.log(`https://${mainDomain}`);
+
+  if (tenantSubdomain) {
     // If only a subdomain exists, rewrite to the subdomain path
     return NextResponse.rewrite(new URL(`/${site_id}${pathname}`, req.url));
   }
