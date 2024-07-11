@@ -19,6 +19,7 @@ import ChangeSiteSubdomain from "../../_components/ChangeSiteSubdomain"
 import DeleteSite from "../../_components/DeleteSite"
 import SiteDashWrapper from "../_components/SiteDashWrapper"
 import SitePreview from "./_components/site_preview"
+import SetupCustomDomain from "../../_components/SetupCustomDomain"
 
 export default async function SettingsPage({ params }: { params: { site_id: string } }) {
   const authCheck: any = await Authorization(params?.site_id)
@@ -72,7 +73,7 @@ export default async function SettingsPage({ params }: { params: { site_id: stri
           <TabsContent value="domain">
             <div className="w-full">
               <ChangeSiteSubdomain response={response} site_id={params?.site_id} />
-              {/* <SetupCustomDomain response={response} site_id={params?.site_id} /> */}
+              <SetupCustomDomain response={response} site_id={params?.site_id} />
             </div>
           </TabsContent>
         </Tabs>

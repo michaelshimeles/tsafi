@@ -1,7 +1,7 @@
 var myHeaders = new Headers();
 
 export const searchInternet = async (query: string) => {
-  myHeaders.append("X-API-KEY", process.env.ELEVEN_LABS_API!);
+  myHeaders.append("X-API-KEY", process.env.SEARCH_API!);
   myHeaders.append("Content-Type", "application/json");
 
   const raw = JSON.stringify({
@@ -23,9 +23,4 @@ export const searchInternet = async (query: string) => {
     console.log("error", error);
     return error;
   }
-
-  // fetch("https://google.serper.dev/search", options)
-  //   .then((response) => response.text())
-  //   .then((result) => console.log(result))
-  //   .catch((error) => console.log("error", error));
 };

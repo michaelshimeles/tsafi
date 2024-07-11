@@ -41,20 +41,22 @@ export default clerkMiddleware(async (auth, req) => {
     return NextResponse.next();
   }
 
-  const site_id = response?.[0]?.site_id;
-  // Get the tenant's subdomain from the response
+  const site_id = response[0]?.site_id;
   const tenantSubdomain = response[0]?.site_subdomain;
+  const mainDomain = response[0]?.site_custom_domain;
 
-  if (tenantSubdomain) {
-    return NextResponse.rewrite(
-      new URL(`/${site_id}${pathname}`, req.url)
-    );
+  if (mainDomain) {
+    // If a main domain exists, rewrite to it
+    const newUrl = new URL(`https://${mainDomain}`);
+    newUrl.pathname = pathname;
+    return NextResponse.rewrite(newUrl);
+  } else if (tenantSubdomain) {
+    // If only a subdomain exists, rewrite to the subdomain path
+    return NextResponse.rewrite(new URL(`/${site_id}${pathname}`, req.url));
   }
 
-  // Rewrite the URL to the tenant-specific path
-  return NextResponse.rewrite(
-    new URL(tenantSubdomain === "/" ? "" : `tsafi.xyz`, req.url)
-  );
+  // If neither main domain nor subdomain exists, continue to the next middleware
+  return NextResponse.next();
 });
 
 // Define which paths the middleware should run for
