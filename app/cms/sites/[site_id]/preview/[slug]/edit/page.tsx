@@ -185,7 +185,7 @@ export default function ArticleEditor({ params }: { params: { slug: string, site
   async function onSubmit(info: z.infer<typeof FormSchema>) {
     try {
 
-      const response = await updateArticleImage(data?.[0]?.site_id, imageUploadUrl, info?.image_alt)
+      const response = await updateArticleImage(data?.[0]?.site_id, params?.slug, imageUploadUrl, info?.image_alt)
 
       toast("Article is published");
       form.reset();
