@@ -7,7 +7,7 @@ export default function Home() {
     <PageWrapper>
       <div className="flex flex-col max-w-[70rem]">
         <HeroSection />
-        <FeatureSection />
+        {/* <FeatureSection /> */}
       </div>
     </PageWrapper>
   );
