@@ -35,12 +35,12 @@ export default function HeroSection() {
                                 <img
                                     src="/home.png"
                                     alt="Hero Image"
-                                    className="block dark:hidden w-[1200px] rounded-[inherit] border object-contain shadow-lg"
+                                    className="block dark:hidden w-[1400px] rounded-[inherit] border object-contain shadow-lg"
                                 />
                                 <img
                                     src="/dash-dark.png"
                                     alt="Hero Image"
-                                    className="hidden dark:block w-[1200px] rounded-[inherit] border object-contain shadow-lg"
+                                    className="hidden dark:block w-[1400px] rounded-[inherit] border object-contain shadow-lg"
                                 />
                                 <BorderBeam size={250} duration={12} delay={9} />
                             </div>

@@ -4,7 +4,7 @@ import { createServerClient } from "@supabase/ssr";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
-export const updateArticleImage = async (site_id: string, image_url: string, image_alt: string) => {
+export const updateArticleImage = async (site_id: string, slug: string, image_url: string, image_alt: string) => {
   const { userId } = auth();
 
   if (!userId) {
@@ -35,6 +35,7 @@ export const updateArticleImage = async (site_id: string, image_url: string, ima
         },
       ])
       .eq("user_id", userId)
+      .eq("slug", slug)
       .eq("site_id", site_id)
       .select();
 
