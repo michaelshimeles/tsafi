@@ -6,7 +6,7 @@ export default function ArticleCard({ article, path }: any) {
 
   return (
     <Link href={path}>
-      <article className="flex flex-col space-y-2 p-4 rounded-md border h-full max-w-[350px] ">
+      <article className="flex flex-col space-y-2 p-4 rounded-md border h-full max-w-[350px] w-full">
         <div className="h-[17rem] overflow-hidden">
           <Image
             src={article?.image}
