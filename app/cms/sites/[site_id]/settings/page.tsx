@@ -73,7 +73,7 @@ export default async function SettingsPage({ params }: { params: { site_id: stri
           <TabsContent value="domain">
             <div className="w-full">
               <ChangeSiteSubdomain response={response} site_id={params?.site_id} />
-              <SetupCustomDomain response={response} site_id={params?.site_id} />
+              {/* <SetupCustomDomain response={response} site_id={params?.site_id} /> */}
             </div>
           </TabsContent>
         </Tabs>

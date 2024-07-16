@@ -68,7 +68,7 @@ export default clerkMiddleware(async (auth, req) => {
   const mainDomain = response[0]?.site_custom_domain;
 
   // Determine which domain to use for rewriting
-  const rewriteDomain = mainDomain || tenantSubdomain;
+  const rewriteDomain = tenantSubdomain //|| mainDomain;
 
   console.log("Hostname:", hostname);
   console.log("Current Host:", currentHost);
