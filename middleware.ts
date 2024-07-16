@@ -1,31 +1,11 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
+import { readSiteDomain } from "./utils/actions/sites/read-site-domain";
 // import { readSiteDomain } from "./utils/actions/sites/read-site-domain";
 
 // Define the routes that require authentication
 const isProtectedRoute = createRouteMatcher(["/cms(.*)"]);
 
-// Mock implementation for testing
-async function readSiteDomain(host: any) {
-  const mockData: any = {
-    tenant1: {
-      site_id: "site1",
-      site_subdomain: "tenant1",
-      site_custom_domain: null,
-    },
-    tenant2: {
-      site_id: "site2",
-      site_subdomain: "tenant2",
-      site_custom_domain: null,
-    },
-    "mike.com": {
-      site_id: "site3",
-      site_subdomain: "tenant3",
-      site_custom_domain: "mike.com",
-    },
-  };
-  return [mockData[host] || null];
-}
 // Main middleware function
 export default clerkMiddleware(async (auth, req) => {
   // Check if the route is protected and enforce authentication if it is
@@ -68,7 +48,7 @@ export default clerkMiddleware(async (auth, req) => {
   const mainDomain = response[0]?.site_custom_domain;
 
   // Determine which domain to use for rewriting
-  const rewriteDomain = tenantSubdomain //|| mainDomain;
+  const rewriteDomain = tenantSubdomain // || mainDomain;
 
   console.log("Hostname:", hostname);
   console.log("Current Host:", currentHost);
