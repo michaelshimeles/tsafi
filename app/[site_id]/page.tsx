@@ -4,6 +4,7 @@ import { readSiteById } from "@/utils/actions/sites/read-site-id"
 import { Article } from "@/utils/types"
 import Image from "next/image"
 import Link from "next/link"
+import ArticleCard from "../cms/sites/_components/article-card"
 
 export default async function page({ params }: { params: { site_id: string } }) {
 
@@ -29,30 +30,8 @@ export default async function page({ params }: { params: { site_id: string } }) 
       </div>
       <div className='flex items-center w-full'>
         <div className="grid gap-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 mt-5">
-          {response?.length > 0 && response?.map((article: Article) => (
-            <Link key={article?.id} href={`/${article?.slug}`}>
-              <article
-                className="flex flex-col space-y-2 p-4 rounded-md border w-[350px]"
-              >
-                {article?.image && <Image
-                  src={article?.image}
-                  alt={""}
-                  width={804}
-                  height={452}
-                  className="rounded-md border bg-muted transition-colors"
-                />}
-                <h2 className="text-xl font-bold">{article?.title}</h2>
-                <p className="text-sm text-muted-foreground">{article?.subtitle}</p>
-                <div className='flex lg:flex-row w-full justify-between items-center gap-1'>
-                  <p className="text-sm text-muted-foreground">
-                    {new Date(article?.created_at)?.toLocaleDateString()}
-                  </p>
-                  <div>
-                    <Badge>{article?.category?.category}</Badge>
-                  </div>
-                </div>
-              </article>
-            </Link>
+          {response?.length > 0 && response?.map((article: Article, index: number) => (
+            <ArticleCard key={index} article={article} path={`/${article?.slug}`} />
           ))}
         </div>
       </div>
