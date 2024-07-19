@@ -38,7 +38,7 @@ export async function POST(req: Request) {
   const coreMessages = safeConvertToCoreMessages(messages);
 
   const result = await streamText({
-    model: openai("gpt-4o") as any,
+    model: openai("gpt-4o-mini") as any,
     system,
     messages: coreMessages,
     tools: {
