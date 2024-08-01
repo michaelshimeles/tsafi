@@ -12,15 +12,25 @@ export const youtubeToDocument = async (
 
   // Join all the text segments into a single string
   const transcriptText = result.map((segment) => segment.text).join(" ");
+
+  console.log("transcriptText", transcriptText);
   // Generate a prompt for OpenAI with the result from the tool
   let prompt;
   render_method === "html"
     ? (prompt = `Turn this transcript into a document for a blog post:\n\n${transcriptText}\n\n  DO NOT. I REPEAT DO NOT RENDER A RESPONSE IN MARKDOWN. Please render in HTML.`)
     : (prompt = `Turn this transcript into a document for a blog post:\n\n${transcriptText}\n\n  DO NOT. I REPEAT DO NOT RENDER A RESPONSE IN MARKDOWN.`);
-  const completion = await openai.chat.completions.create({
-    messages: [{ role: "user", content: prompt }],
-    model: "gpt-4o",
-  });
 
-  return completion?.choices?.[0]?.message?.content;
+  console.log("prompt", prompt);
+
+  try {
+    const completion = await openai.chat.completions.create({
+      messages: [{ role: "user", content: prompt }],
+      model: "gpt-4o",
+    });
+
+    return completion?.choices?.[0]?.message?.content;
+  } catch (error) {
+    console.log("error", error);
+    return error;
+  }
 };

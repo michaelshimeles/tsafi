@@ -148,7 +148,7 @@ export default function DocumentEditor({ params }: { params: { id: string, site_
   const onSubmit = async (data: any) => {
     setLoading(true);
     try {
-      const response = await youtubeToDocument(data?.youtube_url, "html");
+      const response: any = await youtubeToDocument(data?.youtube_url, "html");
       setOpen(false);
       console.log('response', response);
       setTranscription(response); // Update transcription state
