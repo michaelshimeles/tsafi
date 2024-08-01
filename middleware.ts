@@ -17,8 +17,6 @@ export default clerkMiddleware(async (auth, req) => {
   // Get hostname (e.g., 'mike.com', 'test.mike.com')
   const hostname = req.headers.get("host");
 
-  console.log("ENTERED")
-
   let currentHost;
   if (process.env.NODE_ENV === "production") {
     // Production logic remains the same

@@ -1,9 +1,6 @@
-import { Badge } from "@/components/ui/badge"
 import { readAllArticles } from "@/utils/actions/sites/articles/read-articles"
 import { readSiteById } from "@/utils/actions/sites/read-site-id"
 import { Article } from "@/utils/types"
-import Image from "next/image"
-import Link from "next/link"
 import ArticleCard from "../cms/sites/_components/article-card"
 
 export default async function page({ params }: { params: { site_id: string } }) {
