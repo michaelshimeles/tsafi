@@ -24,9 +24,13 @@ import { useRouter } from "next/navigation";
 import { useCheckAuthorization } from "@/utils/hooks/useCheckAuthorization";
 
 const FormSchema = z.object({
-  name: z.string(),
-  instagram: z.string(),
-  twitter: z.string()
+  name: z
+  .string()
+  .trim()
+  .min(1, { message: "Author name is required" }), 
+  // Validation rule for name required field (trigger error when name is empty string and empty space)
+instagram: z.string(),
+twitter: z.string()
 })
 
 export default function Author({ params }: { params: { site_id: string } }) {
@@ -42,12 +46,15 @@ export default function Author({ params }: { params: { site_id: string } }) {
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
+    mode:'onChange',
     defaultValues: {
       name: "",
       instagram: "",
       twitter: ""
     }
   })
+
+  const { isValid } = form.formState;
 
   const [imageUploadUrl, setImageUploadUrl] = useState<string>("");
 
@@ -134,7 +141,7 @@ export default function Author({ params }: { params: { site_id: string } }) {
                   </DialogContent>
                 </Dialog>
               </div>
-              <Button type="submit" size="sm" variant="outline">Submit</Button>
+              <Button type="submit" size="sm" variant="outline" className={!isValid ? "cursor-not-allowed" :  ""}>Submit</Button>
             </form>
           </Form>
         </div>

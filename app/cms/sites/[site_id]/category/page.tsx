@@ -21,8 +21,12 @@ import { useRouter } from "next/navigation";
 import { useCheckAuthorization } from "@/utils/hooks/useCheckAuthorization";
 
 const FormSchema = z.object({
-  category: z.string(),
+  category: z
+  .string()
+  .trim()
+  .min(1, { message: "Category is required" }), 
 })
+
 
 export default function Category({ params }: { params: { site_id: string } }) {
 
@@ -37,11 +41,14 @@ export default function Category({ params }: { params: { site_id: string } }) {
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
+    mode:"onChange",
     defaultValues: {
       category: "",
     }
   })
-
+  
+  const { isValid } = form.formState;
+  
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
       const response = await createCategory(data?.category, params?.site_id)
@@ -80,7 +87,7 @@ export default function Category({ params }: { params: { site_id: string } }) {
                 )}
               />
               <div>
-                <Button type="submit" size="sm">Submit</Button>
+              <Button type="submit" size="sm" className={!isValid ? "cursor-not-allowed" :  ""} disabled={!isValid}>Submit</Button>
               </div>
             </form>
           </Form>
@@ -88,5 +95,5 @@ export default function Category({ params }: { params: { site_id: string } }) {
         </div>
       </main>
     </SiteDashWrapper>
-  )
+  );
 }
