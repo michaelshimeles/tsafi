@@ -87,7 +87,7 @@ export default function Category({ params }: { params: { site_id: string } }) {
                 )}
               />
               <div>
-              <Button type="submit" size="sm" className={!isValid ? "cursor-not-allowed" :  ""} disabled={!isValid}>Submit</Button>
+              <Button type="submit" size="sm" className={!isValid ? "cursor-not-allowed" :  ""} >Submit</Button>
               </div>
             </form>
           </Form>
